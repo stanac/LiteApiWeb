@@ -1,0 +1,1 @@
+webpack app/index.js wwwroot/bundle.js -w
