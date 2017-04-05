@@ -1,4 +1,6 @@
-﻿namespace LiteApiWeb.Models
+﻿using System;
+
+namespace LiteApiWeb.Models
 {
     public class PageContent: PageDetails
     {
@@ -20,5 +22,16 @@
 
         public string ShortMarkDown { get; set; }
         public string ContentMarkDown { get; set; }
+
+        public string ConcatMarkDown()
+        {
+            string result = "";
+            if (ShortMarkDown != null)
+            {
+                result += ShortMarkDown + Environment.NewLine + Environment.NewLine;
+            }
+            result += ContentMarkDown;
+            return result;
+        }
     }
 }

@@ -27,6 +27,8 @@ namespace LiteApiWeb
         {
             loggerFactory.AddConsole();
 
+            RenderAllPages(env, app.ApplicationServices);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -51,6 +53,15 @@ namespace LiteApiWeb
                 context.Response.StatusCode = 404;
                 await context.Response.WriteAsync("Not found");
             });
+        }
+
+        private void RenderAllPages(IHostingEnvironment env, IServiceProvider services)
+        {
+            var pageService = services.GetService<IPageService>() as IPageService;
+            string pagesOutPath = Path.Combine(env.ContentRootPath, "wwwroot", "content", "pages");
+            string hashesPath = Path.Combine(env.ContentRootPath, "Content", "Hashes", "pages");
+            var renderer = new FirstTimeRunRenderer(pageService, pagesOutPath, hashesPath);
+            renderer.RenderAll();
         }
     }
 }

@@ -21,10 +21,10 @@ namespace LiteApiWeb.Api
         public IEnumerable<PageDetails> All()
             => _service.GetPages();
 
-        [HttpGet, ActionRoute("/{pageid}")]
-        public RenderedPageContent GetPage(string pageid)
+        [HttpGet, ActionRoute("/{pageId}")]
+        public RenderedPageContent GetPage(string pageId)
         {
-            var content = _service.GetPageContent(pageid);
+            var content = _service.GetPageContent(pageId);
             var page = _service.RenderPage(content);
             return page;
         }
