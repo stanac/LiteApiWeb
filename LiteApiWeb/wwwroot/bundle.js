@@ -63,23 +63,77 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ([
-/* 0 */,
+/* 0 */
+/***/ (function(module, exports) {
+
+﻿module.exports = {
+    template: `
+<h2>LiteApi blog<h2>
+<div class="alert alert-info">
+    In development
+</div>
+`
+}
+
+/***/ }),
 /* 1 */
+/***/ (function(module, exports) {
+
+﻿module.exports = {
+    template: '<h2>Docs</h2>'
+}
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+﻿module.exports = {
+    template: '<h2>Getting started</h2>'
+}
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+﻿var services = __webpack_require__(5);
+
+module.exports = {
+    data() {
+        return {
+            html: 'loading...'
+        }
+    },
+    template: '<div class="off-top" v-html="html"></div>',
+    created() {
+        this.loadData();
+    },
+    methods: {
+        loadData() {
+            services.pageService.get('home', (response) => {
+                this.html = response;
+            });
+        }
+    }
+};
+
+/***/ }),
+/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__gettingStarted__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__gettingStarted__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__gettingStarted___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__gettingStarted__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__docs__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__docs__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__docs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__docs__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__home__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__home___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__home__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__blog__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__blog__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__blog___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__blog__);
 // 0. If using a module system, call Vue.use(VueRouter)
 
@@ -96,10 +150,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // Vue.extend(), or just a component options object.
 // We'll talk about nested routes later.
 const routes = [
-  { path: '/', component: __WEBPACK_IMPORTED_MODULE_2__home__ },
-  { path: '/getting-started', component: __WEBPACK_IMPORTED_MODULE_0__gettingStarted__ },
-  { path: '/docs', component: __WEBPACK_IMPORTED_MODULE_1__docs__ },
-  { path: '/blog', component: __WEBPACK_IMPORTED_MODULE_3__blog__ }
+    { path: '/', component: __WEBPACK_IMPORTED_MODULE_2__home__ },
+    { path: '/getting-started', component: __WEBPACK_IMPORTED_MODULE_0__gettingStarted__ },
+    { path: '/docs', component: __WEBPACK_IMPORTED_MODULE_1__docs__ },
+    { path: '/blog', component: __WEBPACK_IMPORTED_MODULE_3__blog__ }
 ]
 
 // 3. Create the router instance and pass the `routes` option
@@ -118,42 +172,23 @@ const app = new Vue({
 
 
 /***/ }),
-/* 2 */,
-/* 3 */
-/***/ (function(module, exports) {
-
-﻿module.exports = {
-    template: '<h2>LiteApi <small>ASPNET Core midleware, alternative to WebAPI</small></h2>'
-}
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-﻿module.exports = {
-    template: '<h2>Getting started</h2>'
-}
-
-/***/ }),
 /* 5 */
 /***/ (function(module, exports) {
 
-﻿module.exports = {
-    template: '<h2>Docs</h2>'
-}
+﻿var PageService = function () {
+    this.get = function(name, callback) {
+        nanoajax.ajax({
+            method: 'GET',
+            url: '/content/pages/' + name + '.html'
+        }, function (code, responseText, request) {
+            callback(responseText);
+        });
+    }
+};
 
-/***/ }),
-/* 6 */
-/***/ (function(module, exports) {
+var pageService = new PageService();
 
-﻿module.exports = {
-    template: `
-<h2>LiteApi blog<h2>
-<div class="alert alert-info">
-    In development
-</div>
-`
-}
+module.exports = { pageService };
 
 /***/ })
 /******/ ]);

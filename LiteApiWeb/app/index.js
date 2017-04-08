@@ -13,10 +13,10 @@ import * as Blog from './blog'
 // Vue.extend(), or just a component options object.
 // We'll talk about nested routes later.
 const routes = [
-  { path: '/', component: Home },
-  { path: '/getting-started', component: GettingStarted },
-  { path: '/docs', component: Docs },
-  { path: '/blog', component: Blog }
+    { path: '/', component: Home },
+    { path: '/getting-started', component: GettingStarted },
+    { path: '/docs', component: Docs },
+    { path: '/blog', component: Blog }
 ]
 
 // 3. Create the router instance and pass the `routes` option

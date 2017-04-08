@@ -1,3 +1,20 @@
-﻿module.exports = {
-    template: '<h2>LiteApi <small>ASPNET Core midleware, alternative to WebAPI</small></h2>'
-}
+﻿var services = require('./services/httpService');
+
+module.exports = {
+    data() {
+        return {
+            html: 'loading...'
+        }
+    },
+    template: '<div class="off-top" v-html="html"></div>',
+    created() {
+        this.loadData();
+    },
+    methods: {
+        loadData() {
+            services.pageService.get('home', (response) => {
+                this.html = response;
+            });
+        }
+    }
+};

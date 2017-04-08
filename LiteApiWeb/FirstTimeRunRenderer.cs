@@ -80,6 +80,35 @@ namespace LiteApiWeb
                 ? page.ContentMarkDown
                 : Markdig.Markdown.ToHtml(page.ContentMarkDown);
 
+            html = $@"
+<div class='user-content'>
+{html}
+</div>
+";
+
+            if (!string.IsNullOrWhiteSpace(page.ShortMarkDown))
+            {
+                string shortContent = page.IsHtml
+                    ? page.ShortMarkDown
+                    : Markdig.Markdown.ToHtml(page.ShortMarkDown);
+                html = $@"
+<div class='short-user-content'>
+{shortContent}
+</div>
+
+{html}
+";
+            }
+            
+            if (page.RenderTitle)
+            {
+                html = $@"
+<h1>{page.Title}</h1>
+
+{html}
+";
+            }
+
             File.WriteAllText(filePath, html);
         }
 
@@ -90,6 +119,11 @@ namespace LiteApiWeb
             var html = page.IsHtml
                 ? page.ShortMarkDown
                 : Markdig.Markdown.ToHtml(page.ShortMarkDown);
+            html = $@"
+<div class='short-user-content'>
+{html}
+</div>
+";
 
             string filePath = Path.Combine(_shortDir, page.Id + ".html");
 

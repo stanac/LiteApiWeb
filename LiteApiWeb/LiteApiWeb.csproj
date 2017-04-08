@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="wwwroot\libs\nanoajax.min.js" />
     <Content Include="wwwroot\libs\vue-router.min.js" />
     <Content Include="wwwroot\libs\vue.min.js" />
     <Content Include="wwwroot\style.css" />
@@ -18,6 +19,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="wwwroot\content\imgs\" />
+    <Folder Include="wwwroot\content\pages\__short\" />
   </ItemGroup>
 
 </Project>
