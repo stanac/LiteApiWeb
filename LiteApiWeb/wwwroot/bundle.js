@@ -63,28 +63,34 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
 /***/ (function(module, exports) {
 
-﻿module.exports = {
-    template: `
-<h2>LiteApi blog<h2>
-<div class="alert alert-info">
-    In development
-</div>
-`
-}
+﻿var PageService = function () {
+    this.get = function(name, callback) {
+        nanoajax.ajax({
+            method: 'GET',
+            url: '/content/pages/' + name + '.html'
+        }, function (code, responseText, request) {
+            callback(responseText);
+        });
+    }
+};
+
+var pageService = new PageService();
+
+module.exports = { pageService };
 
 /***/ }),
 /* 1 */
 /***/ (function(module, exports) {
 
 ﻿module.exports = {
-    template: '<h2>Docs</h2>'
+    template: '<h2>LiteApi blog<h2> <div class="alert alert-info">  In development</div>'
 }
 
 /***/ }),
@@ -92,15 +98,39 @@
 /***/ (function(module, exports) {
 
 ﻿module.exports = {
-    template: '<h2>Getting started</h2>'
+    template: '<h2>Docs<h2> <div class="alert alert-info">  being written...</div>'
 }
 
 /***/ }),
 /* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-﻿var services = __webpack_require__(5);
+﻿var services = __webpack_require__(0);
+
+module.exports = {
+    data() {
+        return {
+            html: 'loading...'
+        }
+    },
+    template: '<div class="off-top row" v-html="html"></div>',
+    created() {
+        this.loadData();
+    },
+    methods: {
+        loadData() {
+            services.pageService.get('getting-started', (response) => {
+                this.html = response;
+            });
+        }
+    }
+};
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+﻿var services = __webpack_require__(0);
 
 module.exports = {
     data() {
@@ -122,18 +152,18 @@ module.exports = {
 };
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__gettingStarted__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__gettingStarted__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__gettingStarted___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__gettingStarted__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__docs__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__docs__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__docs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__docs__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__home__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__home__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__home___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__home__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__blog__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__blog__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__blog___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__blog__);
 // 0. If using a module system, call Vue.use(VueRouter)
 
@@ -170,25 +200,6 @@ const app = new Vue({
   router
 }).$mount('#app')
 
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports) {
-
-﻿var PageService = function () {
-    this.get = function(name, callback) {
-        nanoajax.ajax({
-            method: 'GET',
-            url: '/content/pages/' + name + '.html'
-        }, function (code, responseText, request) {
-            callback(responseText);
-        });
-    }
-};
-
-var pageService = new PageService();
-
-module.exports = { pageService };
 
 /***/ })
 /******/ ]);

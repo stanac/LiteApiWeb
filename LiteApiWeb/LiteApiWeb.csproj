@@ -5,7 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="wwwroot\content\imgs\getting-started\09_actors.gif" />
     <Content Include="wwwroot\libs\nanoajax.min.js" />
+    <Content Include="wwwroot\libs\prism.css" />
+    <Content Include="wwwroot\libs\prism.js" />
     <Content Include="wwwroot\libs\vue-router.min.js" />
     <Content Include="wwwroot\libs\vue.min.js" />
     <Content Include="wwwroot\style.css" />
@@ -18,7 +21,6 @@
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.1" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="wwwroot\content\imgs\" />
     <Folder Include="wwwroot\content\pages\__short\" />
   </ItemGroup>
 
