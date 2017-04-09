@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System.Diagnostics;
 
 namespace LiteApiWeb
 {
@@ -43,6 +44,18 @@ namespace LiteApiWeb
             //    await next.Invoke();
             //});
             app.UseDefaultFiles();
+
+            if (Debugger.IsAttached)
+            {
+                app.Use(async (httpCtx, next) =>
+                {
+                    if (httpCtx.Request.Path.Value.Contains("index.html"))
+                    {
+                        RenderAllPages(env, app.ApplicationServices);
+                    }
+                    await next.Invoke();
+                });
+            }
             
             app.UseStaticFiles();
 
