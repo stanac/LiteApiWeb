@@ -52,3 +52,18 @@
     -moz-border-radius: 0 !important;
     border-radius: 0 !important;
 }
+
+footer {
+    background-color: #ddd;
+    color: #333;
+    padding: 20px;
+}
+
+#app {
+    background: white;
+    min-height: 600px;
+}
+
+body {
+    background: #ddd;
+}

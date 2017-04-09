@@ -11,7 +11,7 @@ IsHtml: true
 
 
 <div class='row'>
-    <div class="col-md-3 col-md-offset-1">
+    <div class="col-md-3 col-md-offset-1 text-center">
         <img src='/content/imgs/logo-w.svg' />
     </div>
     <div class="col-md-5">
@@ -77,8 +77,10 @@ Extensibility points are already here for some parts of the middleware, more wil
 <div class='row'>&nbsp;</div>
 
 <div class='row'>
+<div class='col-md-8 col-md-offset-2'>
 <h3>Why?</h3>
 Why would someone write a middleware which features are already handled by ASP.NET Core MVC? <br/>
 - A large chunk of today's web apps are written as SPAs. From that perspective, server side rendering is not needed.
 That's where LiteApi steps in.
+</div>
 </div>
