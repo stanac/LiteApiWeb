@@ -3,6 +3,7 @@ using System.IO;
 using LiteApiWeb.Models;
 using LiteApiWeb.Services;
 using Newtonsoft.Json;
+using Markdig;
 
 namespace LiteApiWeb
 {
@@ -12,8 +13,18 @@ namespace LiteApiWeb
         private readonly string _outDir;
         private readonly string _hashesPath;
         private readonly string _shortDir;
+        private static readonly MarkdownPipeline _mdPipeline;
         private static readonly object Sync = new object();
         
+        static FirstTimeRunRenderer()
+        {
+            _mdPipeline = new MarkdownPipelineBuilder()
+                .UsePragmaLines()
+                .UseDiagrams()
+                .UseAdvancedExtensions()
+                .Build();
+        }
+
         public FirstTimeRunRenderer(IPageService service, string outDir, string hashesPath)
         {
             _service = service;
@@ -38,7 +49,7 @@ namespace LiteApiWeb
                 var pages = _service.GetPages();
                 foreach (PageDetails page in pages)
                 {
-                    PageContent content = _service.GetPageContent(page.Id);
+                    PageContent content = _service.GetPageContent(page.OriginalId);
                     var hash = StringHasher.Hash(content.ConcatMarkDown());
                     if (hashes.ContainsKey(page.Id))
                     {
@@ -78,7 +89,7 @@ namespace LiteApiWeb
 
             string html = page.IsHtml
                 ? page.ContentMarkDown
-                : Markdig.Markdown.ToHtml(page.ContentMarkDown);
+                : Markdown.ToHtml(page.ContentMarkDown, _mdPipeline);
 
             html = $@"
 <div class='user-content'>
@@ -90,7 +101,7 @@ namespace LiteApiWeb
             {
                 string shortContent = page.IsHtml
                     ? page.ShortMarkDown
-                    : Markdig.Markdown.ToHtml(page.ShortMarkDown);
+                    : Markdown.ToHtml(page.ShortMarkDown, _mdPipeline);
                 html = $@"
 <div class='short-user-content'>
 {shortContent}
@@ -118,7 +129,7 @@ namespace LiteApiWeb
 
             var html = page.IsHtml
                 ? page.ShortMarkDown
-                : Markdig.Markdown.ToHtml(page.ShortMarkDown);
+                : Markdig.Markdown.ToHtml(page.ShortMarkDown, _mdPipeline);
             html = $@"
 <div class='short-user-content'>
 {html}

@@ -14,7 +14,6 @@ namespace LiteApiWeb.Services
         private static readonly PropertyData[] _props =
             typeof(PageDetails).GetProperties(BindingFlags.Instance | BindingFlags.Public)
             .Select(x => new PropertyData(x))
-            .Where(x => x.Name != "Id")
             .ToArray();
         
         public static PageDetails Parse(List<string> frontMatter)

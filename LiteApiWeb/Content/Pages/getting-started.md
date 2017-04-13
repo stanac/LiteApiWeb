@@ -1,6 +1,6 @@
 ﻿---
 Author: stanac
-CreatedDate: 2017-03-30
+CreatedDate: 2017-04-11
 Tags: home welcome initial
 Title: none
 RenderTitle: false
@@ -8,10 +8,6 @@ IsHtml: false
 ---
 
 # Getting started
-
-<div class='alert alert-info'>
-This article assumes you are familiar with HTTP protocol, .NET, C#, and OOP in general.
-</div>
 
 <div class='alert alert-info'>
 tl;dr here is the code on GitHub.

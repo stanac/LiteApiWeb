@@ -5,12 +5,20 @@ using System.Text;
 using AutoMapper;
 using LiteApiWeb.Models;
 using Microsoft.AspNetCore.Hosting;
+using Markdig;
 
 namespace LiteApiWeb.Services
 {
     public class PageService : IPageService
     {
         private readonly string _rootDir;
+        private static readonly MarkdownPipeline _mdPipeline = 
+            new MarkdownPipelineBuilder()
+                .UsePragmaLines()
+                .UseDiagrams()
+                .UseAdvancedExtensions()
+                .Build();
+
         private static readonly IMapper _mapFromContentToDetails;
 
         static PageService()
@@ -18,10 +26,10 @@ namespace LiteApiWeb.Services
             var config = new MapperConfiguration(cfg => cfg.CreateMap<PageContent, PageDetails>());
             _mapFromContentToDetails = config.CreateMapper();
         }
-
-        public PageService(IHostingEnvironment host)
+        
+        public PageService(IHostingEnvironment host, string contentDirectory = "Pages")
         {
-            string rootDir = Path.Combine(host.ContentRootPath, "Content", "Pages");
+            string rootDir = Path.Combine(host.ContentRootPath, "Content", contentDirectory);
             if (!Directory.Exists(rootDir)) throw new ArgumentException($"dir {rootDir} doesn't exists.");
             _rootDir = rootDir;
         }
@@ -104,7 +112,11 @@ namespace LiteApiWeb.Services
                 }
             }
 
-            page.Id = Path.GetFileNameWithoutExtension(file);
+            if (page.Id == null)
+            {
+                page.Id = Path.GetFileNameWithoutExtension(file);
+            }
+            page.OriginalId = Path.GetFileNameWithoutExtension(file);
             StringBuilderPool.Default.PutBack(sb);
             return page;
         }
@@ -115,9 +127,9 @@ namespace LiteApiWeb.Services
             var retPage = new RenderedPageContent(page);
             if (!string.IsNullOrWhiteSpace(retPage.ShortMarkDown))
             {
-                retPage.ShortHtml = Markdig.Markdown.ToHtml(page.ShortMarkDown);
+                retPage.ShortHtml = Markdown.ToHtml(page.ShortMarkDown, _mdPipeline);
             }
-            retPage.ContentHtml = Markdig.Markdown.ToHtml(page.ContentMarkDown);
+            retPage.ContentHtml = Markdown.ToHtml(page.ContentMarkDown, _mdPipeline);
 
             return retPage;
         }

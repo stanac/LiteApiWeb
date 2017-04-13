@@ -14,6 +14,15 @@ module.exports = {
         loadData() {
             services.pageService.get('getting-started', (response) => {
                 this.html = response;
+                setTimeout(function () {
+                    if (Prism) Prism.highlightAll();
+                    else setTimeout(function () {
+                        if (Prism) Prism.highlightAll();
+                        else setTimeout(function () {
+                            if (Prism) Prism.highlightAll();
+                        }, 500);
+                    }, 200);
+                }, 50);
             });
         }
     }
