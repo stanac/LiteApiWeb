@@ -68,64 +68,78 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-﻿var PageService = function () {
-    this.get = function(name, callback) {
+"use strict";
+
+
+var PageService = function PageService() {
+    this.get = function (name, callback) {
         nanoajax.ajax({
             method: 'GET',
             url: '/content/pages/' + name + '.html'
         }, function (code, responseText, request) {
             callback(responseText);
         });
-    }
+    };
 };
 
 var pageService = new PageService();
 
-module.exports = { pageService };
+module.exports = { pageService: pageService };
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-﻿module.exports = {
+"use strict";
+
+
+module.exports = {
     template: '<h2>LiteApi blog<h2> <div class="alert alert-info">  In development</div>'
-}
+};
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-﻿module.exports = {
-    template: '<h2>Docs<h2> <div class="alert alert-info">  being written...</div>'
-}
+"use strict";
+
+
+module.exports = {
+    template: "<h2>Docs<h2> \n<div class=\"alert alert-info\">  \nbeing written...\n\n</div>"
+};
 
 /***/ }),
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-﻿var services = __webpack_require__(0);
+"use strict";
+
+
+var services = __webpack_require__(0);
 
 module.exports = {
-    data() {
+    data: function data() {
         return {
             html: 'loading...'
-        }
+        };
     },
+
     template: '<div class="off-top row" v-html="html"></div>',
-    created() {
+    created: function created() {
         this.loadData();
     },
+
     methods: {
-        loadData() {
-            services.pageService.get('getting-started', (response) => {
-                this.html = response;
+        loadData: function loadData() {
+            var _this = this;
+
+            services.pageService.get('getting-started', function (response) {
+                _this.html = response;
                 setTimeout(function () {
-                    if (Prism) Prism.highlightAll();
-                    else setTimeout(function () {
-                        if (Prism) Prism.highlightAll();
-                        else setTimeout(function () {
+                    if (Prism) Prism.highlightAll();else setTimeout(function () {
+                        if (Prism) Prism.highlightAll();else setTimeout(function () {
                             if (Prism) Prism.highlightAll();
                         }, 500);
                     }, 200);
@@ -139,22 +153,29 @@ module.exports = {
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-﻿var services = __webpack_require__(0);
+"use strict";
+
+
+var services = __webpack_require__(0);
 
 module.exports = {
-    data() {
+    data: function data() {
         return {
             html: 'loading...'
-        }
+        };
     },
+
     template: '<div class="off-top" v-html="html"></div>',
-    created() {
+    created: function created() {
         this.loadData();
     },
+
     methods: {
-        loadData() {
-            services.pageService.get('home', (response) => {
-                this.html = response;
+        loadData: function loadData() {
+            var _this = this;
+
+            services.pageService.get('home', function (response) {
+                _this.html = response;
             });
         }
     }
@@ -162,53 +183,53 @@ module.exports = {
 
 /***/ }),
 /* 5 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__gettingStarted__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__gettingStarted___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__gettingStarted__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__docs__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__docs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__docs__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__home__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__home___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__home__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__blog__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__blog___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__blog__);
-// 0. If using a module system, call Vue.use(VueRouter)
-
-// 1. Define route components.
-// These can be imported from other files
 
 
+var _gettingStarted = __webpack_require__(3);
 
+var GettingStarted = _interopRequireWildcard(_gettingStarted);
 
+var _docs = __webpack_require__(2);
+
+var Docs = _interopRequireWildcard(_docs);
+
+var _home = __webpack_require__(4);
+
+var Home = _interopRequireWildcard(_home);
+
+var _blog = __webpack_require__(1);
+
+var Blog = _interopRequireWildcard(_blog);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 // 2. Define some routes
 // Each route should map to a component. The "component" can
 // either be an actual component constructor created via
 // Vue.extend(), or just a component options object.
 // We'll talk about nested routes later.
-const routes = [
-    { path: '/', component: __WEBPACK_IMPORTED_MODULE_2__home__ },
-    { path: '/getting-started', component: __WEBPACK_IMPORTED_MODULE_0__gettingStarted__ },
-    { path: '/docs', component: __WEBPACK_IMPORTED_MODULE_1__docs__ },
-    { path: '/blog', component: __WEBPACK_IMPORTED_MODULE_3__blog__ }
-]
+// 0. If using a module system, call Vue.use(VueRouter)
+
+// 1. Define route components.
+// These can be imported from other files
+var routes = [{ path: '/', component: Home }, { path: '/getting-started', component: GettingStarted }, { path: '/docs', component: Docs }, { path: '/blog', component: Blog }];
 
 // 3. Create the router instance and pass the `routes` option
 // You can pass in additional options here, but let's
 // keep it simple for now.
-const router = new VueRouter({
-    routes
-})
+var router = new VueRouter({
+    routes: routes
+});
 
 // 4. Create and mount the root instance.
 // Make sure to inject the router with the router option to make the
 // whole app router-aware.
-const app = new Vue({
-  router
-}).$mount('#app')
-
+var app = new Vue({
+    router: router
+}).$mount('#app');
 
 /***/ })
 /******/ ]);
