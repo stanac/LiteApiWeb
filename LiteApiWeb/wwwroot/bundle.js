@@ -84,9 +84,24 @@ var PageService = function PageService() {
     };
 };
 
-var pageService = new PageService();
+var DocsService = function DocsService() {
+    this.get = function (name, callback) {
+        if (!name.endsWith('.html') && !name.endsWith('.json')) {
+            name += '.html';
+        }
+        nanoajax.ajax({
+            method: 'GET',
+            url: '/content/docs/' + name
+        }, function (code, responseText, request) {
+            callback(responseText);
+        });
+    };
+};
 
-module.exports = { pageService: pageService };
+var pageService = new PageService();
+var docsService = new DocsService();
+
+module.exports = { pageService: pageService, docsService: docsService };
 
 /***/ }),
 /* 1 */
@@ -106,8 +121,44 @@ module.exports = {
 "use strict";
 
 
+var services = __webpack_require__(0);
+var highlighter = __webpack_require__(6);
+
 module.exports = {
-    template: "<h2>Docs<h2> \n<div class=\"alert alert-info\">  \nbeing written...\n\n</div>"
+    template: '\n<script type="text/x-template" id="item-template">\n  <li>\n    <div v-if="model.Page">\n      {{model.Page.Title}}\n    </div>\n    <ul v-show="open" v-if="model.Children.length">\n      <item\n        v-for="model in model.Children"\n        :model="model">\n      </item>\n    </ul>\n  </li>\n</script>\n\n<div class="row">\n<div v-html="side" class="col-md-3"></div>\n<div v-html="html" class="col-md-9"></div>\n</div>',
+    data: function data() {
+        return {
+            side: 'loading...',
+            html: 'loading...',
+            model: { Children: [], Page: { Title: "123" } }
+        };
+    },
+    created: function created() {
+        this.loadData();
+    },
+
+    methods: {
+        loadData: function loadData() {
+            var _this = this;
+
+            services.docsService.get('home', function (homeRes) {
+                _this.html = homeRes;
+
+                highlighter.highlight();
+            });
+            this.showIndex();
+        },
+        showIndex: function showIndex() {
+            var _this2 = this;
+
+            services.docsService.get('index.json', function (response) {
+                var data = JSON.parse(response).filter(function (x) {
+                    return x.Page.Id !== 'home';
+                });
+                _this2.model = { Children: data, Title: "123" };
+            });
+        }
+    }
 };
 
 /***/ }),
@@ -118,6 +169,7 @@ module.exports = {
 
 
 var services = __webpack_require__(0);
+var highlighter = __webpack_require__(6);
 
 module.exports = {
     data: function data() {
@@ -137,13 +189,8 @@ module.exports = {
 
             services.pageService.get('getting-started', function (response) {
                 _this.html = response;
-                setTimeout(function () {
-                    if (Prism) Prism.highlightAll();else setTimeout(function () {
-                        if (Prism) Prism.highlightAll();else setTimeout(function () {
-                            if (Prism) Prism.highlightAll();
-                        }, 500);
-                    }, 200);
-                }, 50);
+
+                highlighter.highlight();
             });
         }
     }
@@ -230,6 +277,27 @@ var router = new VueRouter({
 var app = new Vue({
     router: router
 }).$mount('#app');
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = {
+	highlight: function highlight() {
+		var innerHighlight = function innerHighlight(timeout) {
+			timeout = timeout | 50;
+			if (timeout > 2000) return;
+
+			setTimeout(function () {
+				if (Prism) Prism.highlightAll();else innerHighlight(timeout * 2);
+			}, timeout);
+		};
+		innerHighlight(50);
+	}
+};
 
 /***/ })
 /******/ ]);

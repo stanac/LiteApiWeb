@@ -9,6 +9,21 @@
     }
 };
 
-var pageService = new PageService();
+var DocsService = function () {
+    this.get = function (name, callback) {
+        if (!name.endsWith('.html') && !name.endsWith('.json')) {
+            name += '.html';
+        }
+        nanoajax.ajax({
+            method: 'GET',
+            url: '/content/docs/' + name
+        }, function (code, responseText, request) {
+            callback(responseText);
+        });
+    }
+};
 
-module.exports = { pageService };
+var pageService = new PageService();
+var docsService = new DocsService();
+
+module.exports = { pageService, docsService };
