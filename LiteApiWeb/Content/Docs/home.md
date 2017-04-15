@@ -8,6 +8,5 @@ IsHtml: false
 
 # Documentation
 
-<div id="docs-content"></div>
-
-123
+You should start with [getting started](/#/getting-started). If you already read it, 
+check [installing and configurating](/#/docs/install-and-configure).

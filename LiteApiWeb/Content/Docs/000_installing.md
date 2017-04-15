@@ -1,7 +1,6 @@
 ﻿---
 Author: stanac
 CreatedDate: 2017-03-30
-Tags: home welcome initial
 Title: Installing and configurating
 RenderTitle: false
 IsHtml: false
