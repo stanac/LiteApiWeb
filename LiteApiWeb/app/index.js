@@ -15,7 +15,8 @@ import * as Blog from './blog'
 const routes = [
     { path: '/', component: Home },
     { path: '/getting-started', component: GettingStarted },
-    { path: '/docs', component: Docs },
+    { path: '/docs/:id?', component: Docs },
+    // { path: '/docs', component: Docs },
     { path: '/blog', component: Blog }
 ]
 

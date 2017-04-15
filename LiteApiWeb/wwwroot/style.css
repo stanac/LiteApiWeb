@@ -81,3 +81,7 @@ body {
 .treeListItem {
 
 }
+
+tbody tr td {
+    padding: 2px;
+}

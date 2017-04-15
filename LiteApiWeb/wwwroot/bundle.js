@@ -146,12 +146,22 @@ var services = __webpack_require__(0);
 var highlighter = __webpack_require__(1);
 
 module.exports = {
+    route: {
+        canReuse: false
+    },
     template: '\n<div class="row off-top">\n    <div class="col-md-3">\n        <ul class="treeListRoot">\n            <template v-for="item in treeData">\n                <treeitem :model="item"></treeitem>\n            </template>\n        </ul>\n    </div>\n\n    <div v-html="docsHtml" class="col-md-9"></div>\n</div>',
     data: function data() {
         return {
             docsHtml: 'loading...',
-            treeData: []
+            treeData: [],
+            onDocsChangedClick: function onDocsChangedClick() {
+                this.onDocsChanged();
+            }
         };
+    },
+
+    watch: {
+        '$route': 'loadData'
     },
     created: function created() {
         this.loadData();
@@ -161,8 +171,12 @@ module.exports = {
         loadData: function loadData() {
             var _this = this;
 
-            services.docsService.get('home', function (homeRes) {
-                _this.docsHtml = homeRes;
+            var id = 'home';
+            if (this.$route.params.id) {
+                id = this.$route.params.id;
+            }
+            services.docsService.get(id, function (res) {
+                _this.docsHtml = res;
                 highlighter.highlight();
             });
             this.loadTree();
@@ -176,7 +190,8 @@ module.exports = {
                 });
                 _this2.treeData = data;
             });
-        }
+        },
+        watchIdChange: function watchIdChange() {}
     },
 
     components: {
@@ -292,7 +307,9 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 // 1. Define route components.
 // These can be imported from other files
-var routes = [{ path: '/', component: Home }, { path: '/getting-started', component: GettingStarted }, { path: '/docs', component: Docs }, { path: '/blog', component: Blog }];
+var routes = [{ path: '/', component: Home }, { path: '/getting-started', component: GettingStarted }, { path: '/docs/:id?', component: Docs },
+// { path: '/docs', component: Docs },
+{ path: '/blog', component: Blog }];
 
 // 3. Create the router instance and pass the `routes` option
 // You can pass in additional options here, but let's

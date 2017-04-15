@@ -2,6 +2,9 @@
 var highlighter = require('./services/codeHighlighter');
 
 module.exports = {
+    route: {
+        canReuse: false,
+    },
     template: `
 <div class="row off-top">
     <div class="col-md-3">
@@ -17,16 +20,26 @@ module.exports = {
     data() {
         return {
             docsHtml: 'loading...',
-            treeData: []
+            treeData: [],
+            onDocsChangedClick: function () {
+                this.onDocsChanged();
+            }
         }
+    },
+    watch: {
+        '$route': 'loadData'
     },
     created() {
         this.loadData();
     },
     methods: {
         loadData() {
-            services.docsService.get('home', (homeRes) => {
-                this.docsHtml = homeRes;
+            var id = 'home';
+            if (this.$route.params.id) {
+                id = this.$route.params.id;
+            }
+            services.docsService.get(id, (res) => {
+                this.docsHtml = res;
                 highlighter.highlight();
             });
             this.loadTree();
@@ -37,6 +50,10 @@ module.exports = {
                 var data = JSON.parse(response).filter(x => x.Page.Id !== "home");
                 this.treeData = data;
             });
+        },
+
+        watchIdChange() {
+            
         }
     },
 
