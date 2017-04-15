@@ -32,7 +32,7 @@ IsHtml: true
 <div class='col-md-4'>
 <span class='sub'>Lightweight</span>
 <br/>
-No rendering engine, only WebApi with JSON support and planned extensibility points for other formats.
+No rendering engine, only Web API with JSON support and planned extensibility points for other formats.
 </div>
 
 <div class='col-md-4'>

@@ -1,6 +1,88 @@
 
 <div class='user-content'>
 <h1 id="errors-and-common-pitfalls"><a id="pragma-line-1"></a>Errors and common pitfalls</h1>
-<p id="pragma-line-3">TBD</p>
+<p id="pragma-line-3">LiteApi is built around <strong>fail-fast</strong> philosophy. That means if something is wrong, LiteApi will try to recognize the problem during startup and throw exception with meaningful message.</p>
+<p id="pragma-line-5">Here are listed some of the problems that might occur.</p>
+<h2 id="registration-errors"><a id="pragma-line-7"></a>Registration errors</h2>
+<p id="pragma-line-9"><strong>Multiple controllers with same name</strong></p>
+<p id="pragma-line-11">Make sure controller routes are unique. Controllers names are determined by class name or <code>ControllerRouteAttribute</code>.
+It's possible to create multiple controller with same route, e.g. following controllers have same route:</p>
+<pre><code id="pragma-line-14">public class Person: LiteController { }
+
+public class PersonController: LiteController { }
+
+[ControllerRoute(&quot;/api/person&quot;)]
+public class Persons: LiteController { }
+</code></pre>
+<hr id="pragma-line-22" />
+<p id="pragma-line-23"><strong>Authorization policy is not registered</strong></p>
+<p id="pragma-line-25">Authorization policies needs to be registered during startup, check <a href="/#/docs/policy-authorization">this article</a>.</p>
+<hr id="pragma-line-27" />
+<p id="pragma-line-28"><strong>Action has 0 (constant) route segments</strong></p>
+<p id="pragma-line-30">If controller is not RESTful and action has <code>ActionRouteAttribute</code> set, than ActionRouteAttribute must set
+at least one constant route segment, you can check <a href="/#/docs/action-matching">Action matching</a> for more
+information.</p>
+<hr id="pragma-line-34" />
+<p id="pragma-line-35"><strong>Parameter from route segment with default value</strong></p>
+<p id="pragma-line-37">Parameters from route segment cannot have default value, e.g. following code will throw exception.</p>
+<pre><code id="pragma-line-39" class="language-csharp">public class EntityController: LiteController
+{
+    [ActionRoute({/entity/{type}/{id})]
+    public object Entity(string type = &quot;person&quot;, int id = 0)
+    {
+        // ...
+    }
+}
+</code></pre>
+<hr id="pragma-line-50" />
+<p id="pragma-line-51"><strong>Unsupported parameter type from route segment</strong></p>
+<p id="pragma-line-53">Route segment can provide parameters of types defined in <a href="/#/docs/parameters-supported-types">Supported parameter types</a>. Those types must be non nullable (except string, which cannot be null in runtime).</p>
+<hr id="pragma-line-55" />
+<p id="pragma-line-56"><strong>HTTP methods GET and DELETE does not support parameters from body</strong></p>
+<p id="pragma-line-58">Parameters from body are supported only in <code>POST</code> and <code>PUT</code> methods. This can happen when
+your controller class has a public method that accepts complex parameter. Check following sample code and
+<a href="/#/docs/parameter-retrieving-from-body">Parameters from body</a> documentation.</p>
+<pre><code id="pragma-line-62" class="language-csharp">public class PersonController: LiteController
+{
+    // ctor and other init code
+    
+    public Person Get(int id) =&gt; Convert(_service.Get(id));
+
+    public PersonModel Convert(PersonDto person)
+    {
+       // code for converting PersonDto to PersonModel
+    }
+}
+</code></pre>
+<p id="pragma-line-75">In example above we have public method <code>Convert</code>. Problem with this method is that LiteApi is recognizing
+it like <code>GET</code> action, and <code>GET</code> actions cannot have parameters from body. Now LiteApi see that <code>PersonDto</code> is complex parameter and all complex parameters must come from  request body. In order to avoid this issue,
+you can set method to be private/internal/protected or use <code>DontMapToApiAttribute</code> on action.</p>
+<hr id="pragma-line-79" />
+<p id="pragma-line-80"><strong>Multiple parameters from body found</strong></p>
+<p id="pragma-line-82">Only one parameter can come from body. Make sure you don't have more than one complex parameter type in
+your method. All complex parameters are by default consider to come from body.</p>
+<hr id="pragma-line-85" />
+<p id="pragma-line-86"><strong>Parameter is from route and there is no matching route segment found</strong></p>
+<p id="pragma-line-88">Parameter from route is defined but no matching route segment in found, here is an example of how to get this error (if you are so inclined).</p>
+<pre><code id="pragma-line-89" class="language-csharp">[RestfulLinks]
+public class PersonController: LiteController
+{
+    [ActionRoute(&quot;/{personId}&quot;)] // notice that parameter name is different from parameter in method
+    public Person Get([FromRoute]int id) =&gt; _service.Get(id);
+}
+</code></pre>
+<hr id="pragma-line-98" />
+<p id="pragma-line-99"><strong>Route segment is set as parameter without matching parameter in method</strong></p>
+<p id="pragma-line-101">See previous error on this page and check example (make sure all parameters defined in <code>ActionRouteAttribute</code> has matching parameters in method).</p>
+<pre><code id="pragma-line-102" class="language-csharp">[RestfulLinks]
+public class PersonController: LiteController
+{
+    [ActionRoute(&quot;/{type}/{id}&quot;)] // notice that parameter {type} is not defined in method
+    public Person Get([FromRoute]int id) =&gt; _service.Get(id);
+}
+</code></pre>
+<hr id="pragma-line-111" />
+<h2 id="runtime-errors"><a id="pragma-line-112"></a>Runtime errors</h2>
+<p id="pragma-line-114">TBD, please report a bug on <a href="https://github.com/stanac/LiteApi/issues/new">GitHub</a> if middleware related runtime error occurs.</p>
 
 </div>
