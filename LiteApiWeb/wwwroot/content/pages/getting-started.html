@@ -4,36 +4,40 @@
 <div class='alert alert-info'>
 tl;dr here is the code on GitHub.
 </div>
-<h2 id="tools"><a id="pragma-line-8"></a>Tools</h2>
-<p id="pragma-line-10">We are going to use free version of Visual Studio 2017, <a href="https://www.visualstudio.com/thank-you-downloading-visual-studio/?sku=Community">Community edition</a>.
+<div class='alert alert-info'>
+If you have never worked with MVC types of server side frameworks/middlwares 
+you might want to check <a href="/#/docs/basic-concepts">Basic concepts</a>.
+</div>
+<h2 id="tools"><a id="pragma-line-13"></a>Tools</h2>
+<p id="pragma-line-15">We are going to use free version of Visual Studio 2017, <a href="https://www.visualstudio.com/thank-you-downloading-visual-studio/?sku=Community">Community edition</a>.
 If you are no using Windows, you can try free code editor <a href="https://code.visualstudio.com/download">VS Code</a>.</p>
-<h2 id="setup"><a id="pragma-line-13"></a>Setup</h2>
-<h3 id="create-new-project"><a id="pragma-line-15"></a>Create new project</h3>
-<p id="pragma-line-17">Select new project in Visual Studio, choose Visual C# -&gt; .NET Core -&gt; ASP.NET Core Web Application.
+<h2 id="setup"><a id="pragma-line-18"></a>Setup</h2>
+<h3 id="create-new-project"><a id="pragma-line-20"></a>Create new project</h3>
+<p id="pragma-line-22">Select new project in Visual Studio, choose Visual C# -&gt; .NET Core -&gt; ASP.NET Core Web Application.
 If you are using VS Core (or some other code editor) you can use <a href="https://docs.microsoft.com/en-us/dotnet/articles/core/tools/dotnet-new">dotnet CLI</a>, but this article won't
 cover any details about using CLI tool (there will be another article).</p>
 <div class='col-md-12 text-center'>
 <img src="/content/imgs/getting-started/01_new_project.png" />
 </div>
-<p id="pragma-line-25">On next screen select empty project and click OK.</p>
+<p id="pragma-line-30">On next screen select empty project and click OK.</p>
 <div class='col-md-12 text-center'>
 <img src="/content/imgs/getting-started/02_empty_project.png" />
 </div>
 <div style='clear:both'> <br/> </div>
-<h3 id="install-nuget-package"><a id="pragma-line-33"></a>Install nuget package</h3>
-<p id="pragma-line-35">Once the project is created go to solution explorer (if not visible VIEW -&gt; Solution Explorer) right click on
+<h3 id="install-nuget-package"><a id="pragma-line-38"></a>Install nuget package</h3>
+<p id="pragma-line-40">Once the project is created go to solution explorer (if not visible VIEW -&gt; Solution Explorer) right click on
 dependencies and select Manage Nuget Packages.</p>
 <div class='col-md-12 text-center'>
 <img src="/content/imgs/getting-started/03_manage_nugets.png" />
 </div>
-<p id="pragma-line-42">In Package explorer go to <em>Browse</em>, check <em>Include prerelease</em>, search for <em>LiteApi</em>, and install the package.</p>
+<p id="pragma-line-47">In Package explorer go to <em>Browse</em>, check <em>Include prerelease</em>, search for <em>LiteApi</em>, and install the package.</p>
 <div class='col-md-12 text-center'>
 <img src="/content/imgs/getting-started/04_install_lite_api.png" />
 </div>
 <div style='clear:both'> <br/> </div>
-<h3 id="setup-middleware"><a id="pragma-line-50"></a>Setup middleware</h3>
-<p id="pragma-line-52">In <code>Startup.cs</code> file in <code>Configure</code> method add <code>app.UseLiteApi()</code> as in the sample:</p>
-<pre><code id="pragma-line-54" class="language-csharp">public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+<h3 id="setup-middleware"><a id="pragma-line-55"></a>Setup middleware</h3>
+<p id="pragma-line-57">In <code>Startup.cs</code> file in <code>Configure</code> method add <code>app.UseLiteApi()</code> as in the sample:</p>
+<pre><code id="pragma-line-59" class="language-csharp">public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
 {
     loggerFactory.AddConsole();
 
@@ -55,11 +59,11 @@ At this point Visual Studio IntelliSense didn't recognize LiteApi namespace, or 
 restart VS in order for IntelliSense to wake up.
 </div>
 <div style='clear:both'> <br/> </div>
-<h2 id="create-simple-controller"><a id="pragma-line-81"></a>Create simple controller</h2>
-<p id="pragma-line-83">Create a folder in your project called <code>API</code> or <code>Controller</code> or whatever makes sense to you and add
+<h2 id="create-simple-controller"><a id="pragma-line-86"></a>Create simple controller</h2>
+<p id="pragma-line-88">Create a folder in your project called <code>API</code> or <code>Controller</code> or whatever makes sense to you and add
 create new class called <em>MathController</em> in the folder. For this sample we will use API folder.</p>
-<p id="pragma-line-86">At the top of the file add <code>using LiteApi;</code> statement, and set your class to inherit <code>LiteController</code>.</p>
-<pre><code id="pragma-line-88" class="language-csharp">using LiteApi;
+<p id="pragma-line-91">At the top of the file add <code>using LiteApi;</code> statement, and set your class to inherit <code>LiteController</code>.</p>
+<pre><code id="pragma-line-93" class="language-csharp">using LiteApi;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,40 +76,40 @@ namespace GettingStarted.API
     }
 }
 </code></pre>
-<p id="pragma-line-103">Now we have a controller without any action.</p>
-<h3 id="add-some-actions"><a id="pragma-line-105"></a>Add some actions</h3>
-<p id="pragma-line-107">We will add actions that will add two integers, subtract two integers and sum array of integers.</p>
-<p id="pragma-line-109">In order to create action that will add two integers we can write a method that accepts <code>int a</code> and <code>int b</code>
+<p id="pragma-line-108">Now we have a controller without any action.</p>
+<h3 id="add-some-actions"><a id="pragma-line-110"></a>Add some actions</h3>
+<p id="pragma-line-112">We will add actions that will add two integers, subtract two integers and sum array of integers.</p>
+<p id="pragma-line-114">In order to create action that will add two integers we can write a method that accepts <code>int a</code> and <code>int b</code>
 parameters and returns <code>a + b</code>;</p>
-<pre><code id="pragma-line-112" class="language-csharp">public class MathController: LiteController
+<pre><code id="pragma-line-117" class="language-csharp">public class MathController: LiteController
 {
     public int Add(int a, int b) =&gt; a + b;
 }
 </code></pre>
-<p id="pragma-line-119">By default all public methods will respond to <code>HTTP GET</code>. So we don't need any other code to invoke
+<p id="pragma-line-124">By default all public methods will respond to <code>HTTP GET</code>. So we don't need any other code to invoke
 our API.</p>
-<p id="pragma-line-122">For testing the API we will use <a href="https://www.getpostman.com/">Postman</a>. Start your project. A browser should
+<p id="pragma-line-127">For testing the API we will use <a href="https://www.getpostman.com/">Postman</a>. Start your project. A browser should
 open with words <em>Hello World!</em>. <em>Hello World!</em> is returned by sample middleware that was added during
 project creation. Copy the URL from browser, we are going to need it for testing the API in Postman.</p>
-<p id="pragma-line-126">Now, open Postman and paste URL from the browser and invoke <code>GET</code> request.
+<p id="pragma-line-131">Now, open Postman and paste URL from the browser and invoke <code>GET</code> request.
 You should get something like this:</p>
 <div class='col-md-12 text-center'>
 <img src="/content/imgs/getting-started/05_postman_hello_world.png" />
 </div>
-<p id="pragma-line-133">Ok, now set the URL to point to our action. In order to target the action from our controller, URL
+<p id="pragma-line-138">Ok, now set the URL to point to our action. In order to target the action from our controller, URL
 should be in following format:</p>
-<pre><code id="pragma-line-136">/api/{controller}/{action}?param1=value1&amp;param2=value2
+<pre><code id="pragma-line-141">/api/{controller}/{action}?param1=value1&amp;param2=value2
 </code></pre>
-<p id="pragma-line-140">In our case it should be <code>/api/math/add?a=2&amp;b=3</code>. If we send the <code>GET</code> request through Postman
+<p id="pragma-line-145">In our case it should be <code>/api/math/add?a=2&amp;b=3</code>. If we send the <code>GET</code> request through Postman
 we should get 5 for response as on the following screenshot.</p>
 <div class='col-md-12 text-center'>
 <img src="/content/imgs/getting-started/06_postman_add.png" />
 </div>
-<p id="pragma-line-147">For subtraction action we want to use different format of the URL. When we invoke <code>/api/math/5/minus/3</code> we
+<p id="pragma-line-152">For subtraction action we want to use different format of the URL. When we invoke <code>/api/math/5/minus/3</code> we
 want to get <code>2</code> as the response. In order to achiveachieve such behavior we will use <code>ActionRouteAttribute</code> from
 <code>LiteApi.Attributes</code> namespace.</p>
-<p id="pragma-line-151">After adding <code>Minus</code> action, our file looks like this:</p>
-<pre><code id="pragma-line-153" class="language-csharp">using LiteApi;
+<p id="pragma-line-156">After adding <code>Minus</code> action, our file looks like this:</p>
+<pre><code id="pragma-line-158" class="language-csharp">using LiteApi;
 using LiteApi.Attributes;
 using System;
 using System.Collections.Generic;
@@ -123,18 +127,18 @@ namespace GettingStarted.API
     }
 }
 </code></pre>
-<p id="pragma-line-173">In the <code>Minus</code> action parameter names from attribute and method must be matched by name. LiteApi will
+<p id="pragma-line-178">In the <code>Minus</code> action parameter names from attribute and method must be matched by name. LiteApi will
 try to automatically recognize from where parameter should be retrieved. If there is a parameter in action
 route with same name as in the method, LiteApi will expect for the parameter to arrive as URL segment.</p>
-<p id="pragma-line-177">After invoking the <code>GET</code> method in Postman response should be returned.</p>
+<p id="pragma-line-182">After invoking the <code>GET</code> method in Postman response should be returned.</p>
 <div class='col-md-12 text-center'>
 <img src="/content/imgs/getting-started/07_postman_subtract.png" />
 </div>
-<p id="pragma-line-183">Sum action is left to be implemented. This action should accept array of integers (or <code>List&lt;int&gt;</code> or IEnumerable<int>)
+<p id="pragma-line-188">Sum action is left to be implemented. This action should accept array of integers (or <code>List&lt;int&gt;</code> or IEnumerable<int>)
 and return sum of all integers from the collection. In order to pass a collection we should repeat
 parameter in the query string. Sum action will respond on <code>/api/math/sum?ints=1&amp;ints=4&amp;ints=2</code>.</p>
-<p id="pragma-line-187">Here is the controller after adding <code>Sum</code> method and below the code is response in Postman.</p>
-<pre><code id="pragma-line-189" class="language-csharp">public class MathController: LiteController
+<p id="pragma-line-192">Here is the controller after adding <code>Sum</code> method and below the code is response in Postman.</p>
+<pre><code id="pragma-line-194" class="language-csharp">public class MathController: LiteController
 {
     public int Add(int a, int b) =&gt; a + b;
 
@@ -148,13 +152,13 @@ parameter in the query string. Sum action will respond on <code>/api/math/sum?in
 <img src="/content/imgs/getting-started/08_postman_sum.png" />
 </div>
 <div style='clear:both'> <br/> </div>
-<h2 id="create-restful-controller"><a id="pragma-line-207"></a>Create RESTful controller</h2>
-<p id="pragma-line-209">For the following example we plan to create RESTful controller that will get all actors,
+<h2 id="create-restful-controller"><a id="pragma-line-212"></a>Create RESTful controller</h2>
+<p id="pragma-line-214">For the following example we plan to create RESTful controller that will get all actors,
 get actor by Id, add actor, update an actor by Id, and delete an actor by Id. Furthermore we
 will be building RESTful API, which means action names are not allowed in URLs.</p>
-<h3 id="adding-model-and-service"><a id="pragma-line-213"></a>Adding model and service</h3>
-<p id="pragma-line-215">Our <code>ActorModel</code> looks like this.</p>
-<pre><code id="pragma-line-217" class="language-csharp">public class ActorModel
+<h3 id="adding-model-and-service"><a id="pragma-line-218"></a>Adding model and service</h3>
+<p id="pragma-line-220">Our <code>ActorModel</code> looks like this.</p>
+<pre><code id="pragma-line-222" class="language-csharp">public class ActorModel
 {
     public Guid Id { get; set; }
 
@@ -163,10 +167,10 @@ will be building RESTful API, which means action names are not allowed in URLs.<
     public int BirthYear { get; set; }
 }
 </code></pre>
-<p id="pragma-line-228">We need some sort of permanent storage for actors, but fake <code>IDictionary&lt;Guid, ActorModel&gt;</code> will
+<p id="pragma-line-233">We need some sort of permanent storage for actors, but fake <code>IDictionary&lt;Guid, ActorModel&gt;</code> will
 do the job.</p>
-<p id="pragma-line-231">Here is the interface our service will implement:</p>
-<pre><code id="pragma-line-233" class="language-csharp">public interface IActorsService
+<p id="pragma-line-236">Here is the interface our service will implement:</p>
+<pre><code id="pragma-line-238" class="language-csharp">public interface IActorsService
 {
     IEnumerable&lt;ActorModel&gt; GetAll();
     ActorModel Get(Guid id);
@@ -175,8 +179,8 @@ do the job.</p>
     bool Delete(Guid id);
 }
 </code></pre>
-<p id="pragma-line-244">and here is the service:</p>
-<pre><code id="pragma-line-246" class="language-csharp">public class ActorsService : IActorsService
+<p id="pragma-line-249">and here is the service:</p>
+<pre><code id="pragma-line-251" class="language-csharp">public class ActorsService : IActorsService
 {
     private static readonly IDictionary&lt;Guid, ActorModel&gt; _data = new ConcurrentDictionary&lt;Guid, ActorModel&gt;();
 
@@ -213,18 +217,18 @@ do the job.</p>
     }
 }
 </code></pre>
-<p id="pragma-line-285">Our service needs to be registered in <code>Startup.cs</code> file, in <code>ConfigureServices</code> method.</p>
-<pre><code id="pragma-line-287" class="language-csharp">public void ConfigureServices(IServiceCollection services)
+<p id="pragma-line-290">Our service needs to be registered in <code>Startup.cs</code> file, in <code>ConfigureServices</code> method.</p>
+<pre><code id="pragma-line-292" class="language-csharp">public void ConfigureServices(IServiceCollection services)
 {
     services.AddScoped&lt;IActorsService, ActorsService&gt;();
 }
 </code></pre>
-<h3 id="adding-the-controller"><a id="pragma-line-294"></a>Adding the controller</h3>
-<p id="pragma-line-296">Lets say our controller is second version of the API. In such case we can use <code>ControllerRouteAttribute</code>
+<h3 id="adding-the-controller"><a id="pragma-line-299"></a>Adding the controller</h3>
+<p id="pragma-line-301">Lets say our controller is second version of the API. In such case we can use <code>ControllerRouteAttribute</code>
 from <code>LiteApi.Attributes</code> namespace with appropriate route. If we want our actions to response to URLs
 without action names we should use <code>RestfulLinksAttribute</code>. Here is our controller which uses the
 service we described above.</p>
-<pre><code id="pragma-line-301" class="language-csharp">// RestfulLinks will tell LiteApi to ignore action names when matching URL to action, 
+<pre><code id="pragma-line-306" class="language-csharp">// RestfulLinks will tell LiteApi to ignore action names when matching URL to action, 
 // ControllerRoute will tell LiteApi to use specified path to target the controller
 [RestfulLinks, ControllerRoute(&quot;/api/v2/actors&quot;)] 
 public class ActorsController : LiteController, IActorsService
@@ -252,23 +256,23 @@ public class ActorsController : LiteController, IActorsService
     public ActorModel Update(Guid id, ActorModel model) =&gt; _service.Update(id, model);
 }
 </code></pre>
-<p id="pragma-line-331">Few remarks on this controller:</p>
-<ul id="pragma-line-332">
-<li id="pragma-line-332"><code>RestfulLinks</code> will tell LiteApi to ignore action names when matching the URL to controller/action</li>
-<li id="pragma-line-333"><code>ControllerRoute</code> can be used to alter the route of the controller</li>
-<li id="pragma-line-334">Following HTTP methods are supported: <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>DELETE</code>, more are coming in future releases</li>
-<li id="pragma-line-335"><code>HttpGet</code> attribute is optional</li>
-<li id="pragma-line-336">Complex models, eg. <code>ActorModel</code> must be passed using HTTP request body</li>
-<li id="pragma-line-337"><code>ActionRoute</code> can be used to tell LiteApi to retrieve parameter value from route segment</li>
+<p id="pragma-line-336">Few remarks on this controller:</p>
+<ul id="pragma-line-337">
+<li id="pragma-line-337"><code>RestfulLinks</code> will tell LiteApi to ignore action names when matching the URL to controller/action</li>
+<li id="pragma-line-338"><code>ControllerRoute</code> can be used to alter the route of the controller</li>
+<li id="pragma-line-339">Following HTTP methods are supported: <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>DELETE</code>, more are coming in future releases</li>
+<li id="pragma-line-340"><code>HttpGet</code> attribute is optional</li>
+<li id="pragma-line-341">Complex models, eg. <code>ActorModel</code> must be passed using HTTP request body</li>
+<li id="pragma-line-342"><code>ActionRoute</code> can be used to tell LiteApi to retrieve parameter value from route segment</li>
 </ul>
-<h3 id="testing-the-controller"><a id="pragma-line-339"></a>Testing the controller</h3>
-<p id="pragma-line-341">Here is a gif which demonstrates how to use <code>ActorsController</code>:</p>
+<h3 id="testing-the-controller"><a id="pragma-line-344"></a>Testing the controller</h3>
+<p id="pragma-line-346">Here is a gif which demonstrates how to use <code>ActorsController</code>:</p>
 <div class='col-md-12 text-center'>
 <img src="/content/imgs/getting-started/09_actors.gif" />
 </div>
 <div style='clear:both'> <br/> </div>
 <div class='alert alert-info'>
-tl;dr here is the code on GitHub.
+Here is the code on GitHub. Documentation can be found under <a href="/#/docs">Docs section</a>.
 </div>
 
 </div>

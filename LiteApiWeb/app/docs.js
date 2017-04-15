@@ -31,9 +31,11 @@ module.exports = {
     },
     created() {
         this.loadData();
+        this.loadTree();
     },
     methods: {
         loadData() {
+            this.docsHtml = '';
             var id = 'home';
             if (this.$route.params.id) {
                 id = this.$route.params.id;
@@ -42,7 +44,6 @@ module.exports = {
                 this.docsHtml = res;
                 highlighter.highlight();
             });
-            this.loadTree();
         },
 
         loadTree() {

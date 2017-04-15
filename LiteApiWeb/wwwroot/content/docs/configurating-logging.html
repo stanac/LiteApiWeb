@@ -1,0 +1,22 @@
+
+<div class='user-content'>
+<h1 id="configurating-logging"><a id="pragma-line-1"></a>Configurating logging</h1>
+<p id="pragma-line-3">LiteApi by default does not log anything, but is capable of logging
+<code>Information</code> and <code>Error</code> log entries. In order to enable logging, LoggerFactory
+needs to be set during registration of the middleware in <code>Startup</code>.</p>
+<pre><code id="pragma-line-7" class="language-csharp">public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+{
+    loggerFactory.AddConsole();
+
+    // ... other middlewares
+
+    var options = LiteApiOptions.Default
+        .SetLoggerFactory(loggerFactory);
+
+    app.UseLiteApi(options);
+
+    // ... other middlewares
+}
+</code></pre>
+
+</div>

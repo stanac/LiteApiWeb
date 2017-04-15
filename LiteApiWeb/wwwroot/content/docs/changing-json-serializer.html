@@ -1,0 +1,43 @@
+
+<div class='user-content'>
+<h1 id="changing-json-serializer"><a id="pragma-line-1"></a>Changing JSON serializer</h1>
+<p id="pragma-line-3">By default LiteApi is using Json.NET de/serializer. It's possible to configure it or to
+change it to suit your needs.</p>
+<p id="pragma-line-6">LiteApi has interface called
+<a href="https://github.com/stanac/LiteApi/blob/master/LiteApi/LiteApi/Contracts/Abstractions/IJsonSerializer.cs">LiteApi.Contracts.Abstractions.IJsonSerializer</a>
+which has following defined:</p>
+<pre><code id="pragma-line-10" class="language-csharp">public interface IJsonSerializer
+{
+    T Deserialize&lt;T&gt;(string json);
+    object Deserialize(string json, Type objectType);
+    string Serialize(object obj);
+}
+</code></pre>
+<p id="pragma-line-19">Defualt IJsonSerializer looks like this:</p>
+<pre><code id="pragma-line-21" class="language-csharp">internal class JsonSerializer : IJsonSerializer
+{
+    private static JsonSerializerSettings _settings = new JsonSerializerSettings
+    {
+        ContractResolver = new CamelCasePropertyNamesContractResolver(),
+        PreserveReferencesHandling = PreserveReferencesHandling.None,
+        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+    };
+
+    public object Deserialize(string json, Type objectType) =&gt; JsonConvert.DeserializeObject(json, objectType, _settings);
+
+    public T Deserialize&lt;T&gt;(string json) =&gt; JsonConvert.DeserializeObject&lt;T&gt;(json, _settings);
+
+    public string Serialize(object obj) =&gt; JsonConvert.SerializeObject(obj, _settings);
+}
+</code></pre>
+<p id="pragma-line-39">You can provide your own configuration for Json.NET by implementing <code>IJsonSerializer</code>
+or you can change serializer to use some different libarary.</p>
+<p id="pragma-line-42">In order to change serializer <code>LiteApiOptions</code> needs to be changed and used when
+registering the middleware in <code>Startup</code> class:</p>
+<pre><code id="pragma-line-45" class="language-csharp">// myJsonSerializer needs to implement LiteApi.Contracts.Abstractions.IJsonSerializer
+var options = LiteApiOptions.Default
+    .SetJsonSerializer(myJsonSerializer);
+app.UseLiteApi(options);
+</code></pre>
+
+</div>

@@ -111,17 +111,32 @@ module.exports = { pageService: pageService, docsService: docsService };
 
 
 module.exports = {
-	highlight: function highlight() {
-		var innerHighlight = function innerHighlight(timeout) {
-			timeout = timeout | 50;
-			if (timeout > 2000) return;
+    highlight: function highlight() {
+        var innerHighlight = function innerHighlight(timeout) {
+            timeout = timeout | 50;
+            if (timeout > 2000) return;
 
-			setTimeout(function () {
-				if (Prism) Prism.highlightAll();else innerHighlight(timeout * 2);
-			}, timeout);
-		};
-		innerHighlight(50);
-	}
+            setTimeout(function () {
+                if (Prism) Prism.highlightAll();else innerHighlight(timeout * 2);
+            }, timeout);
+        };
+
+        var innerTable = function innerTable(timeout) {
+            timeout = timeout | 50;
+            if (timeout > 2000) return;
+
+            setTimeout(function () {
+                if (window.$) {
+                    $('.user-content table').addClass('table table-stripped');
+                } else {
+                    innerTable(timeout * 2);
+                }
+            }, timeout);
+        };
+
+        innerHighlight(50);
+        innerTable(50);
+    }
 };
 
 /***/ }),
@@ -165,12 +180,14 @@ module.exports = {
     },
     created: function created() {
         this.loadData();
+        this.loadTree();
     },
 
     methods: {
         loadData: function loadData() {
             var _this = this;
 
+            this.docsHtml = '';
             var id = 'home';
             if (this.$route.params.id) {
                 id = this.$route.params.id;
@@ -179,7 +196,6 @@ module.exports = {
                 _this.docsHtml = res;
                 highlighter.highlight();
             });
-            this.loadTree();
         },
         loadTree: function loadTree() {
             var _this2 = this;

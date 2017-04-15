@@ -8,69 +8,68 @@ using Visual Studio (check <a href="/#/getting-started">getting started</a>)
 or by editing project's <code>.csproj</code> file and running <a href="https://docs.microsoft.com/en-us/dotnet/articles/core/tools/dotnet-restore">dotnet-restore</a> command.</p>
 <pre><code id="pragma-line-10" class="language-xml">&lt;ItemGroup&gt;
   &lt;PackageReference Include=&quot;LiteApi&quot; Version=&quot;0.7.2-beta&quot; /&gt;
-  &lt;PackageReference Include=&quot;AutoMapper&quot; Version=&quot;6.0.2&quot; /&gt;
   &lt;!-- more packages ... --&gt;
 &lt;ItemGroup&gt;
 </code></pre>
-<h2 id="configurating"><a id="pragma-line-18"></a>Configurating</h2>
-<p id="pragma-line-20">Once the package is installed, you can add middleware in <code>Startup</code> class,
+<h2 id="configurating"><a id="pragma-line-17"></a>Configurating</h2>
+<p id="pragma-line-19">Once the package is installed, you can add middleware in <code>Startup</code> class,
 <code>Configure</code> method.</p>
-<p id="pragma-line-23">Simplest way to add middleware is without any configuration:</p>
-<pre><code id="pragma-line-25" class="language-csharp">app.UseLiteApi();
+<p id="pragma-line-22">Simplest way to add middleware is without any configuration:</p>
+<pre><code id="pragma-line-24" class="language-csharp">app.UseLiteApi();
 </code></pre>
-<p id="pragma-line-29">Equivalent would be to use default options:</p>
-<pre><code id="pragma-line-31" class="language-csharp">app.UseLiteApi(LiteApiOptions.Default);
+<p id="pragma-line-28">Equivalent would be to use default options:</p>
+<pre><code id="pragma-line-30" class="language-csharp">app.UseLiteApi(LiteApiOptions.Default);
 </code></pre>
-<p id="pragma-line-35">Options can be set with fluid methods, eg:</p>
-<pre><code id="pragma-line-37" class="language-csharp">app.UseLiteApi(LiteApiOptions.Default
+<p id="pragma-line-34">Options can be set with fluid methods, eg:</p>
+<pre><code id="pragma-line-36" class="language-csharp">app.UseLiteApi(LiteApiOptions.Default
     .AddAdditionalQueryModelBinder(myQueryModelBinder)
     .SetLoggerFactory(myLoggerFact)
     );
 </code></pre>
-<p id="pragma-line-44">Following methods can alter <code>LiteApiOptions</code>:</p>
-<table id="pragma-line-46">
+<p id="pragma-line-43">Following methods can alter <code>LiteApiOptions</code>:</p>
+<table id="pragma-line-45">
 <thead>
 <tr>
-<th id="pragma-line-46">Method</th>
-<th id="pragma-line-46">Parameter</th>
-<th id="pragma-line-46">Description</th>
-<th id="pragma-line-46">Link</th>
+<th id="pragma-line-45">Method</th>
+<th id="pragma-line-45">Parameter</th>
+<th id="pragma-line-45">Description</th>
+<th id="pragma-line-45">Link</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td id="pragma-line-48">AddAdditionalQueryModelBinder</td>
-<td id="pragma-line-48">IQueryModelBinder binder</td>
-<td id="pragma-line-48">Sets additional query model binder, by default LiteApi is using binder for basic types, arrays/lists/enumerables and dictionaries</td>
-<td id="pragma-line-48">TBD</td>
+<td id="pragma-line-47">AddAdditionalQueryModelBinder</td>
+<td id="pragma-line-47">IQueryModelBinder binder</td>
+<td id="pragma-line-47">Sets additional query model binder, by default LiteApi is using binder for basic types, arrays/lists/enumerables and dictionaries</td>
+<td id="pragma-line-47"><a href="/#/docs/custom-parameter-provider">Link</a></td>
 </tr>
 <tr>
-<td id="pragma-line-49">AddAuthorizationPolicy</td>
-<td id="pragma-line-49">string name, Func&lt;ClaimsPrincipal, bool&gt; policy</td>
-<td id="pragma-line-49">Defines authorization policy that can be used to filter access to controllers and actions</td>
-<td id="pragma-line-49">TBD</td>
+<td id="pragma-line-48">AddAuthorizationPolicy</td>
+<td id="pragma-line-48">string name, Func&lt;ClaimsPrincipal, bool&gt; policy</td>
+<td id="pragma-line-48">Defines authorization policy that can be used to filter access to controllers and actions</td>
+<td id="pragma-line-48"><a href="/#/docs/policy-authorization">Link</a></td>
 </tr>
 <tr>
-<td id="pragma-line-50">AddControllerAssemblies</td>
-<td id="pragma-line-50">IEnumerable&lt;Assembly&gt; controllerAssemblies</td>
-<td id="pragma-line-50">Adds additional assemblies in which LiteApi should look for controller. By default LiteApi check calling assembly for controllers</td>
-<td id="pragma-line-50">TBD</td>
+<td id="pragma-line-49">AddControllerAssemblies</td>
+<td id="pragma-line-49">IEnumerable&lt;Assembly&gt; controllerAssemblies</td>
+<td id="pragma-line-49">Adds additional assemblies in which LiteApi should look for controller. By default LiteApi check calling assembly for controllers</td>
+<td id="pragma-line-49"><a href="/#/docs/controller-registration">Link</a></td>
 </tr>
 <tr>
-<td id="pragma-line-51">SetJsonSerializer</td>
-<td id="pragma-line-51">IJsonSerializer jsonSerializer</td>
-<td id="pragma-line-51">Sets custom JSON (de)serializer, by default Json.NET is used</td>
-<td id="pragma-line-51">TBD</td>
+<td id="pragma-line-50">SetJsonSerializer</td>
+<td id="pragma-line-50">IJsonSerializer jsonSerializer</td>
+<td id="pragma-line-50">Sets custom JSON (de)serializer, by default Json.NET is used</td>
+<td id="pragma-line-50"><a href="/#/docs/changing-json-serializer">Link</a></td>
 </tr>
 <tr>
-<td id="pragma-line-52">SetLoggerFactory</td>
-<td id="pragma-line-52">ILoggerFactory loggerFactory</td>
-<td id="pragma-line-52">Sets logger factory, no logger is used by default</td>
-<td id="pragma-line-52">TBD</td>
+<td id="pragma-line-51">SetLoggerFactory</td>
+<td id="pragma-line-51">ILoggerFactory loggerFactory</td>
+<td id="pragma-line-51">Sets logger factory, no logger is used by default</td>
+<td id="pragma-line-51"><a href="/#/docs/configurating-logging">Link</a></td>
 </tr>
 </tbody>
 </table>
-<p id="pragma-line-54">Method that is planned to be added is <code>SetApiRootUrl(string rootUrl)</code>.
+<p id="pragma-line-53">Method that is planned to be added is <code>SetApiRootUrl(string rootUrl)</code>.
 By default all controller root URLs are <code>/api</code> which can be overriden with <code>ControllerRouteAttribute</code>.</p>
 
 </div>

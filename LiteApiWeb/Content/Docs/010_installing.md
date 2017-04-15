@@ -19,7 +19,6 @@ or by editing project's `.csproj` file and running [dotnet-restore](https://docs
 ```xml
 <ItemGroup>
   <PackageReference Include="LiteApi" Version="0.7.2-beta" />
-  <PackageReference Include="AutoMapper" Version="6.0.2" />
   <!-- more packages ... -->
 <ItemGroup>
 ```
@@ -54,11 +53,11 @@ Following methods can alter `LiteApiOptions`:
 
 | Method | Parameter | Description | Link |
 | --- | --- | --- |
-| AddAdditionalQueryModelBinder | IQueryModelBinder binder | Sets additional query model binder, by default LiteApi is using binder for basic types, arrays/lists/enumerables and dictionaries | TBD |
-| AddAuthorizationPolicy | string name, Func<ClaimsPrincipal, bool> policy | Defines authorization policy that can be used to filter access to controllers and actions | TBD |
-| AddControllerAssemblies | IEnumerable&lt;Assembly&gt; controllerAssemblies | Adds additional assemblies in which LiteApi should look for controller. By default LiteApi check calling assembly for controllers | TBD |
-| SetJsonSerializer | IJsonSerializer jsonSerializer | Sets custom JSON (de)serializer, by default Json.NET is used | TBD  |
-| SetLoggerFactory | ILoggerFactory loggerFactory | Sets logger factory, no logger is used by default | TBD |
+| AddAdditionalQueryModelBinder | IQueryModelBinder binder | Sets additional query model binder, by default LiteApi is using binder for basic types, arrays/lists/enumerables and dictionaries | [Link](/#/docs/custom-parameter-provider) |
+| AddAuthorizationPolicy | string name, Func<ClaimsPrincipal, bool> policy | Defines authorization policy that can be used to filter access to controllers and actions | [Link](/#/docs/policy-authorization) |
+| AddControllerAssemblies | IEnumerable&lt;Assembly&gt; controllerAssemblies | Adds additional assemblies in which LiteApi should look for controller. By default LiteApi check calling assembly for controllers | [Link](/#/docs/controller-registration) |
+| SetJsonSerializer | IJsonSerializer jsonSerializer | Sets custom JSON (de)serializer, by default Json.NET is used | [Link](/#/docs/changing-json-serializer) |
+| SetLoggerFactory | ILoggerFactory loggerFactory | Sets logger factory, no logger is used by default | [Link](/#/docs/configurating-logging) |
 
 Method that is planned to be added is `SetApiRootUrl(string rootUrl)`.
 By default all controller root URLs are `/api` which can be overriden with `ControllerRouteAttribute`.

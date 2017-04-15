@@ -1,0 +1,16 @@
+
+<div class='user-content'>
+<h1 id="controller-registration"><a id="pragma-line-1"></a>Controller registration</h1>
+<p id="pragma-line-3">For your class to be recognized as a controller it needs to inherit <code>LiteApi.LiteController</code>
+class.</p>
+<p id="pragma-line-6">All classes that inherit mentioned base class and are located in your web application assembly
+are registered by default. If you want to add additional controllers that are located in
+different assemblies you can do that in <code>Startup</code> class in <code>Configure</code> method
+by changing default options.</p>
+<pre><code id="pragma-line-11" class="language-csharp">var options = LiteApiOptions.Default.AddControllerAssemblies(
+    new System.Reflection.Assembly[] { ctrlAssembly1, ctrlAssembly2 }
+    );
+app.UseLiteApi(options);
+</code></pre>
+
+</div>

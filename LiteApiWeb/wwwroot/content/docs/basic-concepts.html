@@ -1,0 +1,27 @@
+
+<div class='user-content'>
+<h1 id="basic-concepts"><a id="pragma-line-1"></a>Basic concepts</h1>
+<div class='alert alert-info'>
+If you are already familiar with basic concepts of server side MVC frameworks/middlewares
+you might want to check <a href="/#/getting-started">Getting started</a>.
+</div>
+<p id="pragma-line-8">LiteApi is .NET Core middleware for creating Web APIs. It follows MVC pattern but does not
+support views.</p>
+<p id="pragma-line-11">Controller is a class that should handle requests for one type of resources, for example books.
+BookController should be able to retrieve books (by id, page, category, etc...),
+and optionally create/update/delete books. Each URL and HTTP method
+should respond to a single action in controller.</p>
+<h2 id="basic-conventions"><a id="pragma-line-16"></a>Basic conventions</h2>
+<p id="pragma-line-18">Controllers are usually located in <code>Controllers</code> or <code>API</code> directory and namespace,
+but that's not necessary. Controller can be split by your own preferences, for example you can set your controllers in folders like this:</p>
+<ul id="pragma-line-20">
+<li id="pragma-line-20">Admin</li>
+<li id="pragma-line-21">Public</li>
+<li id="pragma-line-22">Reports</li>
+<li id="pragma-line-23">ApiVersion2</li>
+<li id="pragma-line-24">any folder you desire</li>
+</ul>
+<p id="pragma-line-26">Each public method is considered to be HTTP <code>GET</code> action. And each parameter in the method is considered
+to be from query or route segment (check <a href="/#/docs/controller-and-action-matching">Controller and action matching</a> and <a href="/#/docs/parameter-retrieving">Parameter retrieving</a> for information).</p>
+
+</div>

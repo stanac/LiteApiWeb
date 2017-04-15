@@ -1,5 +1,96 @@
 
 <div class='user-content'>
 <h1 id="controller-and-action-matching"><a id="pragma-line-1"></a>Controller and action matching</h1>
+<p id="pragma-line-3">It is recommended to first check <a href="/#/docs/getting-started">Getting started</a>.</p>
+<h2 id="controllers"><a id="pragma-line-5"></a>Controllers</h2>
+<div class="alert alert-warning">
+All controllers must inherit `LiteApi.LiteController` class. All attributes used by LiteApi can be found under LiteApi.Attributes namespace.
+</div>
+<div class="alert alert-info">
+All routes and parameters are case insensitive.
+</div>
+<p id="pragma-line-15">This is quick overview with samples, for specific topic check subsections on the left under &quot;Controller and action matching&quot;.</p>
+<p id="pragma-line-17">All controller are matched on URL <code>/api/{controller}</code>. If controller class name ends &quot;Controller&quot;, &quot;Controller&quot; suffix with will be stripped from matching URL.</p>
+<p id="pragma-line-19">Controller route can be configurated using <code>ControllerRouteAttribute</code> as in:</p>
+<pre><code id="pragma-line-21" class="language-csharp">[ControllerRoute(&quot;/api/v2/actors&quot;)] 
+public class ActorsController : LiteController
+{
+}
+
+public class BooksController : LiteController
+{
+}
+</code></pre>
+<p id="pragma-line-32">In this case <code>ActorsController</code> will match <code>/api/v2/actors</code> route and <code>BooksController</code>
+will match <code>/api/books</code>.</p>
+<h2 id="actions"><a id="pragma-line-35"></a>Actions</h2>
+<p id="pragma-line-37">Actions are by default matched on name as in <code>/api/{controller}/{action}</code>.</p>
+<p id="pragma-line-39">This behavior can be changed using <code>RestfulLinksAttribute</code> and <code>ActionRouteAttribute</code>:</p>
+<pre><code id="pragma-line-41" class="language-csharp">[RestfulLinks] 
+public class ActorsController : LiteController
+{
+    // ... ctor and other code ...
+    
+    public ActorModel Get(int id) =&gt; _service.Get(id);
+}
+
+public class BooksController : LiteController
+{
+    // ... ctor and other code ...
+    
+    public Book Get(int id) =&gt; _service.Get(id);
+}
+</code></pre>
+<p id="pragma-line-58">In this case actor can be retrieved on <code>/api/actors?id=5</code> and book can be retrieved using
+<code>/api/books/get?id=5</code> URL.</p>
+<p id="pragma-line-61">Using combination of <code>RestfulLinksAttribute</code> and <code>ActionRouteAttribute</code> we can create
+RESTful API, where we cab retrieve book with id <code>5</code> with URL <code>/api/books/5</code>.</p>
+<pre><code id="pragma-line-64" class="language-csharp">[RestfulLinks]
+public class BooksController : LiteController
+{
+    // ... ctor and other code ...
+    
+    [ActionRoute('/{id}')]
+    public Book Get(int id) =&gt; _service.Get(id);
+}
+</code></pre>
+<p id="pragma-line-75"><code>ActionRouteAttribute</code> can tell LiteApi to <a href="/#/docs/parameter-retrieving-from-route-segment">retrieve parameter value from route segment</a> and it can change action matching segment if we don't want to write RESTful actions.</p>
+<pre><code id="pragma-line-77" class="language-csharp">public class BooksController : LiteController
+{
+    // ... ctor and other code ...
+    
+    [ActionRoute('/get/the/book/{id}')]
+    public Book Get(int id) =&gt; _service.Get(id);
+}
+</code></pre>
+<p id="pragma-line-87">In the example above book with id 5 can be retrieved by URL <code>/api/books/get/the/book/5</code>.</p>
+<p id="pragma-line-89">Action route can specify arbitrary number of parameter (zero or more).</p>
+<pre><code id="pragma-line-91" class="language-csharp">public class MathController: LiteController
+{
+    [ActionRoute(&quot;/{a}/minus/{b}&quot;)]
+    public int Minus(int a, int b) =&gt; a - b;
+}
+</code></pre>
+<p id="pragma-line-99"><code>MathController</code> in this case have <code>Minus</code> action that will respond to <code>/api/math/5/minus/3</code>;</p>
+<div class="alert alert-info">
+Please note that using multiple attributes of same time is not allowed on controllers and actions.
+</div>
+<p id="pragma-line-105">As you might have noticed all actions in presented examples are responding to HTTP <code>GET</code>.
+If we want to use some other HTTP method to target our actions we can use one of the following
+attributes:</p>
+<ul id="pragma-line-108">
+<li id="pragma-line-108"><code>LiteApi.Attributes.HttpGet</code></li>
+<li id="pragma-line-109"><code>LiteApi.Attributes.HttpPost</code></li>
+<li id="pragma-line-110"><code>LiteApi.Attributes.HttpPut</code></li>
+<li id="pragma-line-111"><code>LiteApi.Attributes.HttpDelete</code></li>
+</ul>
+<p id="pragma-line-113">For more information check <a href="/#/docs/action-matching">Action matching</a>.</p>
+<hr/>
+<p id="pragma-line-117">Related topics:</p>
+<ul id="pragma-line-118">
+<li id="pragma-line-118"><a href="/#/docs/action-matching">Action matching</a></li>
+<li id="pragma-line-119"><a href="/#/docs/controller-matching">Controller matching</a></li>
+<li id="pragma-line-120"><a href="/#/docs/parameter-retrieving">Parameter retrieving</a></li>
+</ul>
 
 </div>
