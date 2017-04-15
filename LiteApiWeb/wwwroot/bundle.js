@@ -146,7 +146,7 @@ var services = __webpack_require__(0);
 var highlighter = __webpack_require__(1);
 
 module.exports = {
-    template: '\n<div class="row off-top">\n    <div class="col-md-3">\n        index\n        <ul>\n            <template v-for="item in treeData">\n                <treeitem :model="item"></treeitem>\n            </template>\n        </ul>\n    </div>\n\n    <div v-html="docsHtml" class="col-md-9"></div>\n</div>',
+    template: '\n<div class="row off-top">\n    <div class="col-md-3">\n        <ul class="treeListRoot">\n            <template v-for="item in treeData">\n                <treeitem :model="item"></treeitem>\n            </template>\n        </ul>\n    </div>\n\n    <div v-html="docsHtml" class="col-md-9"></div>\n</div>',
     data: function data() {
         return {
             docsHtml: 'loading...',
@@ -168,39 +168,21 @@ module.exports = {
             this.loadTree();
         },
         loadTree: function loadTree() {
-            this.treeData = [{
-                Page: {
-                    Title: 'Root page 1 and id is 1'
-                },
-                Children: []
-            }, {
-                Page: {
-                    Title: 'Root page 2 and id is 2'
-                },
-                Children: [{
-                    Page: {
-                        Title: 'Subpage and instalation 21'
-                    },
-                    Children: [{
-                        Page: {
-                            Title: 'Sublevel level number 3'
-                        },
-                        Children: []
-                    }]
-                }]
-            }, {
-                Page: {
-                    Title: 'Root page 3 and i3'
-                },
-                Children: []
-            }];
+            var _this2 = this;
+
+            services.docsService.get('index.json', function (response) {
+                var data = JSON.parse(response).filter(function (x) {
+                    return x.Page.Id !== "home";
+                });
+                _this2.treeData = data;
+            });
         }
     },
 
     components: {
         'treeitem': {
             props: ['model'],
-            template: '\n<li>\n    {{ model.Page.Title }}\n</li>\n'
+            template: '\n<!-- TODO change to use recursive template -->\n<li>\n    <a :href="\'#/docs/\' + model.Page.Id">{{ model.Page.Title }}</a>\n    <ul v-if="model.Children.length" class="treeList">\n        <li v-for="sub in model.Children" class="treeListItem">\n            <a :href="\'#/docs/\' + sub.Page.Id">{{ sub.Page.Title }}</a>\n           <ul v-if="sub.Children.length"  class="treeList">\n             <li v-for="sub2 in sub.Children" class="treeListItem">\n                <a :href="\'#/docs/\' + sub2.Page.Id">{{ sub2.Page.Title }}</a>\n                <ul v-if="sub2.Children.length" class="treeList">\n                  <li v-for="sub3 in sub2.Children" class="treeListItem">\n                    <a :href="\'#/docs/\' + sub3.Page.Id">{{ sub3.Page.Title }}</a>\n                      <ul v-if="sub3.Children.length" class="treeList">\n                        <li v-for="sub4 in sub3.Children" class="treeListItem">\n                          <a :href="\'#/docs/\' + sub4.Page.Id">{{ sub4.Page.Title }}</a>\n                        </li>\n                      </ul>\n                  </li>\n                </ul>\n             </li>\n           </ul>\n        </li>\n    </ul>\n</li>\n'
         }
     }
 };

@@ -5,8 +5,7 @@ module.exports = {
     template: `
 <div class="row off-top">
     <div class="col-md-3">
-        index
-        <ul>
+        <ul class="treeListRoot">
             <template v-for="item in treeData">
                 <treeitem :model="item"></treeitem>
             </template>
@@ -34,33 +33,10 @@ module.exports = {
         },
 
         loadTree() {
-            this.treeData = [{
-                Page: {
-                    Title: 'Root page 1 and id is 1'
-                },
-                Children: []
-            }, {
-                Page: {
-                    Title: 'Root page 2 and id is 2'
-                },
-                Children: [{
-                    Page: {
-                        Title: 'Subpage and instalation 21'
-                    },
-                    Children: [{
-                        Page: {
-                            Title: 'Sublevel level number 3'
-                        },
-                        Children: []
-                    }]
-                }]
-            }, {
-                Page: {
-                    Title: 'Root page 3 and i3'
-                },
-                Children: []
-            }];
-
+            services.docsService.get('index.json', response => {
+                var data = JSON.parse(response).filter(x => x.Page.Id !== "home");
+                this.treeData = data;
+            });
         }
     },
 
@@ -68,8 +44,29 @@ module.exports = {
         'treeitem': {
             props: ['model'],
             template: `
+<!-- TODO change to use recursive template -->
 <li>
-    {{ model.Page.Title }}
+    <a :href="'#/docs/' + model.Page.Id">{{ model.Page.Title }}</a>
+    <ul v-if="model.Children.length" class="treeList">
+        <li v-for="sub in model.Children" class="treeListItem">
+            <a :href="'#/docs/' + sub.Page.Id">{{ sub.Page.Title }}</a>
+           <ul v-if="sub.Children.length"  class="treeList">
+             <li v-for="sub2 in sub.Children" class="treeListItem">
+                <a :href="'#/docs/' + sub2.Page.Id">{{ sub2.Page.Title }}</a>
+                <ul v-if="sub2.Children.length" class="treeList">
+                  <li v-for="sub3 in sub2.Children" class="treeListItem">
+                    <a :href="'#/docs/' + sub3.Page.Id">{{ sub3.Page.Title }}</a>
+                      <ul v-if="sub3.Children.length" class="treeList">
+                        <li v-for="sub4 in sub3.Children" class="treeListItem">
+                          <a :href="'#/docs/' + sub4.Page.Id">{{ sub4.Page.Title }}</a>
+                        </li>
+                      </ul>
+                  </li>
+                </ul>
+             </li>
+           </ul>
+        </li>
+    </ul>
 </li>
 `
         }
