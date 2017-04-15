@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 6);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -111,7 +111,17 @@ module.exports = { pageService: pageService, docsService: docsService };
 
 
 module.exports = {
-    template: '<h2>LiteApi blog<h2> <div class="alert alert-info">  In development</div>'
+	highlight: function highlight() {
+		var innerHighlight = function innerHighlight(timeout) {
+			timeout = timeout | 50;
+			if (timeout > 2000) return;
+
+			setTimeout(function () {
+				if (Prism) Prism.highlightAll();else innerHighlight(timeout * 2);
+			}, timeout);
+		};
+		innerHighlight(50);
+	}
 };
 
 /***/ }),
@@ -121,16 +131,26 @@ module.exports = {
 "use strict";
 
 
+module.exports = {
+    template: '<h2>LiteApi blog<h2> <div class="alert alert-info">  In development</div>'
+};
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 var services = __webpack_require__(0);
-var highlighter = __webpack_require__(6);
+var highlighter = __webpack_require__(1);
 
 module.exports = {
-    template: '\n<script type="text/x-template" id="item-template">\n  <li>\n    <div v-if="model.Page">\n      {{model.Page.Title}}\n    </div>\n    <ul v-show="open" v-if="model.Children.length">\n      <item\n        v-for="model in model.Children"\n        :model="model">\n      </item>\n    </ul>\n  </li>\n</script>\n\n<div class="row">\n<div v-html="side" class="col-md-3"></div>\n<div v-html="html" class="col-md-9"></div>\n</div>',
+    template: '\n<div class="row off-top">\n    <div class="col-md-3">\n        index\n        <ul>\n            <template v-for="item in treeData">\n                <treeitem :model="item"></treeitem>\n            </template>\n        </ul>\n    </div>\n\n    <div v-html="docsHtml" class="col-md-9"></div>\n</div>',
     data: function data() {
         return {
-            side: 'loading...',
-            html: 'loading...',
-            model: { Children: [], Page: { Title: "123" } }
+            docsHtml: 'loading...',
+            treeData: []
         };
     },
     created: function created() {
@@ -142,34 +162,58 @@ module.exports = {
             var _this = this;
 
             services.docsService.get('home', function (homeRes) {
-                _this.html = homeRes;
-
+                _this.docsHtml = homeRes;
                 highlighter.highlight();
             });
-            this.showIndex();
+            this.loadTree();
         },
-        showIndex: function showIndex() {
-            var _this2 = this;
+        loadTree: function loadTree() {
+            this.treeData = [{
+                Page: {
+                    Title: 'Root page 1 and id is 1'
+                },
+                Children: []
+            }, {
+                Page: {
+                    Title: 'Root page 2 and id is 2'
+                },
+                Children: [{
+                    Page: {
+                        Title: 'Subpage and instalation 21'
+                    },
+                    Children: [{
+                        Page: {
+                            Title: 'Sublevel level number 3'
+                        },
+                        Children: []
+                    }]
+                }]
+            }, {
+                Page: {
+                    Title: 'Root page 3 and i3'
+                },
+                Children: []
+            }];
+        }
+    },
 
-            services.docsService.get('index.json', function (response) {
-                var data = JSON.parse(response).filter(function (x) {
-                    return x.Page.Id !== 'home';
-                });
-                _this2.model = { Children: data, Title: "123" };
-            });
+    components: {
+        'treeitem': {
+            props: ['model'],
+            template: '\n<li>\n    {{ model.Page.Title }}\n</li>\n'
         }
     }
 };
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var services = __webpack_require__(0);
-var highlighter = __webpack_require__(6);
+var highlighter = __webpack_require__(1);
 
 module.exports = {
     data: function data() {
@@ -197,7 +241,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -212,7 +256,7 @@ module.exports = {
         };
     },
 
-    template: '<div class="off-top" v-html="html"></div>',
+    template: '\n<div>\n    <div class="off-top" v-html="html"></div>\n</div>',
     created: function created() {
         this.loadData();
     },
@@ -223,31 +267,35 @@ module.exports = {
 
             services.pageService.get('home', function (response) {
                 _this.html = response;
+
+                setTimeout(function (_) {
+                    _this.isLoading = false;
+                }, 1500);
             });
         }
     }
 };
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _gettingStarted = __webpack_require__(3);
+var _gettingStarted = __webpack_require__(4);
 
 var GettingStarted = _interopRequireWildcard(_gettingStarted);
 
-var _docs = __webpack_require__(2);
+var _docs = __webpack_require__(3);
 
 var Docs = _interopRequireWildcard(_docs);
 
-var _home = __webpack_require__(4);
+var _home = __webpack_require__(5);
 
 var Home = _interopRequireWildcard(_home);
 
-var _blog = __webpack_require__(1);
+var _blog = __webpack_require__(2);
 
 var Blog = _interopRequireWildcard(_blog);
 
@@ -277,27 +325,6 @@ var router = new VueRouter({
 var app = new Vue({
     router: router
 }).$mount('#app');
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = {
-	highlight: function highlight() {
-		var innerHighlight = function innerHighlight(timeout) {
-			timeout = timeout | 50;
-			if (timeout > 2000) return;
-
-			setTimeout(function () {
-				if (Prism) Prism.highlightAll();else innerHighlight(timeout * 2);
-			}, timeout);
-		};
-		innerHighlight(50);
-	}
-};
 
 /***/ })
 /******/ ]);

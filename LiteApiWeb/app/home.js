@@ -6,7 +6,10 @@ module.exports = {
             html: 'loading...'
         }
     },
-    template: '<div class="off-top" v-html="html"></div>',
+    template: `
+<div>
+    <div class="off-top" v-html="html"></div>
+</div>`,
     created() {
         this.loadData();
     },
@@ -14,6 +17,10 @@ module.exports = {
         loadData() {
             services.pageService.get('home', (response) => {
                 this.html = response;
+
+                setTimeout(_ => {
+                    this.isLoading = false;
+                }, 1500);
             });
         }
     }
