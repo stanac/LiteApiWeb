@@ -21,7 +21,7 @@ Here are listed some of the problems that might occur.
 Make sure controller routes are unique. Controllers names are determined by class name or `ControllerRouteAttribute`.
 It's possible to create multiple controller with same route, e.g. following controllers have same route:
 
-```
+```csharp
 public class Person: LiteController { }
 
 public class PersonController: LiteController { }

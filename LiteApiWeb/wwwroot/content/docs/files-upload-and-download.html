@@ -1,5 +1,54 @@
 
 <div class='user-content'>
 <h1 id="uploading-and-downloading-files"><a id="pragma-line-1"></a>Uploading and downloading files</h1>
+<h2 id="file-downloading"><a id="pragma-line-3"></a>File downloading</h2>
+<p id="pragma-line-5">This feature is not a critical one but it's a nice to have. There is a workaround for
+downloading files. You could simply put file in <code>wwwroot</code> of your app and have static
+files middleware handle it, or you could use a separate middleware for downloading files,
+or even return files in <code>base64</code> format. In case of LiteApi there is an interface called
+<code>ILiteActionResult</code> and a method in <code>LiteController</code> called <code>FileDownload</code> which can
+be used for sending files to client. There is nothing special about <code>FileDownload</code> method,
+except that it returns object that implements <code>ILiteActionResult</code>. You can write your
+own class that implements <code>ILiteActionResult</code> and it would be handled differently than
+other action call results (it won't be serialized, but it will need to handle response on
+it's own).</p>
+<p id="pragma-line-16">Here is an action that returns file for download.</p>
+<pre><code id="pragma-line-17" class="language-csharp">[HttpGet]
+public ILiteActionResult Download()
+{
+    byte[] data = Encoding.UTF8.GetBytes(&quot;hello from LiteApi&quot;); // can be Stream or byte[]
+    string contentType = &quot;text/plain&quot;;
+    string fileName = &quot;hello.txt&quot;;
+
+    return FileDownload(data, contentType, fileName);
+}
+</code></pre>
+<p id="pragma-line-29">One note on providing files this way for download: behind the scenes LiteApi is using <code>byte[]</code> to hold file content, so it would be best to avoid sending large files this way to the client. Depending on the hardware and load <code>FileDownlaod</code> method should probably be able to handle files up to few 100s of megabytes.</p>
+<h2 id="file-uploading"><a id="pragma-line-31"></a>File uploading</h2>
+<p id="pragma-line-33">Same as for file download feature, this one has many workarounds, but somehow the middleware
+would be incomplete without file upload feature. Let's face it, most SPA apps needs to have
+file upload support, and in order to avoid workarounds LiteApi supports HTML form data only
+in case of file upload. Here is an action that supports reading files uploaded by HTML form:</p>
+<pre><code id="pragma-line-38" class="language-csharp">[HttpPost]
+public async Task&lt;long&gt; Upload(FormFileCollection fileCollection)
+{
+    long bytesUploaded = 0;
+    foreach (var file in fileCollection.Files)
+    {
+        using (Stream diskFileStream = new FileStream(file.FileName, FileMode.Create))
+        {
+            bytesUploaded += file.Length;
+            await file.CopyToAsync(diskFileStream);
+        }
+    }
+
+    return bytesUploaded;
+}
+</code></pre>
+<p id="pragma-line-56">In case of file upload, only one parameter from body is needed of type
+<code>FormFileCollection</code>, multiple parameters from route or query are supported in the
+same call. As it's name says it <code>FormFileCollection</code> supports multiple files,
+there is no parameter type that supports just one file, in case when client uploads
+just one file <code>FormFileCollection</code> will have just that one uploaded file.</p>
 
 </div>

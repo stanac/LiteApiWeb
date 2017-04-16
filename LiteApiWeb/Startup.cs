@@ -12,11 +12,35 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using Newtonsoft.Json;
+using Microsoft.Extensions.Configuration;
 
 namespace LiteApiWeb
 {
     public class Startup
     {
+        public readonly IConfigurationRoot _config;
+        private readonly bool _enableFirstRunRender;
+
+        public Startup()
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("config.json");
+
+            _config = builder.Build();
+            const string key = "enableFirstTimeRender";
+            bool parse;
+            if (_config.AsEnumerable().Any(x => x.Key == key)
+                && bool.TryParse(_config[key], out parse))
+            {
+                _enableFirstRunRender = parse;
+            }
+            else
+            {
+                _enableFirstRunRender = false;
+            }
+        }
+        
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
@@ -30,7 +54,10 @@ namespace LiteApiWeb
         {
             loggerFactory.AddConsole();
 
-            RenderAllPages(env, app.ApplicationServices);
+            if (_enableFirstRunRender)
+            {
+                RenderAllPages(env, app.ApplicationServices);
+            }
 
             if (env.IsDevelopment())
             {
@@ -47,7 +74,7 @@ namespace LiteApiWeb
             //});
             app.UseDefaultFiles();
 
-            if (Debugger.IsAttached)
+            if (Debugger.IsAttached && _enableFirstRunRender)
             {
                 app.Use(async (httpCtx, next) =>
                 {

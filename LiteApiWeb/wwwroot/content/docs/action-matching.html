@@ -1,5 +1,127 @@
 
 <div class='user-content'>
 <h1 id="action-matching"><a id="pragma-line-1"></a>Action matching</h1>
+<div class="alert alert-info">
+All attributes used in samples are located in <code>LiteApi.Attributes</code> namespace. All routes and parameters are case insensitive.
+</div>
+<p id="pragma-line-8">Actions are by default matched by HTTP method and action name.</p>
+<h2 id="matching-by-url"><a id="pragma-line-10"></a>Matching by URL</h2>
+<pre><code id="pragma-line-12" class="language-csharp">public class PersonsController: LiteController
+{
+    // responds to GET /api/persons/get?id=5
+    public PersonModel Get(int id) =&gt; _service.Get(id);
+}
+</code></pre>
+<hr id="pragma-line-19" />
+<p id="pragma-line-21">Action name can be overridden using <code>LiteApi.Attributes.ActionRouteAttribute</code>.</p>
+<pre><code id="pragma-line-23" class="language-csharp">public class PersonsController: LiteController
+{
+    // responds to GET /api/persons/getperson?id=5
+    [ActionRoute(&quot;GetPerson&quot;)]
+    public PersonModel Get(int id) =&gt; _service.Get(id);
+}
+</code></pre>
+<hr id="pragma-line-32" />
+<p id="pragma-line-34">Action name can be omitted in case when <code>LiteApi.Attributes.RestfulLinks</code> is set on controller.</p>
+<pre><code id="pragma-line-36" class="language-csharp">[RestfulLinks]
+public class PersonsController: LiteController
+{
+    // responds to GET /api/persons?id=5
+    public PersonModel Get(int id) =&gt; _service.Get(id);
+}
+</code></pre>
+<hr id="pragma-line-45" />
+<p id="pragma-line-47">By combining <code>RestfulLinksAttribute</code> and <code>ActionRouteAttribute</code> it's possible to get action to respond to RESTful URL: <code>/api/persons/{id}</code>.</p>
+<pre><code id="pragma-line-49" class="language-csharp">[RestfulLinks]
+public class PersonsController: LiteController
+{
+    // responds to GET /api/persons/5
+    [ActionRoute(&quot;/{id}&quot;)]
+    public PersonModel Get(int id) =&gt; _service.Get(id);
+}
+</code></pre>
+<p id="pragma-line-59">More about route segment parameters can be found on <a href="/#/docs/parameter-retrieving-from-route-segment">dedicated page</a>.</p>
+<hr id="pragma-line-61" />
+<h2 id="action-matching-by-http-method"><a id="pragma-line-63"></a>Action matching by HTTP method</h2>
+<p id="pragma-line-65">In all examples above actions are responding to HTTP <code>GET</code> methods. By default if method is public it's
+considered to be HTTP <code>GET</code> method. We can explicitly set which method our action should respond to.</p>
+<pre><code id="pragma-line-68" class="language-csharp">[RestfulLinks]
+public class PersonsController: LiteController
+{
+    // responds to GET /api/persons/5
+    [HttpGet, ActionRoute(&quot;/{id}&quot;)]
+    public PersonModel Get(int id) =&gt; _service.Get(id);
+
+    // responds to PUT /api/persons/5
+    [HttpPut, ActionRoute(&quot;/{id}&quot;)]
+    public PersonModel Update(int id, PersonModel model) =&gt; _service.Update(id, model);
+}
+</code></pre>
+<p id="pragma-line-82">Only one Http<em>Method</em>Attribute can be set on one action.</p>
+<p id="pragma-line-84">Following HTTP methods are supported with attributes:</p>
+<ul id="pragma-line-85">
+<li id="pragma-line-85"><code>LiteApi.Attributes.HttpGet</code></li>
+<li id="pragma-line-86"><code>LiteApi.Attributes.HttpPost</code></li>
+<li id="pragma-line-87"><code>LiteApi.Attributes.HttpPut</code></li>
+<li id="pragma-line-88"><code>LiteApi.Attributes.HttpDelete</code></li>
+</ul>
+<p id="pragma-line-90">More HTTP methods might be supported in future releases (if you need <code>PATCH</code> or some other method to be
+added please open ticket on <a href="https://github.com/stanac/shutdown/issues/new">GitHub</a>.</p>
+<hr id="pragma-line-93" />
+<h2 id="void-and-async-actions"><a id="pragma-line-95"></a>Void and async actions</h2>
+<p id="pragma-line-97">Actions can return <code>void</code>, they can be <code>async</code>, return <code>Task</code>s and generic <code>Task&lt;T&gt;</code>. It's considered bad practice to use
+<code>async void</code> return type. If something like that is needed please use <code>async Task</code> methods. Of course
+actions can return any complex or primitive type you like.</p>
+<p id="pragma-line-102">Task can be awaited but they don't have to, you can simply return a task and LiteApi will await it. Some samples:</p>
+<pre><code id="pragma-line-104" class="language-csharp">[RestfulLinks]
+public class PersonsController: LiteController
+{
+    // responds to GET /api/persons/5
+    [ActionRoute(&quot;/{id}&quot;)]
+    public async Task&lt;PersonModel&gt; Get(int id)
+    {
+        PersonDto person = await _service.GetAsync(id);
+        return person.ToModel();
+    }
+
+    // responds to GET /api/persons
+    // LiteApi will await the result for you, you don't have to explicitly await the task
+    public Task&lt;IEnumerable&lt;PersonModel&gt;&gt; GetAll() =&gt; _service.GetAllAsModelsAsync();
+}
+</code></pre>
+<hr id="pragma-line-122" />
+<h2 id="dontmaptoapiattribute"><a id="pragma-line-124"></a>DontMapToApiAttribute</h2>
+<p id="pragma-line-126">Since all public methods are considered to be <code>GET</code> actions, sometimes we want to avoid mapping a
+public method to API. This might be important especially when we have a public method that is
+accepting complex parameter. All complex parameters are implicitly considered to come from body, which is
+not allowed in <code>GET</code> methods, in such case LiteApi will throw exception during startup and application will
+not be able to start.</p>
+<p id="pragma-line-132">This code sample will throw exception.</p>
+<pre><code id="pragma-line-134" class="language-csharp">public class PersonController: LiteController
+{
+    // ctor and other init code
+    
+    public Person Get(int id) =&gt; Convert(_service.Get(id));
+
+    public PersonModel Convert(PersonDto person)
+    {
+       // code for converting PersonDto to PersonModel
+    }
+}
+</code></pre>
+<p id="pragma-line-148">And this one won't.</p>
+<pre><code id="pragma-line-150" class="language-csharp">public class PersonController: LiteController
+{
+    // ctor and other init code
+    
+    public Person Get(int id) =&gt; Convert(_service.Get(id));
+
+    [DontMapToApi]
+    public PersonModel Convert(PersonDto person)
+    {
+       // code for converting PersonDto to PersonModel
+    }
+}
+</code></pre>
 
 </div>

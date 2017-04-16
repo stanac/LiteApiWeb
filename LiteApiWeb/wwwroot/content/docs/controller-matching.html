@@ -1,5 +1,29 @@
 
 <div class='user-content'>
 <h1 id="controller-matching"><a id="pragma-line-1"></a>Controller matching</h1>
+<p id="pragma-line-3">It is recommended to first check <a href="/#/docs/getting-started">Getting started</a>.</p>
+<h2 id="controllers"><a id="pragma-line-5"></a>Controllers</h2>
+<div class="alert alert-warning">
+All controllers must inherit `LiteApi.LiteController` class. All attributes used by LiteApi can be found under LiteApi.Attributes namespace.
+</div>
+<div class="alert alert-info">
+All routes and parameters are case insensitive.
+</div>
+<p id="pragma-line-15">This is quick overview with samples, for specific topic check subsections on the left under &quot;Controller and action matching&quot;.</p>
+<p id="pragma-line-17">All controller are matched on URL <code>/api/{controller}</code>. If controller class name ends &quot;Controller&quot;, &quot;Controller&quot; suffix with will be stripped from matching URL.</p>
+<p id="pragma-line-19">Controller route can be configurated using <code>ControllerRouteAttribute</code> as in:</p>
+<pre><code id="pragma-line-21" class="language-csharp">[ControllerRoute(&quot;/api/v2/actors&quot;)] 
+public class ActorsController : LiteController
+{
+}
+
+public class BooksController : LiteController
+{
+}
+</code></pre>
+<p id="pragma-line-32">In this case <code>ActorsController</code> will match <code>/api/v2/actors</code> route and <code>BooksController</code>
+will match <code>/api/books</code>.</p>
+<p id="pragma-line-35">By default LiteApi will recognize controllers only in you main assembly, if you want to
+use controlles from other assemblies please check <a href="/#/docs/controller-registration">Controller recognition</a>.</p>
 
 </div>

@@ -23,5 +23,10 @@
   <ItemGroup>
     <Folder Include="wwwroot\content\pages\__short\" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Update="config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 
 </Project>
