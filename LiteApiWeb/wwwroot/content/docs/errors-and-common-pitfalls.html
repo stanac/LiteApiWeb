@@ -16,11 +16,11 @@ public class Persons: LiteController { }
 </code></pre>
 <hr id="pragma-line-22" />
 <p id="pragma-line-23"><strong>Authorization policy is not registered</strong></p>
-<p id="pragma-line-25">Authorization policies needs to be registered during startup, check <a href="/#/docs/policy-authorization">this article</a>.</p>
+<p id="pragma-line-25">Authorization policies needs to be registered during startup, check <a href="/docs/policy-authorization">this article</a>.</p>
 <hr id="pragma-line-27" />
 <p id="pragma-line-28"><strong>Action has 0 (constant) route segments</strong></p>
 <p id="pragma-line-30">If controller is not RESTful and action has <code>ActionRouteAttribute</code> set, than ActionRouteAttribute must set
-at least one constant route segment, you can check <a href="/#/docs/action-matching">Action matching</a> for more
+at least one constant route segment, you can check <a href="/docs/action-matching">Action matching</a> for more
 information.</p>
 <hr id="pragma-line-34" />
 <p id="pragma-line-35"><strong>Parameter from route segment with default value</strong></p>
@@ -36,12 +36,12 @@ information.</p>
 </code></pre>
 <hr id="pragma-line-50" />
 <p id="pragma-line-51"><strong>Unsupported parameter type from route segment</strong></p>
-<p id="pragma-line-53">Route segment can provide parameters of types defined in <a href="/#/docs/parameters-supported-types">Supported parameter types</a>. Those types must be non nullable (except string, which cannot be null in runtime).</p>
+<p id="pragma-line-53">Route segment can provide parameters of types defined in <a href="/docs/parameters-supported-types">Supported parameter types</a>. Those types must be non nullable (except string, which cannot be null in runtime).</p>
 <hr id="pragma-line-55" />
 <p id="pragma-line-56"><strong>HTTP methods GET and DELETE does not support parameters from body</strong></p>
 <p id="pragma-line-58">Parameters from body are supported only in <code>POST</code> and <code>PUT</code> methods. This can happen when
 your controller class has a public method that accepts complex parameter. Check following sample code and
-<a href="/#/docs/parameter-retrieving-from-body">Parameters from body</a> documentation.</p>
+<a href="/docs/parameter-retrieving-from-body">Parameters from body</a> documentation.</p>
 <pre><code id="pragma-line-62" class="language-csharp">public class PersonController: LiteController
 {
     // ctor and other init code

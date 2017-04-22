@@ -10,7 +10,7 @@ ParentPageId: controller-and-action-matching
 
 # Controller matching
 
-It is recommended to first check [Getting started](/#/docs/getting-started).
+It is recommended to first check [Getting started](/docs/getting-started).
 
 ## Controllers
 
@@ -43,4 +43,4 @@ In this case `ActorsController` will match `/api/v2/actors` route and `BooksCont
 will match `/api/books`.
 
 By default LiteApi will recognize controllers only in you main assembly, if you want to 
-use controlles from other assemblies please check [Controller recognition](/#/docs/controller-registration).
+use controlles from other assemblies please check [Controller recognition](/docs/controller-registration).

@@ -66,7 +66,7 @@ public class PersonsController: LiteController
 }
 ```
 
-More about route segment parameters can be found on [dedicated page](/#/docs/parameter-retrieving-from-route-segment).
+More about route segment parameters can be found on [dedicated page](/docs/parameter-retrieving-from-route-segment).
 
 ---
 

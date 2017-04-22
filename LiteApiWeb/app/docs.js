@@ -1,5 +1,5 @@
 ﻿var services = require('./services/httpService');
-var highlighter = require('./services/codeHighlighter');
+var codeHelpers = require('./services/codeHelpers');
 
 module.exports = {
     route: {
@@ -21,9 +21,6 @@ module.exports = {
         return {
             docsHtml: 'loading...',
             treeData: [],
-            onDocsChangedClick: function () {
-                this.onDocsChanged();
-            }
         }
     },
     watch: {
@@ -42,7 +39,8 @@ module.exports = {
             }
             services.docsService.get(id, (res) => {
                 this.docsHtml = res;
-                highlighter.highlight();
+                codeHelpers.highlight();
+
             });
         },
 

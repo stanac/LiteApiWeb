@@ -15,7 +15,7 @@ tl;dr here is the code on GitHub.
 
 <div class='alert alert-info'>
 If you have never worked with MVC types of server side frameworks/middlwares 
-you might want to check <a href="/#/docs/basic-concepts">Basic concepts</a>.
+you might want to check <a href="/docs/basic-concepts">Basic concepts</a>.
 </div>
 
 
@@ -362,5 +362,5 @@ Here is a gif which demonstrates how to use `ActorsController`:
 <div style='clear:both'> <br/> </div>
 
 <div class='alert alert-info'>
-Here is the code on GitHub. Documentation can be found under <a href="/#/docs">Docs section</a>.
+Here is the code on GitHub. Documentation can be found under <a href="/docs">Docs section</a>.
 </div>

@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -111,32 +111,7 @@ module.exports = { pageService: pageService, docsService: docsService };
 
 
 module.exports = {
-    highlight: function highlight() {
-        var innerHighlight = function innerHighlight(timeout) {
-            timeout = timeout | 50;
-            if (timeout > 2000) return;
-
-            setTimeout(function () {
-                if (Prism) Prism.highlightAll();else innerHighlight(timeout * 2);
-            }, timeout);
-        };
-
-        var innerTable = function innerTable(timeout) {
-            timeout = timeout | 50;
-            if (timeout > 2000) return;
-
-            setTimeout(function () {
-                if (window.$) {
-                    $('.user-content table').addClass('table table-stripped');
-                } else {
-                    innerTable(timeout * 2);
-                }
-            }, timeout);
-        };
-
-        innerHighlight(50);
-        innerTable(50);
-    }
+    template: '<h2>LiteApi blog<h2> <div class="alert alert-info">  In development</div>'
 };
 
 /***/ }),
@@ -146,19 +121,8 @@ module.exports = {
 "use strict";
 
 
-module.exports = {
-    template: '<h2>LiteApi blog<h2> <div class="alert alert-info">  In development</div>'
-};
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
 var services = __webpack_require__(0);
-var highlighter = __webpack_require__(1);
+var codeHelpers = __webpack_require__(6);
 
 module.exports = {
     route: {
@@ -168,10 +132,7 @@ module.exports = {
     data: function data() {
         return {
             docsHtml: 'loading...',
-            treeData: [],
-            onDocsChangedClick: function onDocsChangedClick() {
-                this.onDocsChanged();
-            }
+            treeData: []
         };
     },
 
@@ -194,7 +155,7 @@ module.exports = {
             }
             services.docsService.get(id, function (res) {
                 _this.docsHtml = res;
-                highlighter.highlight();
+                codeHelpers.highlight();
             });
         },
         loadTree: function loadTree() {
@@ -219,14 +180,14 @@ module.exports = {
 };
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var services = __webpack_require__(0);
-var highlighter = __webpack_require__(1);
+var codeHelpers = __webpack_require__(6);
 
 module.exports = {
     data: function data() {
@@ -247,14 +208,14 @@ module.exports = {
             services.pageService.get('getting-started', function (response) {
                 _this.html = response;
 
-                highlighter.highlight();
+                codeHelpers.highlight();
             });
         }
     }
 };
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -290,25 +251,25 @@ module.exports = {
 };
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _gettingStarted = __webpack_require__(4);
+var _gettingStarted = __webpack_require__(3);
 
 var GettingStarted = _interopRequireWildcard(_gettingStarted);
 
-var _docs = __webpack_require__(3);
+var _docs = __webpack_require__(2);
 
 var Docs = _interopRequireWildcard(_docs);
 
-var _home = __webpack_require__(5);
+var _home = __webpack_require__(4);
 
 var Home = _interopRequireWildcard(_home);
 
-var _blog = __webpack_require__(2);
+var _blog = __webpack_require__(1);
 
 var Blog = _interopRequireWildcard(_blog);
 
@@ -326,9 +287,62 @@ var router = new VueRouter({
     mode: 'history'
 });
 
+window.vueRouter = router;
+
 var app = new Vue({
     router: router
 }).$mount('#app');
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = {
+    highlight: function highlight() {
+        var fixLinks = function fixLinks() {
+            $('.user-content a').filter(function () {
+                return ($(this).attr('id') || '').indexOf('pragma-line') === -1;
+            }).on('click', function () {
+                if ($(this)[0].host === window.location.host) {
+                    // vueRuter.push();
+                    var link = $(this).attr('href');
+                    console.log('prevent: ' + link);
+                    vueRouter.push(link);
+                    return false;
+                }
+            });
+        };
+
+        var innerHighlight = function innerHighlight(timeout) {
+            timeout = timeout | 50;
+            if (timeout > 2000) return;
+
+            setTimeout(function () {
+                if (Prism) Prism.highlightAll();else innerHighlight(timeout * 2);
+            }, timeout);
+        };
+
+        var innerTable = function innerTable(timeout) {
+            timeout = timeout | 50;
+            if (timeout > 2000) return;
+
+            setTimeout(function () {
+                if (window.$) {
+                    $('.user-content table').addClass('table table-stripped');
+                    fixLinks();
+                } else {
+                    innerTable(timeout * 2);
+                }
+            }, timeout);
+        };
+
+        innerHighlight(50);
+        innerTable(50);
+    }
+};
 
 /***/ })
 /******/ ]);

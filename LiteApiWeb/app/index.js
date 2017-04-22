@@ -19,6 +19,8 @@ const router = new VueRouter({
     mode: 'history'
 })
 
+window.vueRouter = router;
+
 const app = new Vue({
   router
 }).$mount('#app')

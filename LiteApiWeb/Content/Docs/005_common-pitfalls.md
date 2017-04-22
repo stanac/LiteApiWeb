@@ -32,13 +32,13 @@ public class Persons: LiteController { }
 ---
 **Authorization policy is not registered**
 
-Authorization policies needs to be registered during startup, check [this article](/#/docs/policy-authorization). 
+Authorization policies needs to be registered during startup, check [this article](/docs/policy-authorization). 
 
 ---
 **Action has 0 (constant) route segments**
 
 If controller is not RESTful and action has `ActionRouteAttribute` set, than ActionRouteAttribute must set 
-at least one constant route segment, you can check [Action matching](/#/docs/action-matching) for more
+at least one constant route segment, you can check [Action matching](/docs/action-matching) for more
 information.
 
 ---
@@ -60,14 +60,14 @@ public class EntityController: LiteController
 ---
 **Unsupported parameter type from route segment**
 
-Route segment can provide parameters of types defined in [Supported parameter types](/#/docs/parameters-supported-types). Those types must be non nullable (except string, which cannot be null in runtime).
+Route segment can provide parameters of types defined in [Supported parameter types](/docs/parameters-supported-types). Those types must be non nullable (except string, which cannot be null in runtime).
 
 ---
 **HTTP methods GET and DELETE does not support parameters from body**
 
 Parameters from body are supported only in `POST` and `PUT` methods. This can happen when
 your controller class has a public method that accepts complex parameter. Check following sample code and
-[Parameters from body](/#/docs/parameter-retrieving-from-body) documentation.
+[Parameters from body](/docs/parameter-retrieving-from-body) documentation.
 
 ```csharp
 public class PersonController: LiteController

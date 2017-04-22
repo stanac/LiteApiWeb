@@ -9,7 +9,7 @@ Id: controller-and-action-matching
 
 # Controller and action matching
 
-It is recommended to first check [Getting started](/#/docs/getting-started).
+It is recommended to first check [Getting started](/docs/getting-started).
 
 ## Controllers
 
@@ -81,7 +81,7 @@ public class BooksController : LiteController
 }
 ```
 
-`ActionRouteAttribute` can tell LiteApi to [retrieve parameter value from route segment](/#/docs/parameter-retrieving-from-route-segment) and it can change action matching segment if we don't want to write RESTful actions.
+`ActionRouteAttribute` can tell LiteApi to [retrieve parameter value from route segment](/docs/parameter-retrieving-from-route-segment) and it can change action matching segment if we don't want to write RESTful actions.
 
 ```csharp
 public class BooksController : LiteController
@@ -119,11 +119,11 @@ attributes:
 - `LiteApi.Attributes.HttpPut`
 - `LiteApi.Attributes.HttpDelete`
 
-For more information check [Action matching](/#/docs/action-matching).
+For more information check [Action matching](/docs/action-matching).
 
 <hr/>
 
 Related topics:
-- [Action matching](/#/docs/action-matching)
-- [Controller matching](/#/docs/controller-matching)
-- [Parameter retrieving](/#/docs/parameter-retrieving)
+- [Action matching](/docs/action-matching)
+- [Controller matching](/docs/controller-matching)
+- [Parameter retrieving](/docs/parameter-retrieving)

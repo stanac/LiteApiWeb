@@ -1,5 +1,5 @@
 ﻿var services = require('./services/httpService');
-var highlighter = require('./services/codeHighlighter');
+var codeHelpers = require('./services/codeHelpers');
 
 module.exports = {
     data() {
@@ -16,7 +16,7 @@ module.exports = {
             services.pageService.get('getting-started', (response) => {
                 this.html = response;
 
-                highlighter.highlight();
+                codeHelpers.highlight();
             });
         }
     }

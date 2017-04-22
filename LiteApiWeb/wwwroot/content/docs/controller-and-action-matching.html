@@ -1,7 +1,7 @@
 
 <div class='user-content'>
 <h1 id="controller-and-action-matching"><a id="pragma-line-1"></a>Controller and action matching</h1>
-<p id="pragma-line-3">It is recommended to first check <a href="/#/docs/getting-started">Getting started</a>.</p>
+<p id="pragma-line-3">It is recommended to first check <a href="/docs/getting-started">Getting started</a>.</p>
 <h2 id="controllers"><a id="pragma-line-5"></a>Controllers</h2>
 <div class="alert alert-warning">
 All controllers must inherit `LiteApi.LiteController` class. All attributes used by LiteApi can be found under LiteApi.Attributes namespace.
@@ -54,7 +54,7 @@ public class BooksController : LiteController
     public Book Get(int id) =&gt; _service.Get(id);
 }
 </code></pre>
-<p id="pragma-line-75"><code>ActionRouteAttribute</code> can tell LiteApi to <a href="/#/docs/parameter-retrieving-from-route-segment">retrieve parameter value from route segment</a> and it can change action matching segment if we don't want to write RESTful actions.</p>
+<p id="pragma-line-75"><code>ActionRouteAttribute</code> can tell LiteApi to <a href="/docs/parameter-retrieving-from-route-segment">retrieve parameter value from route segment</a> and it can change action matching segment if we don't want to write RESTful actions.</p>
 <pre><code id="pragma-line-77" class="language-csharp">public class BooksController : LiteController
 {
     // ... ctor and other code ...
@@ -84,13 +84,13 @@ attributes:</p>
 <li id="pragma-line-110"><code>LiteApi.Attributes.HttpPut</code></li>
 <li id="pragma-line-111"><code>LiteApi.Attributes.HttpDelete</code></li>
 </ul>
-<p id="pragma-line-113">For more information check <a href="/#/docs/action-matching">Action matching</a>.</p>
+<p id="pragma-line-113">For more information check <a href="/docs/action-matching">Action matching</a>.</p>
 <hr/>
 <p id="pragma-line-117">Related topics:</p>
 <ul id="pragma-line-118">
-<li id="pragma-line-118"><a href="/#/docs/action-matching">Action matching</a></li>
-<li id="pragma-line-119"><a href="/#/docs/controller-matching">Controller matching</a></li>
-<li id="pragma-line-120"><a href="/#/docs/parameter-retrieving">Parameter retrieving</a></li>
+<li id="pragma-line-118"><a href="/docs/action-matching">Action matching</a></li>
+<li id="pragma-line-119"><a href="/docs/controller-matching">Controller matching</a></li>
+<li id="pragma-line-120"><a href="/docs/parameter-retrieving">Parameter retrieving</a></li>
 </ul>
 
 </div>
