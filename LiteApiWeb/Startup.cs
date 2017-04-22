@@ -64,6 +64,19 @@ namespace LiteApiWeb
                 app.UseDeveloperExceptionPage();
             }
 
+            app.Use(async (httpCtx, next) =>
+            {
+                if (httpCtx.Request.Method == "GET" &&
+                    (httpCtx.Request.Path.StartsWithSegments("/docs")
+                    || httpCtx.Request.Path.StartsWithSegments("/blog")
+                    || httpCtx.Request.Path.StartsWithSegments("/getting-started"))
+                    )
+                {
+                    httpCtx.Request.Path = "/";
+                }
+                await next.Invoke();
+            });
+
             //app.Use(async (ctx, next) =>
             //{
             //    if (ctx.Request.Method.ToUpper() == "GET" && !ctx.Request.Path.StartsWithSegments("/api") && !ctx.Request.Path.Value.Contains("."))

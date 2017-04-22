@@ -213,7 +213,7 @@ module.exports = {
     components: {
         'treeitem': {
             props: ['model'],
-            template: '\n<!-- TODO change to use recursive template -->\n<li>\n    <a :href="\'#/docs/\' + model.Page.Id">{{ model.Page.Title }}</a>\n    <ul v-if="model.Children.length" class="treeList">\n        <li v-for="sub in model.Children" class="treeListItem">\n            <a :href="\'#/docs/\' + sub.Page.Id">{{ sub.Page.Title }}</a>\n           <ul v-if="sub.Children.length"  class="treeList">\n             <li v-for="sub2 in sub.Children" class="treeListItem">\n                <a :href="\'#/docs/\' + sub2.Page.Id">{{ sub2.Page.Title }}</a>\n                <ul v-if="sub2.Children.length" class="treeList">\n                  <li v-for="sub3 in sub2.Children" class="treeListItem">\n                    <a :href="\'#/docs/\' + sub3.Page.Id">{{ sub3.Page.Title }}</a>\n                      <ul v-if="sub3.Children.length" class="treeList">\n                        <li v-for="sub4 in sub3.Children" class="treeListItem">\n                          <a :href="\'#/docs/\' + sub4.Page.Id">{{ sub4.Page.Title }}</a>\n                        </li>\n                      </ul>\n                  </li>\n                </ul>\n             </li>\n           </ul>\n        </li>\n    </ul>\n</li>\n'
+            template: '\n<!-- TODO change to use recursive template -->\n<li>\n    <router-link :to="\'/docs/\' + model.Page.Id">{{ model.Page.Title }}</router-link>\n    <ul v-if="model.Children.length" class="treeList">\n        <li v-for="sub in model.Children" class="treeListItem">\n            <router-link :to="\'/docs/\' + sub.Page.Id">{{ sub.Page.Title }}</router-link>\n           <ul v-if="sub.Children.length"  class="treeList">\n             <li v-for="sub2 in sub.Children" class="treeListItem">\n                <router-link :to="\'/docs/\' + sub2.Page.Id">{{ sub2.Page.Title }}</router-link>\n                <ul v-if="sub2.Children.length" class="treeList">\n                  <li v-for="sub3 in sub2.Children" class="treeListItem">\n                    <router-link :to="\'/docs/\' + sub3.Page.Id">{{ sub3.Page.Title }}</router-link>\n                      <ul v-if="sub3.Children.length" class="treeList">\n                        <li v-for="sub4 in sub3.Children" class="treeListItem">\n                          <router-link :to="\'/docs/\' + sub4.Page.Id">{{ sub4.Page.Title }}</router-link>\n                        </li>\n                      </ul>\n                  </li>\n                </ul>\n             </li>\n           </ul>\n        </li>\n    </ul>\n</li>\n'
         }
     }
 };
@@ -314,29 +314,18 @@ var Blog = _interopRequireWildcard(_blog);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-// 2. Define some routes
-// Each route should map to a component. The "component" can
-// either be an actual component constructor created via
-// Vue.extend(), or just a component options object.
-// We'll talk about nested routes later.
 // 0. If using a module system, call Vue.use(VueRouter)
 
-// 1. Define route components.
-// These can be imported from other files
 var routes = [{ path: '/', component: Home }, { path: '/getting-started', component: GettingStarted }, { path: '/docs/:id?', component: Docs },
-// { path: '/docs', component: Docs },
+// { path: '/docs/:id', component: Docs },
+//{ path: '/docs', component: Docs },
 { path: '/blog', component: Blog }];
 
-// 3. Create the router instance and pass the `routes` option
-// You can pass in additional options here, but let's
-// keep it simple for now.
 var router = new VueRouter({
-    routes: routes
+    routes: routes,
+    mode: 'history'
 });
 
-// 4. Create and mount the root instance.
-// Make sure to inject the router with the router option to make the
-// whole app router-aware.
 var app = new Vue({
     router: router
 }).$mount('#app');

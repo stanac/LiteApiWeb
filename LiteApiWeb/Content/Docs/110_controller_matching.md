@@ -15,7 +15,7 @@ It is recommended to first check [Getting started](/#/docs/getting-started).
 ## Controllers
 
 <div class="alert alert-warning">
-All controllers must inherit `LiteApi.LiteController` class. All attributes used by LiteApi can be found under LiteApi.Attributes namespace.
+All controllers must inherit <code>LiteApi.LiteController</code> class. All attributes used by LiteApi can be found under LiteApi.Attributes namespace.
 </div>
 
 <div class="alert alert-info">

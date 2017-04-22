@@ -64,19 +64,19 @@ module.exports = {
             template: `
 <!-- TODO change to use recursive template -->
 <li>
-    <a :href="'#/docs/' + model.Page.Id">{{ model.Page.Title }}</a>
+    <router-link :to="'/docs/' + model.Page.Id">{{ model.Page.Title }}</router-link>
     <ul v-if="model.Children.length" class="treeList">
         <li v-for="sub in model.Children" class="treeListItem">
-            <a :href="'#/docs/' + sub.Page.Id">{{ sub.Page.Title }}</a>
+            <router-link :to="'/docs/' + sub.Page.Id">{{ sub.Page.Title }}</router-link>
            <ul v-if="sub.Children.length"  class="treeList">
              <li v-for="sub2 in sub.Children" class="treeListItem">
-                <a :href="'#/docs/' + sub2.Page.Id">{{ sub2.Page.Title }}</a>
+                <router-link :to="'/docs/' + sub2.Page.Id">{{ sub2.Page.Title }}</router-link>
                 <ul v-if="sub2.Children.length" class="treeList">
                   <li v-for="sub3 in sub2.Children" class="treeListItem">
-                    <a :href="'#/docs/' + sub3.Page.Id">{{ sub3.Page.Title }}</a>
+                    <router-link :to="'/docs/' + sub3.Page.Id">{{ sub3.Page.Title }}</router-link>
                       <ul v-if="sub3.Children.length" class="treeList">
                         <li v-for="sub4 in sub3.Children" class="treeListItem">
-                          <a :href="'#/docs/' + sub4.Page.Id">{{ sub4.Page.Title }}</a>
+                          <router-link :to="'/docs/' + sub4.Page.Id">{{ sub4.Page.Title }}</router-link>
                         </li>
                       </ul>
                   </li>
