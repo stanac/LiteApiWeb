@@ -1,5 +1,61 @@
 
 <div class='user-content'>
-<h1 id="security-require-https"><a id="pragma-line-1"></a>Security - require HTTPS</h1>
+<h1 id="security-require-https"><a id="pragma-line-1"></a>Security - Require HTTPS</h1>
+<p id="pragma-line-3">LiteApi can reject all non HTTPS requests on middleware level, controller level or
+action level.</p>
+<h2 id="require-https-on-controller-or-action"><a id="pragma-line-6"></a>Require HTTPS on controller or action</h2>
+<p id="pragma-line-8">On controller or action <code>LiteApi.Attributes.RequiresHttpsAttribute</code> can be set
+in order to force HTTPS.</p>
+<pre><code id="pragma-line-11" class="language-csharp">public class PersonsController: LiteController
+{
+    // ctor and other code...
+
+    // only on action level
+    [RequiresHttps]
+    public PersonModel Get(int id) =&gt; _service.Get(id);
+}
+
+[RequiresHttps] // on all actions in the controller
+public class BooksController: LiteController
+{
+    // ctor and other code...
+
+    public BookModel Get(int id) =&gt; _service.Get(id);
+}
+</code></pre>
+<p id="pragma-line-30">By default <code>RequiresHttpsAttribute</code> ignores <code>SkipFiltersAttribute</code>. In
+order to stop ignoring <code>SkipFiltersAttribute</code> property <code>IgnoreSkipFilters</code> needs
+to be set to <code>false</code>.</p>
+<pre><code id="pragma-line-34" class="language-csharp">[RequiresHttps, RequiresAuthentication]
+public class PersonsController: LiteController
+{
+    // ctor and other code...
+
+    [SkipFilters] // only RequiresAuthentication will be skiped
+    public PersonModel Get(int id) =&gt; _service.Get(id);
+}
+
+[RequiresHttps(IgnoreSkipFilters = false), RequiresAuthentication]
+public class BooksController: LiteController
+{
+    // ctor and other code...
+
+    [SkipFilters] // both filters will be skiped
+    public BookModel Get(int id) =&gt; _service.Get(id);
+}
+</code></pre>
+<p id="pragma-line-54">Default behaviour is usually what is needed in most scenarios where user can
+access some <code>Login</code> action but has to do it over <code>HTTPS</code>.</p>
+<hr id="pragma-line-57" />
+<h2 id="require-https-on-middleware"><a id="pragma-line-59"></a>Require HTTPS on middleware</h2>
+<p id="pragma-line-61">LiteApi can be configurated to require HTTPS on all actions in the middleware by
+calling <code>LiteApiOptions.SetRequiresHttps</code> in <code>Startup.Configure</code> method.</p>
+<pre><code id="pragma-line-64" class="language-csharp">public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+{
+    app.UseLiteApi(
+        LiteApiOptions.Default.SetRequiresHttps(true)
+        );
+}
+</code></pre>
 
 </div>

@@ -58,6 +58,7 @@ Following methods can alter `LiteApiOptions`:
 | AddControllerAssemblies | IEnumerable&lt;Assembly&gt; controllerAssemblies | Adds additional assemblies in which LiteApi should look for controller. By default LiteApi check calling assembly for controllers | [Link](/docs/controller-registration) |
 | SetJsonSerializer | IJsonSerializer jsonSerializer | Sets custom JSON (de)serializer, by default Json.NET is used | [Link](/docs/changing-json-serializer) |
 | SetLoggerFactory | ILoggerFactory loggerFactory | Sets logger factory, no logger is used by default | [Link](/docs/configurating-logging) |
+| SetRequiresHttps | bool requireHttps | Tells middleware to (or not to) reject all non HTTPS requests | [Link](/docs/require-https) |
 
 Method that is planned to be added is `SetApiRootUrl(string rootUrl)`.
 By default all controller root URLs are `/api` which can be overriden with `ControllerRouteAttribute`.

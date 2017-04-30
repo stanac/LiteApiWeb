@@ -16,7 +16,7 @@ Parameters can be retrieved from:
 - Header
 - DI container
 
-If you like to be explicite, you can use on parameter level one of the attributes:
+If you like to be explicit, you can use on parameter level one of the attributes:
 
 - `LiteApi.Attributes.FromQueryAttribute` (previously in v <= 0.7.2 `FromUrlAttribute`)
 - `LiteApi.Attributes.FromRouteAttribute`

@@ -1,5 +1,18 @@
 
 <div class='user-content'>
 <h1 id="security"><a id="pragma-line-1"></a>Security</h1>
+<p id="pragma-line-3">LiteApi handles authorization and require HTTPS options. Authentication is handled
+by other middlewares. For example of integrating cookie based authentication with LiteApi
+check <a href="https://github.com/stanac/LiteApi/tree/master/LiteApi/LiteApi.AuthSample">sample on GitHub</a>.</p>
+<h2 id="require-https"><a id="pragma-line-7"></a>Require HTTPS</h2>
+<p id="pragma-line-9">Require HTTPS can be set on controller level, action level or middleware level by
+using <code>LiteApi.Attributes.RequiresHttpsAttribute</code> or by setting <code>LiteApiOptions</code>
+when registering middleware.
+For more information please check <a href="/docs/require-https">Require HTTPS</a>.</p>
+<h2 id="authorization"><a id="pragma-line-14"></a>Authorization</h2>
+<p id="pragma-line-16">Authorization is done with <code>Requires...Attribute</code> on controller or action level.
+For more information please check <a href="/docs/authorization">Authorization</a>.
+Authorization can be implemented on middleware level using
+<a href="/docs/global-filters">Global filters (to be implemented)</a>.</p>
 
 </div>
