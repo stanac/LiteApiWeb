@@ -1,5 +1,39 @@
 
 <div class='user-content'>
-<h1 id="policy-authorization"><a id="pragma-line-1"></a>Policy authorization</h1>
+<h1 id="policy-based-authorization"><a id="pragma-line-1"></a>Policy based authorization</h1>
+<p id="pragma-line-3">Policy based authorization can be used when none of the existing attributes
+cover authorization requirements of your API. Policy based authorization
+can be applied to controllers, actions or as <a href="/docs/global-filters">Global filters</a>
+(global filters will be implemented in v0.9).</p>
+<p id="pragma-line-8">Policies are defined as <code>Func&lt;ClaimsPrincipal, bool&gt;</code> with specified name as <code>string</code>.
+Policies must be registered during registration of the middleware in <code>Startup</code>
+class.</p>
+<pre><code id="pragma-line-13" class="language-csharp">// Startup.cs file
+app.UseLiteApi(LiteApiOptions.Default  
+    .AddAuthorizationPolicy(&quot;Over18&quot;, user =&gt;
+    {
+        // GetFirstNullableInt is extension method, you would need to add &quot;using LiteApi;&quot; to use it.
+        int? value = user.Claims.GetFirstNullableInt(&quot;Age&quot;);
+        return value.HasValue &amp;&amp; value.Value &gt;= 18;
+    })
+    // .AddAuthorizationPolicy(&quot;AnotherPolicy&quot;, user =&gt; // ...
+    );
+</code></pre>
+<p id="pragma-line-26">Once policy is defined, it can be applied to controller or action using
+<code>LiteApi.Attributes.RequiresAuthorizationPolicyAttribute</code>.</p>
+<p id="pragma-line-29">Constructor:</p>
+<pre><code id="pragma-line-30" class="language-csharp">public RequiresAuthorizationPolicyAttribute(string policyName)
+</code></pre>
+<p id="pragma-line-34">Sample:</p>
+<pre><code id="pragma-line-35" class="language-csharp">public class TicketController: LiteController
+{
+    [HttpPost]
+    [RequiresAuthorizationPolicy(&quot;Over18&quot;)]
+    public OrderResult OrderTicket(OrderModel model) =&gt; _service.Order(model);
+}
+</code></pre>
+<p id="pragma-line-44">Policy name cannot be null, empty or white space</p>
+<p id="pragma-line-46">If <code>ClaimsPrincipal</code> does not provide enough information to authorize user
+you should check <a href="/docs/custom-authorization">Custom authorization page</a>.</p>
 
 </div>

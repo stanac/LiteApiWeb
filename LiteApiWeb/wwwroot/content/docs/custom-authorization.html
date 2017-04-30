@@ -1,5 +1,36 @@
 
 <div class='user-content'>
 <h1 id="custom-authorization"><a id="pragma-line-1"></a>Custom authorization</h1>
+<p id="pragma-line-3">You can implement your own custom authorization filter attribute by implementing
+<code>IApiFilter</code> or <code>IApiFilterAsync</code> interface.
+Both interfaces are located in <code>LiteApi.Contracts.Abstractions</code> namespace.</p>
+<p id="pragma-line-7">How to define custom authorization attribute filter:</p>
+<pre><code id="pragma-line-9" class="language-csharp">[AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
+private class UserHasAnyTwoClaimsAttribute : Attribute, IApiFilter  
+{
+    // tells middleware not to ignore SkipFiltersAttribute
+    public bool IgnoreSkipFilters =&gt; false;
+
+    public ApiFilterRunResult ShouldContinue(HttpContext httpCtx)
+    {
+        var userIsAuthenticated = httpCtx?.User?.Identity.IsAuthenticated ?? false;
+        if (!userIsAuthenticated) return ApiFilterRunResult.Unauthenticated;
+
+        return httpCtx.User.Claims.Count() &gt; 1
+            ? ApiFilterRunResult.Continue
+            : ApiFilterRunResult.Unauthorized;
+        
+        // when manually instantiating ApiFilterRunResult
+        // you can set response message, response code and ShouldContinue boolean value
+    }
+}
+</code></pre>
+<p id="pragma-line-31">After creating custom filter, it can be used as any other authorization attribute.</p>
+<pre><code id="pragma-line-33" class="language-csharp">[UserHasAnyTwoClaims]
+public class PersonsController:LiteController
+{
+    // ...
+}
+</code></pre>
 
 </div>

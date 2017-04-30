@@ -1,5 +1,39 @@
 
 <div class='user-content'>
 <h1 id="roles-authorization"><a id="pragma-line-1"></a>Roles authorization</h1>
+<p id="pragma-line-3">Roles authorization is just an abstraction over claims. Roles are just
+special type of claims. There are two filter attributes that are authorizing
+access by checking user roles.</p>
+<p id="pragma-line-7">As all <code>Requires...Attribute</code> filters, roles based attributes can be used
+on actions, controllers or as <a href="/docs/global-filters">Global filters</a> (Global
+filters will be implemented in v0.9).</p>
+<h2 id="requiresrolesattribute"><a id="pragma-line-11"></a>RequiresRolesAttribute</h2>
+<p id="pragma-line-13">Constructor:</p>
+<pre><code id="pragma-line-14" class="language-csharp">public RequiresRolesAttribute(params string[] roles)
+</code></pre>
+<p id="pragma-line-18">Sample:</p>
+<pre><code id="pragma-line-19" class="language-csharp">public class CustomersController: LiteController
+{
+    [HttpPost]
+    // User needs to be in both roles (&quot;CrmUser&quot; and &quot;CustomerWriter&quot;) in order to access this action
+    [RequiresRoles(&quot;CrmUser&quot;, &quot;CustomerWriter&quot;)]
+    public CustomerModel Add(CustomerModel person) =&gt; _service.Add(person);
+}
+</code></pre>
+<h2 id="requiresanyroleattribute"><a id="pragma-line-30"></a>RequiresAnyRoleAttribute</h2>
+<p id="pragma-line-32">Constructor:</p>
+<pre><code id="pragma-line-33" class="language-csharp">public RequiresAnyRoleAttribute(params string[] roles)
+</code></pre>
+<p id="pragma-line-37">Sample:</p>
+<pre><code id="pragma-line-38" class="language-csharp">public class CustomersController: LiteController
+{
+    [HttpPost]
+    // User needs to be in any of the roles(&quot;CrmAdmin&quot; or &quot;CustomerWriter&quot;) in order to access this action
+    [RequiresAnyRole(&quot;CrmAdmin&quot;, &quot;CustomerWriter&quot;)]
+    public CustomerModel Add(CustomerModel person) =&gt; _service.Add(person);
+}
+</code></pre>
+<p id="pragma-line-48">For both attributes developer must provide at least one role in attribute constructor.
+Roles cannot be null, empty or white space in the constructors.</p>
 
 </div>
