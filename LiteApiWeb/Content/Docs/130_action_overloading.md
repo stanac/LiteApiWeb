@@ -49,8 +49,8 @@ public class MyController: LiteController
 In this case action with `int[] i` will be called, regardless if there is one or more values provided for `i`. 
 This way it's easier for middleware to decide which of the methods to call. Similar behavior can be encountered 
 with overloading methods with parameters `int`, `int?`, `int[]` and `int?[]`. In order to decide which 
-method to use, LiteApi will choose the method that can handle most of the edge cases. Here is the priority 
-where top choice has the most priority:
+method to use, LiteApi will choose the method that can handle most of the edge cases. Here is the priority list 
+where top item has the most priority:
  
 - `int?[]`
 - `int?`

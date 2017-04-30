@@ -1,0 +1,55 @@
+
+<div class='user-content'>
+<h1 id="performance-comparison-between-mvc-core-and-liteapi"><a id="pragma-line-1"></a>Performance comparison between MVC Core and LiteApi</h1>
+<p id="pragma-line-3">When comparing LiteApi with MVC Core LiteApi is capable of serving 20-30
+percent more requests per second. This comparison is performend on minimal
+project with a single controller, before planned LiteApi optimization release.</p>
+<p id="pragma-line-7">Web apps are run using <code>dotnet run</code> on Krestrel only without logging,
+without proxy on localhost using Windows PC:</p>
+<ul id="pragma-line-10">
+<li id="pragma-line-10">Intel(R) Core(TM) i7-4720HQ CPU @ 2.60GHz</li>
+<li id="pragma-line-11">8GB DDR3 memory</li>
+<li id="pragma-line-12">Windows 10 Pro</li>
+</ul>
+<h2 id="code-tool"><a id="pragma-line-14"></a>Code &amp; Tool</h2>
+<p id="pragma-line-16">For testing <a href="https://github.com/hallatore/Netling" target="_blank">Netling</a> is used.</p>
+<p id="pragma-line-18">Both apps have minimal dependencies and configuration, you can check it on
+<a href="https://github.com/stanac/LiteApiPerformanceTest">GitHub repo</a>.</p>
+<p id="pragma-line-21">Here is MVC controller:</p>
+<pre><code id="pragma-line-23" class="language-csharp">[Route(&quot;api/[controller]&quot;)]
+public class AddController : Controller
+{
+    [HttpGet]
+    public int Add(int a, int b) =&gt; a + b;
+}
+</code></pre>
+<p id="pragma-line-32">And LiteApi controller:</p>
+<pre><code id="pragma-line-34" class="language-csharp">[Restful]
+public class AddController: LiteController
+{
+    public int Add(int a, int b) =&gt; a + b;
+}
+</code></pre>
+<h2 id="results"><a id="pragma-line-42"></a>Results</h2>
+<p id="pragma-line-44">On following screenshots values in smaller font are of MVC Core sample app,
+and values with larger font are representing LiteApi sample app values.
+LiteApi is not yet optimized, and it performs 20-30% better than MVC.</p>
+<div class="row">
+<div class='col-md-12 text-center'>
+<img src="/content/imgs/performance/32_threads_pipe_20_thread_off.png" />
+</div>
+</div>
+<div class='row'>&nbsp;</div>
+<div class="row">
+<div class='col-md-12 text-center'>
+<img src="/content/imgs/performance/64_threads_pipe_20_thread_off.png" />
+</div>
+</div>
+<div class='row'>&nbsp;</div>
+<div class="row">
+<div class='col-md-12 text-center'>
+<img src="/content/imgs/performance/8_threads_pipe_10_thread_on.png" />
+</div>
+</div>
+
+</div>

@@ -309,13 +309,13 @@ public void ConfigureServices(IServiceCollection services)
 
 Lets say our controller is second version of the API. In such case we can use `ControllerRouteAttribute`
 from `LiteApi.Attributes` namespace with appropriate route. If we want our actions to response to URLs 
-without action names we should use `RestfulLinksAttribute`. Here is our controller which uses the
+without action names we should use `RestfulAttribute`. Here is our controller which uses the
 service we described above.
 
 ```csharp
-// RestfulLinks will tell LiteApi to ignore action names when matching URL to action, 
+// Restful will tell LiteApi to ignore action names when matching URL to action, 
 // ControllerRoute will tell LiteApi to use specified path to target the controller
-[RestfulLinks, ControllerRoute("/api/v2/actors")] 
+[Restful, ControllerRoute("/api/v2/actors")] 
 public class ActorsController : LiteController, IActorsService
 {
     private readonly IActorsService _service;
@@ -343,7 +343,7 @@ public class ActorsController : LiteController, IActorsService
 ```
 
 Few remarks on this controller:
- - `RestfulLinks` will tell LiteApi to ignore action names when matching the URL to controller/action
+ - `Restful` will tell LiteApi to ignore action names when matching the URL to controller/action
  - `ControllerRoute` can be used to alter the route of the controller
  - Following HTTP methods are supported: `GET`, `POST`, `PUT`, `DELETE`, more are coming in future releases
  - `HttpGet` attribute is optional

@@ -6,6 +6,9 @@
 
   <ItemGroup>
     <Content Include="wwwroot\content\imgs\getting-started\09_actors.gif" />
+    <Content Include="wwwroot\content\imgs\performance\32_threads_pipe_20_thread_off.png" />
+    <Content Include="wwwroot\content\imgs\performance\64_threads_pipe_20_thread_off.png" />
+    <Content Include="wwwroot\content\imgs\performance\8_threads_pipe_10_thread_on.png" />
     <Content Include="wwwroot\libs\nanoajax.min.js" />
     <Content Include="wwwroot\libs\prism.css" />
     <Content Include="wwwroot\libs\prism.js" />

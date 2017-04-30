@@ -30,8 +30,8 @@ parameters differently.</p>
 <p id="pragma-line-39">In this case action with <code>int[] i</code> will be called, regardless if there is one or more values provided for <code>i</code>.
 This way it's easier for middleware to decide which of the methods to call. Similar behavior can be encountered
 with overloading methods with parameters <code>int</code>, <code>int?</code>, <code>int[]</code> and <code>int?[]</code>. In order to decide which
-method to use, LiteApi will choose the method that can handle most of the edge cases. Here is the priority
-where top choice has the most priority:</p>
+method to use, LiteApi will choose the method that can handle most of the edge cases. Here is the priority list
+where top item has the most priority:</p>
 <ul id="pragma-line-45">
 <li id="pragma-line-45"><code>int?[]</code></li>
 <li id="pragma-line-46"><code>int?</code></li>

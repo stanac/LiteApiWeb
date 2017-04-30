@@ -30,9 +30,10 @@ IsHtml: true
 <div class='row'>
 
 <div class='col-md-4'>
-<span class='sub'>Lightweight</span>
+<span class='sub'>Fast</span>
 <br/>
 No rendering engine, only Web API with JSON support and planned extensibility points for other formats.
+Check <a href="/docs/performance">Performance comparison between MVC Core and LiteApi</a>.
 </div>
 
 <div class='col-md-4'>
@@ -81,6 +82,6 @@ Extensibility points are already here for some parts of the middleware, more wil
 <h3>Why?</h3>
 Why would someone write a middleware which features are already handled by ASP.NET Core MVC? <br/>
 - A large chunk of today's web apps are written as SPAs. From that perspective, server side rendering is not needed.
-That's where LiteApi steps in.
+With that in mind, LiteApi is lighter and <a href="/docs/performance">faster</a> than MVC Core.
 </div>
 </div>

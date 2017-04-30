@@ -45,10 +45,10 @@ will match `/api/books`.
 
 Actions are by default matched on name as in `/api/{controller}/{action}`.
 
-This behavior can be changed using `RestfulLinksAttribute` and `ActionRouteAttribute`:
+This behavior can be changed using `RestfulAttribute` and `ActionRouteAttribute`:
 
 ```csharp
-[RestfulLinks] 
+[Restful] 
 public class ActorsController : LiteController
 {
     // ... ctor and other code ...
@@ -67,11 +67,11 @@ public class BooksController : LiteController
 In this case actor can be retrieved on `/api/actors?id=5` and book can be retrieved using 
 `/api/books/get?id=5` URL.
 
-Using combination of `RestfulLinksAttribute` and `ActionRouteAttribute` we can create
+Using combination of `RestfulAttribute` and `ActionRouteAttribute` we can create
 RESTful API, where we cab retrieve book with id `5` with URL `/api/books/5`.
 
 ```csharp
-[RestfulLinks]
+[Restful]
 public class BooksController : LiteController
 {
     // ... ctor and other code ...

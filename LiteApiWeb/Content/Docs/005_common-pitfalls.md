@@ -97,7 +97,7 @@ your method. All complex parameters are by default consider to come from body.
 
 Parameter from route is defined but no matching route segment in found, here is an example of how to get this error (if you are so inclined).
 ```csharp
-[RestfulLinks]
+[Restful]
 public class PersonController: LiteController
 {
     [ActionRoute("/{personId}")] // notice that parameter name is different from parameter in method
@@ -110,7 +110,7 @@ public class PersonController: LiteController
 
 See previous error on this page and check example (make sure all parameters defined in `ActionRouteAttribute` has matching parameters in method).
 ```csharp
-[RestfulLinks]
+[Restful]
 public class PersonController: LiteController
 {
     [ActionRoute("/{type}/{id}")] // notice that parameter {type} is not defined in method

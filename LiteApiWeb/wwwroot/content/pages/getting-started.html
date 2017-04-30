@@ -226,11 +226,11 @@ do the job.</p>
 <h3 id="adding-the-controller"><a id="pragma-line-299"></a>Adding the controller</h3>
 <p id="pragma-line-301">Lets say our controller is second version of the API. In such case we can use <code>ControllerRouteAttribute</code>
 from <code>LiteApi.Attributes</code> namespace with appropriate route. If we want our actions to response to URLs
-without action names we should use <code>RestfulLinksAttribute</code>. Here is our controller which uses the
+without action names we should use <code>RestfulAttribute</code>. Here is our controller which uses the
 service we described above.</p>
-<pre><code id="pragma-line-306" class="language-csharp">// RestfulLinks will tell LiteApi to ignore action names when matching URL to action, 
+<pre><code id="pragma-line-306" class="language-csharp">// Restful will tell LiteApi to ignore action names when matching URL to action, 
 // ControllerRoute will tell LiteApi to use specified path to target the controller
-[RestfulLinks, ControllerRoute(&quot;/api/v2/actors&quot;)] 
+[Restful, ControllerRoute(&quot;/api/v2/actors&quot;)] 
 public class ActorsController : LiteController, IActorsService
 {
     private readonly IActorsService _service;
@@ -258,7 +258,7 @@ public class ActorsController : LiteController, IActorsService
 </code></pre>
 <p id="pragma-line-336">Few remarks on this controller:</p>
 <ul id="pragma-line-337">
-<li id="pragma-line-337"><code>RestfulLinks</code> will tell LiteApi to ignore action names when matching the URL to controller/action</li>
+<li id="pragma-line-337"><code>Restful</code> will tell LiteApi to ignore action names when matching the URL to controller/action</li>
 <li id="pragma-line-338"><code>ControllerRoute</code> can be used to alter the route of the controller</li>
 <li id="pragma-line-339">Following HTTP methods are supported: <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>DELETE</code>, more are coming in future releases</li>
 <li id="pragma-line-340"><code>HttpGet</code> attribute is optional</li>

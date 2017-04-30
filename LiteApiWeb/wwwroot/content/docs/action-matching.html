@@ -22,8 +22,8 @@ All attributes used in samples are located in <code>LiteApi.Attributes</code> na
 }
 </code></pre>
 <hr id="pragma-line-32" />
-<p id="pragma-line-34">Action name can be omitted in case when <code>LiteApi.Attributes.RestfulLinks</code> is set on controller.</p>
-<pre><code id="pragma-line-36" class="language-csharp">[RestfulLinks]
+<p id="pragma-line-34">Action name can be omitted in case when <code>LiteApi.Attributes.RestfulAttribute</code> is set on controller.</p>
+<pre><code id="pragma-line-36" class="language-csharp">[Restful]
 public class PersonsController: LiteController
 {
     // responds to GET /api/persons?id=5
@@ -31,8 +31,8 @@ public class PersonsController: LiteController
 }
 </code></pre>
 <hr id="pragma-line-45" />
-<p id="pragma-line-47">By combining <code>RestfulLinksAttribute</code> and <code>ActionRouteAttribute</code> it's possible to get action to respond to RESTful URL: <code>/api/persons/{id}</code>.</p>
-<pre><code id="pragma-line-49" class="language-csharp">[RestfulLinks]
+<p id="pragma-line-47">By combining <code>RestfulAttribute</code> and <code>ActionRouteAttribute</code> it's possible to get action to respond to RESTful URL: <code>/api/persons/{id}</code>.</p>
+<pre><code id="pragma-line-49" class="language-csharp">[Restful]
 public class PersonsController: LiteController
 {
     // responds to GET /api/persons/5
@@ -45,7 +45,7 @@ public class PersonsController: LiteController
 <h2 id="action-matching-by-http-method"><a id="pragma-line-63"></a>Action matching by HTTP method</h2>
 <p id="pragma-line-65">In all examples above actions are responding to HTTP <code>GET</code> methods. By default if method is public it's
 considered to be HTTP <code>GET</code> method. We can explicitly set which method our action should respond to.</p>
-<pre><code id="pragma-line-68" class="language-csharp">[RestfulLinks]
+<pre><code id="pragma-line-68" class="language-csharp">[Restful]
 public class PersonsController: LiteController
 {
     // responds to GET /api/persons/5
@@ -73,7 +73,7 @@ added please open ticket on <a href="https://github.com/stanac/shutdown/issues/n
 <code>async void</code> return type. If something like that is needed please use <code>async Task</code> methods. Of course
 actions can return any complex or primitive type you like.</p>
 <p id="pragma-line-102">Task can be awaited but they don't have to, you can simply return a task and LiteApi will await it. Some samples:</p>
-<pre><code id="pragma-line-104" class="language-csharp">[RestfulLinks]
+<pre><code id="pragma-line-104" class="language-csharp">[Restful]
 public class PersonsController: LiteController
 {
     // responds to GET /api/persons/5

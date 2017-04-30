@@ -25,8 +25,8 @@ public class BooksController : LiteController
 will match <code>/api/books</code>.</p>
 <h2 id="actions"><a id="pragma-line-35"></a>Actions</h2>
 <p id="pragma-line-37">Actions are by default matched on name as in <code>/api/{controller}/{action}</code>.</p>
-<p id="pragma-line-39">This behavior can be changed using <code>RestfulLinksAttribute</code> and <code>ActionRouteAttribute</code>:</p>
-<pre><code id="pragma-line-41" class="language-csharp">[RestfulLinks] 
+<p id="pragma-line-39">This behavior can be changed using <code>RestfulAttribute</code> and <code>ActionRouteAttribute</code>:</p>
+<pre><code id="pragma-line-41" class="language-csharp">[Restful] 
 public class ActorsController : LiteController
 {
     // ... ctor and other code ...
@@ -43,9 +43,9 @@ public class BooksController : LiteController
 </code></pre>
 <p id="pragma-line-58">In this case actor can be retrieved on <code>/api/actors?id=5</code> and book can be retrieved using
 <code>/api/books/get?id=5</code> URL.</p>
-<p id="pragma-line-61">Using combination of <code>RestfulLinksAttribute</code> and <code>ActionRouteAttribute</code> we can create
+<p id="pragma-line-61">Using combination of <code>RestfulAttribute</code> and <code>ActionRouteAttribute</code> we can create
 RESTful API, where we cab retrieve book with id <code>5</code> with URL <code>/api/books/5</code>.</p>
-<pre><code id="pragma-line-64" class="language-csharp">[RestfulLinks]
+<pre><code id="pragma-line-64" class="language-csharp">[Restful]
 public class BooksController : LiteController
 {
     // ... ctor and other code ...

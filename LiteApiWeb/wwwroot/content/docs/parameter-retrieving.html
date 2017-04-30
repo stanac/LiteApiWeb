@@ -1,5 +1,88 @@
 
 <div class='user-content'>
 <h1 id="parameter-retrieving"><a id="pragma-line-1"></a>Parameter retrieving</h1>
+<p id="pragma-line-3">Parameters can be retrieved from:</p>
+<ul id="pragma-line-4">
+<li id="pragma-line-4">Query</li>
+<li id="pragma-line-5">Route segment</li>
+<li id="pragma-line-6">Body</li>
+<li id="pragma-line-7">Header</li>
+<li id="pragma-line-8">DI container</li>
+</ul>
+<p id="pragma-line-10">If you like to be explicite, you can use on parameter level one of the attributes:</p>
+<ul id="pragma-line-12">
+<li id="pragma-line-12"><code>LiteApi.Attributes.FromQueryAttribute</code> (previously in v &lt;= 0.7.2 <code>FromUrlAttribute</code>)</li>
+<li id="pragma-line-13"><code>LiteApi.Attributes.FromRouteAttribute</code></li>
+<li id="pragma-line-14"><code>LiteApi.Attributes.FromBodyAttribute</code></li>
+<li id="pragma-line-15"><code>LiteApi.Attributes.FromHeaderAttribute</code></li>
+<li id="pragma-line-16"><code>LiteApi.Attributes.FromServicesAttribute</code></li>
+</ul>
+<h2 id="convetions"><a id="pragma-line-18"></a>Convetions</h2>
+<p id="pragma-line-20">All primitive type parameters without one of the attributes, as well arrays, dictionaries, and nullable variants of
+primitive types are considered to come from query. For more info check <a href="/docs/parameters-supported-types">Supported types</a>.
+All parameters of complex types are considered to come from body.</p>
+<pre><code id="pragma-line-24" class="language-csharp">[Restful]
+public class ActorsController: LiteController
+{
+    private readonly ActorService _service = new ActorService();
+
+    // id is retrieved from query as in /api/actors?id=5
+    public ActorModel Get(int id) =&gt; _service.Get(id);
+
+    // model is comming from body
+    public ActorModel Post(ActorModel model) =&gt; _service.Add(model);
+}
+</code></pre>
+<p id="pragma-line-38">Controller from code above is same as the next one, only difference is that we are
+setting source of parameter values explicitly.</p>
+<pre><code id="pragma-line-41" class="language-csharp">[Restful]
+public class ActorsController: LiteController
+{
+    private readonly ActorService _service = new ActorService();
+
+    // id is retrieved from query as in /api/actors?id=5
+    public ActorModel Get([FromQuery] int id) =&gt; _service.Get(id);
+
+    // model is comming from body
+    public ActorModel Post([FromBody] ActorModel model) =&gt; _service.Add(model);
+}
+</code></pre>
+<p id="pragma-line-55">For more information you can check (From query)[/docs/parameter-retrieving-from-query]
+and (From body)[/docs/parameter-retrieving-from-body].</p>
+<hr id="pragma-line-58" />
+<p id="pragma-line-60">All simple type parameters that have matching names in route segments are considered
+to be retrieved from route segment.</p>
+<pre><code id="pragma-line-63" class="language-csharp">[Restful]
+public class ActorsController: LiteController
+{
+    private readonly ActorService _service = new ActorService();
+
+    // id is retrieved from query as in /api/actors/5
+    [ActionRoute(&quot;/{id}&quot;)]
+    public ActorModel Get(int id) =&gt; _service.Get(id);
+}
+</code></pre>
+<p id="pragma-line-75">Controller from code above is same as the next one, only difference is that we are
+setting source of parameter value explicitly.</p>
+<pre><code id="pragma-line-78" class="language-csharp">[Restful]
+public class ActorsController: LiteController
+{
+    private readonly ActorService _service = new ActorService();
+
+    // id is retrieved from query as in /api/actors/5
+    [ActionRoute(&quot;/{id}&quot;)]
+    public ActorModel Get([FromRoute] int id) =&gt; _service.Get(id);
+}
+</code></pre>
+<p id="pragma-line-90">For more information check <a href="/docs/parameter-retrieving-from-route-segment">From route segment</a> page.</p>
+<hr id="pragma-line-92" />
+<p id="pragma-line-94">Related docs:</p>
+<ul id="pragma-line-95">
+<li id="pragma-line-95"><a href="/docs/parameter-retrieving-from-header">Retrieving parameters from header</a></li>
+<li id="pragma-line-96"><a href="/docs/parameter-retrieving-from-service-provider">Retrieving parameters from service provider (DI container)</a></li>
+<li id="pragma-line-97"><a href="/docs/parameters-retrieving-arrays">Retrieving arrays, lists and IEnumerable<T></a></li>
+<li id="pragma-line-98"><a href="/docs/parameters-retrieving-dictionaries">Retrieving Dictionary&lt;TKey, TValue&gt; and IDictionary&lt;TKey, TValue&gt;</a></li>
+<li id="pragma-line-99"><a href="/docs/custom-parameter-provider">Creating custom parameters provider</a></li>
+</ul>
 
 </div>

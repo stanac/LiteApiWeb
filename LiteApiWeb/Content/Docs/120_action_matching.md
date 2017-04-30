@@ -41,10 +41,10 @@ public class PersonsController: LiteController
 
 ---
 
-Action name can be omitted in case when `LiteApi.Attributes.RestfulLinks` is set on controller.
+Action name can be omitted in case when `LiteApi.Attributes.RestfulAttribute` is set on controller.
 
 ```csharp
-[RestfulLinks]
+[Restful]
 public class PersonsController: LiteController
 {
     // responds to GET /api/persons?id=5
@@ -54,10 +54,10 @@ public class PersonsController: LiteController
 
 ---
 
-By combining `RestfulLinksAttribute` and `ActionRouteAttribute` it's possible to get action to respond to RESTful URL: `/api/persons/{id}`.
+By combining `RestfulAttribute` and `ActionRouteAttribute` it's possible to get action to respond to RESTful URL: `/api/persons/{id}`.
 
 ```csharp
-[RestfulLinks]
+[Restful]
 public class PersonsController: LiteController
 {
     // responds to GET /api/persons/5
@@ -76,7 +76,7 @@ In all examples above actions are responding to HTTP `GET` methods. By default i
 considered to be HTTP `GET` method. We can explicitly set which method our action should respond to.
 
 ```csharp
-[RestfulLinks]
+[Restful]
 public class PersonsController: LiteController
 {
     // responds to GET /api/persons/5
@@ -112,7 +112,7 @@ actions can return any complex or primitive type you like.
 Task can be awaited but they don't have to, you can simply return a task and LiteApi will await it. Some samples:
 
 ```csharp
-[RestfulLinks]
+[Restful]
 public class PersonsController: LiteController
 {
     // responds to GET /api/persons/5
