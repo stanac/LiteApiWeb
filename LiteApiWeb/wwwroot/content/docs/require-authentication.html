@@ -1,5 +1,36 @@
 
 <div class='user-content'>
 <h1 id="require-authentication"><a id="pragma-line-1"></a>Require authentication</h1>
+<p id="pragma-line-3"><code>LiteApi.Attributes.RequiresAuthenticationAttribute</code> is simplest of all
+authorization filters. It requires for user to be logged in and authenticated
+when calling the controller or action.</p>
+<p id="pragma-line-7">As all other filters <code>Requires...Attribute</code> can be applied to
+controller, action or as <a href="/docs/global-filters">Global filter</a> (global filters will be implemented in v0.9).</p>
+<pre><code id="pragma-line-10" class="language-csharp">// all actions in this controller except Login require authentication
+[RequiresAuthentication]
+public class UserController: LiteController
+{
+    public User GetLoggedInUser() =&gt; _service.GetCurrent(this.HttpContext);
+
+    [HttpPost]
+    public bool Logout() =&gt; _service.Logout(this.HttpContext);
+
+    [HttpPost, SkipFilters]
+    public LoginResultModel Login(LoginModel model) =&gt; _service.Login(model, this.HttpContext);
+}
+
+
+
+// Only add action requires authentication
+public class PersonsController: LiteController
+{
+    public PersonModel Get(int id) =&gt; _service.Get(id);
+
+    public IEnumerable&lt;PersonModel&gt; All() =&gt; _service.All();
+
+    [HttpPost, RequiresAuthentication]
+    public PersonModel Add(PersonModel model) =&gt; _service.Add(model);
+}
+</code></pre>
 
 </div>

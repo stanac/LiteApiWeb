@@ -62,7 +62,7 @@ public class BooksController: LiteController
 ```
 
 Default behaviour is usually what is needed in most scenarios where user can
-access some `Login` action but has to do it over `HTTPS`.
+anonymously access some `Login` action but has to do it over `HTTPS`.
 
 ---
 
@@ -79,3 +79,5 @@ public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerF
         );
 }
 ```
+
+`SkipFilterAttribute` does not affect global settings in any way.

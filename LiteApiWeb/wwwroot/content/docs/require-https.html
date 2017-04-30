@@ -45,7 +45,7 @@ public class BooksController: LiteController
 }
 </code></pre>
 <p id="pragma-line-54">Default behaviour is usually what is needed in most scenarios where user can
-access some <code>Login</code> action but has to do it over <code>HTTPS</code>.</p>
+anonymously access some <code>Login</code> action but has to do it over <code>HTTPS</code>.</p>
 <hr id="pragma-line-57" />
 <h2 id="require-https-on-middleware"><a id="pragma-line-59"></a>Require HTTPS on middleware</h2>
 <p id="pragma-line-61">LiteApi can be configurated to require HTTPS on all actions in the middleware by
@@ -57,5 +57,6 @@ calling <code>LiteApiOptions.SetRequiresHttps</code> in <code>Startup.Configure<
         );
 }
 </code></pre>
+<p id="pragma-line-73"><code>SkipFilterAttribute</code> does not affect global settings in any way.</p>
 
 </div>

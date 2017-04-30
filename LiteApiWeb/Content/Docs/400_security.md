@@ -13,6 +13,12 @@ LiteApi handles authorization and require HTTPS options. Authentication is handl
 by other middlewares. For example of integrating cookie based authentication with LiteApi
 check [sample on GitHub](https://github.com/stanac/LiteApi/tree/master/LiteApi/LiteApi.AuthSample).
 
+Security in LiteApi (require HTTPS and authorization) is implemented using filters.
+Filters can be created by implementing 
+`IApiFilter` or `IApiFilterAsync` (both in `LiteApi.Contracts.Abstractions` namespace).
+Your custom filter can inherit `System.Attribute` and be used on controller, action
+or as [Global filter](/docs/global-filters).
+
 ## Require HTTPS
 
 Require HTTPS can be set on controller level, action level or middleware level by

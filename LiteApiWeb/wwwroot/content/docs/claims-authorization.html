@@ -1,5 +1,86 @@
 
 <div class='user-content'>
-<h1 id="claims-authorization"><a id="pragma-line-1"></a>Claims authorization</h1>
+<h1 id="claims-based-authorization"><a id="pragma-line-1"></a>Claims based authorization</h1>
+<p id="pragma-line-3">There are four claim based authorization attributes. All can be applied to
+controllers, actions or as <a href="/docs/global-filters">Global filters</a> (global filters
+will be implemented in v0.9).</p>
+<p id="pragma-line-7">All attributes can be combined, such as if more than one attribute is set on
+controller or action, all attribute checks must be satisfied in order for user
+to get access to controller/action.</p>
+<p id="pragma-line-11">All attributes are located in <code>LiteApi.Attributes</code> namespace.</p>
+<h2 id="requiresclaimsattribute"><a id="pragma-line-13"></a>RequiresClaimsAttribute</h2>
+<p id="pragma-line-15">This attribute requires calling user to have all required claims (one or more claims
+can be set in the attribute).</p>
+<pre><code id="pragma-line-18" class="language-csharp">// constructor
+public RequiresClaimsAttribute(params string[] claims)
+</code></pre>
+<pre><code id="pragma-line-23" class="language-csharp">public class PersonsController: LiteController
+{
+    [RequiresClaims(&quot;GetPerson&quot;)] // &quot;GetPerson&quot; is claim type, values of the claim are not checked
+    public Person Get(int id) =&gt; _service.Get(id);
+
+    [HttpPost]
+    [RequiresClaims(&quot;GetPeson&quot;, &quot;SetPerson&quot;)] 
+    // &quot;GetPerson&quot; and &quot;SetPerson&quot; are claim types, values of the claims are not checked
+    // User needs to have all of the claim types in order to access this action
+    public Person Add(Person model) =&gt; _service.Add(model);
+}
+</code></pre>
+<p id="pragma-line-37">Developer needs to provide at least one claim type in constructor of this attribute.
+None of the provided claims (to constructor) can be null or empty or white space.</p>
+<h2 id="requiresanyclaimattribute"><a id="pragma-line-40"></a>RequiresAnyClaimAttribute</h2>
+<p id="pragma-line-42">This attribute requires calling user to have any of the provided claim types (one or more claims
+can be set in the attribute).</p>
+<pre><code id="pragma-line-45" class="language-csharp">// constructor
+public RequiresAnyClaimAttribute(params string[] claims)
+</code></pre>
+<pre><code id="pragma-line-50" class="language-csharp">public class PersonsController: LiteController
+{
+    [RequiresAnyClaim(&quot;GetPerson&quot;, &quot;GlobalGet&quot;)] 
+    // &quot;GetPerson&quot; and &quot;GlobalGet&quot; are claim types, values of the claims are not checked
+    // User needs to have at least one of the claim types in order to access this action
+    public Person Get(int id) =&gt; _service.Get(id);
+
+    [HttpPost]
+    [RequiresAnyClaim(&quot;SetPerson&quot;, &quot;GlobalSet&quot;)] 
+    // &quot;GetPerson&quot; and &quot;SetPerson&quot; are claim types, values of the claims are not checked
+    // User needs to have at least one of the claim types in order to access this action
+    public Person Add(Person model) =&gt; _service.Add(model);
+}
+</code></pre>
+<p id="pragma-line-66">Developer needs to provide at least one claim type in constructor of this attribute.
+None of the provided claims (to constructor) can be null or empty or white space.</p>
+<h2 id="requiresclaimwithvaluesattribute"><a id="pragma-line-69"></a>RequiresClaimWithValuesAttribute</h2>
+<p id="pragma-line-71">This attribute requires calling user to have specific claim with all of the claim
+values provided in the attribute constructor.</p>
+<pre><code id="pragma-line-74" class="language-csharp">// constructor
+public RequiresClaimWithValuesAttribute(string claimType, params string[] claimValues)
+</code></pre>
+<pre><code id="pragma-line-79" class="language-csharp">public class PersonsController: LiteController
+{
+    [RequiresClaimWithValues(&quot;ReadAccess&quot;, &quot;person&quot;, &quot;entity&quot;)]
+    // User must have claim &quot;ReadAccess&quot; with both &quot;person&quot; value and &quot;entity&quot; value
+    public Person Get(int id) =&gt; _service.Get(id);
+}
+</code></pre>
+<p id="pragma-line-87">Developer needs to provide claim type and at least one claim value
+in constructor of this attribute.
+None of the provided parameters (to constructor) can be null or empty or white space.</p>
+<h2 id="requiresclaimwithanyvalueattribute"><a id="pragma-line-91"></a>RequiresClaimWithAnyValueAttribute</h2>
+<p id="pragma-line-93">This attribute requires calling user to have specific claim with
+any of the claim values provided in the attribute constructor.</p>
+<pre><code id="pragma-line-96" class="language-csharp">// constructor
+public RequiresClaimWithAnyValueAttribute(string claimType, params string[] claimValues) 
+</code></pre>
+<pre><code id="pragma-line-101" class="language-csharp">public class PersonsController: LiteController
+{
+    [RequiresClaimWithAnyValue(&quot;ReadAccess&quot;, &quot;person&quot;, &quot;entity&quot;)]
+    // User must have claim &quot;ReadAccess&quot; with &quot;person&quot; value or &quot;entity&quot; value
+    public Person Get(int id) =&gt; _service.Get(id);
+}
+</code></pre>
+<p id="pragma-line-109">Developer needs to provide claim type and at least one claim value
+in constructor of this attribute.
+None of the provided parameters (to constructor) can be null or empty or white space.</p>
 
 </div>

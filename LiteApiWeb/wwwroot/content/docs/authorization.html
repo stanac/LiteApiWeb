@@ -1,5 +1,43 @@
 
 <div class='user-content'>
 <h1 id="authorization"><a id="pragma-line-1"></a>Authorization</h1>
+<p id="pragma-line-3">Authorization is implemented using one or more attributes (all located in <code>LiteApi.Attributes</code>
+namespace):</p>
+<ul id="pragma-line-5">
+<li id="pragma-line-5">RequiresAuthentication</li>
+<li id="pragma-line-6">RequiresAuthorizationPolicy</li>
+<li id="pragma-line-7">RequiresClaims</li>
+<li id="pragma-line-8">RequiresAnyClaim</li>
+<li id="pragma-line-9">RequiresClaimWithValues</li>
+<li id="pragma-line-10">RequiresClaimWithAnyValue</li>
+<li id="pragma-line-11">RequiresRoles</li>
+<li id="pragma-line-12">RequiresAnyRole</li>
+</ul>
+<p id="pragma-line-14">Authorization can also be implemented using <a href="/docs/custom-authorization">Custom attribute</a>.</p>
+<p id="pragma-line-16">For more information check one of the related pages:</p>
+<ul id="pragma-line-17">
+<li id="pragma-line-17"><a href="/docs/require-authentication">Require authentication</a></li>
+<li id="pragma-line-18"><a href="/docs/claims-authorization">Claims based authorization</a></li>
+<li id="pragma-line-19"><a href="/docs/roles-authorization">Roles based authorization</a></li>
+<li id="pragma-line-20"><a href="/docs/policy-authorization">Policy based authorization</a></li>
+<li id="pragma-line-21"><a href="/docs/custom-authorization">Custom authorization</a></li>
+</ul>
+<p id="pragma-line-23">All authorization attributes (<code>Requires...Attribute</code>) are first checking
+if user is authenticated and then performing attribute specific check.</p>
+<h2 id="skiping-authorization-on-action"><a id="pragma-line-26"></a>Skiping authorization on action</h2>
+<p id="pragma-line-28">Authorization filters on controller level can be ignored using <code>SkipFiltersAttribute</code>
+as in following example:</p>
+<pre><code id="pragma-line-31" class="language-csharp">[RequiresAuthentication]
+public class UserController: LiteController
+{
+    public User GetLoggedInUser() =&gt; _service.GetCurrent(this.HttpContext);
+
+    [HttpPost]
+    public bool Logout() =&gt; _service.Logout(this.HttpContext);
+
+    [HttpPost, SkipFilters] // all actions in this controller except this one require authentication
+    public LoginResultModel Login(LoginModel model) =&gt; _service.Login(model, this.HttpContext);
+}
+</code></pre>
 
 </div>

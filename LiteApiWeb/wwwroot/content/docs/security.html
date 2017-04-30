@@ -4,13 +4,18 @@
 <p id="pragma-line-3">LiteApi handles authorization and require HTTPS options. Authentication is handled
 by other middlewares. For example of integrating cookie based authentication with LiteApi
 check <a href="https://github.com/stanac/LiteApi/tree/master/LiteApi/LiteApi.AuthSample">sample on GitHub</a>.</p>
-<h2 id="require-https"><a id="pragma-line-7"></a>Require HTTPS</h2>
-<p id="pragma-line-9">Require HTTPS can be set on controller level, action level or middleware level by
+<p id="pragma-line-7">Security in LiteApi (require HTTPS and authorization) is implemented using filters.
+Filters can be created by implementing
+<code>IApiFilter</code> or <code>IApiFilterAsync</code> (both in <code>LiteApi.Contracts.Abstractions</code> namespace).
+Your custom filter can inherit <code>System.Attribute</code> and be used on controller, action
+or as <a href="/docs/global-filters">Global filter</a>.</p>
+<h2 id="require-https"><a id="pragma-line-13"></a>Require HTTPS</h2>
+<p id="pragma-line-15">Require HTTPS can be set on controller level, action level or middleware level by
 using <code>LiteApi.Attributes.RequiresHttpsAttribute</code> or by setting <code>LiteApiOptions</code>
 when registering middleware.
 For more information please check <a href="/docs/require-https">Require HTTPS</a>.</p>
-<h2 id="authorization"><a id="pragma-line-14"></a>Authorization</h2>
-<p id="pragma-line-16">Authorization is done with <code>Requires...Attribute</code> on controller or action level.
+<h2 id="authorization"><a id="pragma-line-20"></a>Authorization</h2>
+<p id="pragma-line-22">Authorization is done with <code>Requires...Attribute</code> on controller or action level.
 For more information please check <a href="/docs/authorization">Authorization</a>.
 Authorization can be implemented on middleware level using
 <a href="/docs/global-filters">Global filters (to be implemented)</a>.</p>
