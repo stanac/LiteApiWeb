@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -185,7 +185,7 @@ module.exports = {
 
 
 module.exports = {
-    template: '<h2>LiteApi blog<h2> <div class="alert alert-info">  In development</div>'
+    template: "\n<div class=\"row off-top\">\n    <h2> LiteApi blog<h2> <div class=\"alert alert-info\"> In development</div>\n\n</div>"
 };
 
 /***/ }),
@@ -202,7 +202,7 @@ module.exports = {
     route: {
         canReuse: false
     },
-    template: '\n<div class="row off-top">\n    <div class="col-md-3">\n        <ul class="treeListRoot">\n            <template v-for="item in treeData">\n                <treeitem :model="item"></treeitem>\n            </template>\n        </ul>\n    </div>\n\n    <div v-html="docsHtml" class="col-md-9"></div>\n</div>',
+    template: '\n<div class="row off-top">\n    <div class="col-md-3">\n        <ul class="treeListRoot">\n            <li class="treeListItem">\n                <router-link to="/api-docs/">API documentation</router-link>\n            </li>\n            <template v-for="item in treeData">\n                <treeitem :model="item"></treeitem>\n            </template>\n        </ul>\n    </div>\n\n    <div v-html="docsHtml" class="col-md-9"></div>\n</div>',
     data: function data() {
         return {
             docsHtml: 'loading...',
@@ -261,140 +261,6 @@ module.exports = {
 
 
 var services = __webpack_require__(0);
-var codeHelpers = __webpack_require__(1);
-
-module.exports = {
-    data: function data() {
-        return {
-            html: 'loading...'
-        };
-    },
-
-    template: '<div class="off-top row" v-html="html"></div>',
-    created: function created() {
-        this.loadData();
-    },
-
-    methods: {
-        loadData: function loadData() {
-            var _this = this;
-
-            services.pageService.get('getting-started', function (response) {
-                _this.html = response;
-
-                codeHelpers.highlight();
-            });
-        }
-    }
-};
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var services = __webpack_require__(0);
-
-module.exports = {
-    data: function data() {
-        return {
-            html: 'loading...'
-        };
-    },
-
-    template: '\n<div>\n    <div class="off-top" v-html="html"></div>\n</div>',
-    created: function created() {
-        this.loadData();
-    },
-
-    methods: {
-        loadData: function loadData() {
-            var _this = this;
-
-            services.pageService.get('home', function (response) {
-                _this.html = response;
-
-                setTimeout(function (_) {
-                    _this.isLoading = false;
-                }, 1500);
-            });
-        }
-    }
-};
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _gettingStarted = __webpack_require__(4);
-
-var GettingStarted = _interopRequireWildcard(_gettingStarted);
-
-var _docs = __webpack_require__(3);
-
-var Docs = _interopRequireWildcard(_docs);
-
-var _home = __webpack_require__(5);
-
-var Home = _interopRequireWildcard(_home);
-
-var _blog = __webpack_require__(2);
-
-var Blog = _interopRequireWildcard(_blog);
-
-var _docsSearch = __webpack_require__(7);
-
-var DocsSearch = _interopRequireWildcard(_docsSearch);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-var routes = [{ path: '/', component: Home }, { path: '/getting-started', component: GettingStarted }, { path: '/docs/:id?', component: Docs }, { path: '/search/docs/:query', component: DocsSearch }, { path: '/blog', component: Blog }]; // 0. If using a module system, call Vue.use(VueRouter)
-
-var router = new VueRouter({
-    routes: routes,
-    mode: 'history'
-});
-
-window.vueRouter = router;
-
-var app = new Vue({
-    router: router
-}).$mount('#app');
-
-function initSearch(timeout) {
-    if (timeout > 5000) {
-        return;
-    }
-    if (window.$) {
-        var input = $('#navbar form input');
-        input.keypress(function (e) {
-            if (e.which == 13) {
-                var query = input.val();
-                window.vueRouter.push('/search/docs/' + (query || ''));
-                return false;
-            }
-        });
-    } else {
-        setTimeout(function () {
-            initSearch(timeout * 2);
-        }, timeout);
-    }
-}
-initSearch(50);
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var services = __webpack_require__(0);
 // var codeHelpers = require('./services/codeHelpers');
 
 module.exports = {
@@ -433,6 +299,155 @@ module.exports = {
             });
         }
     }
+};
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var services = __webpack_require__(0);
+var codeHelpers = __webpack_require__(1);
+
+module.exports = {
+    data: function data() {
+        return {
+            html: 'loading...'
+        };
+    },
+
+    template: '<div class="off-top row" v-html="html"></div>',
+    created: function created() {
+        this.loadData();
+    },
+
+    methods: {
+        loadData: function loadData() {
+            var _this = this;
+
+            services.pageService.get('getting-started', function (response) {
+                _this.html = response;
+
+                codeHelpers.highlight();
+            });
+        }
+    }
+};
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var services = __webpack_require__(0);
+var codeHelpers = __webpack_require__(1);
+
+module.exports = {
+    data: function data() {
+        return {
+            html: 'loading...'
+        };
+    },
+
+    template: '\n<div>\n    <div class="off-top" v-html="html"></div>\n</div>',
+    created: function created() {
+        this.loadData();
+    },
+
+    methods: {
+        loadData: function loadData() {
+            var _this = this;
+
+            services.pageService.get('home', function (response) {
+                _this.html = response;
+                codeHelpers.highlight();
+            });
+        }
+    }
+};
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _gettingStarted = __webpack_require__(5);
+
+var GettingStarted = _interopRequireWildcard(_gettingStarted);
+
+var _docs = __webpack_require__(3);
+
+var Docs = _interopRequireWildcard(_docs);
+
+var _home = __webpack_require__(6);
+
+var Home = _interopRequireWildcard(_home);
+
+var _blog = __webpack_require__(2);
+
+var Blog = _interopRequireWildcard(_blog);
+
+var _docsSearch = __webpack_require__(4);
+
+var DocsSearch = _interopRequireWildcard(_docsSearch);
+
+var _apiDocs = __webpack_require__(8);
+
+var ApiDocs = _interopRequireWildcard(_apiDocs);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+// 0. If using a module system, call Vue.use(VueRouter)
+
+var routes = [{ path: '/', component: Home }, { path: '/getting-started', component: GettingStarted }, { path: '/docs/:id?', component: Docs }, { path: '/search/docs/:query', component: DocsSearch }, { path: '/blog', component: Blog }, { path: '/api-docs', component: ApiDocs }];
+
+var router = new VueRouter({
+    routes: routes,
+    mode: 'history'
+});
+
+window.vueRouter = router;
+
+var app = new Vue({
+    router: router
+}).$mount('#app');
+
+function initSearch(timeout) {
+    if (timeout > 5000) {
+        return;
+    }
+    if (window.$) {
+        var input = $('#navbar form input');
+        input.keypress(function (e) {
+            if (e.which == 13) {
+                var query = input.val();
+                window.vueRouter.push('/search/docs/' + (query || ''));
+                return false;
+            }
+        });
+    } else {
+        setTimeout(function () {
+            initSearch(timeout * 2);
+        }, timeout);
+    }
+}
+initSearch(50);
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = {
+    template: "\n<div class=\"row off-top\">\n    <h2>API documentation<h2> <div class=\"alert alert-info\">In development</div>\n</div>"
 };
 
 /***/ })

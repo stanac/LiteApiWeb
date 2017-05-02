@@ -5,13 +5,15 @@ import * as Docs from './docs'
 import * as Home from './home'
 import * as Blog from './blog'
 import * as DocsSearch from './docsSearch'
+import * as ApiDocs from './apiDocs'
 
 const routes = [
     { path: '/', component: Home },
     { path: '/getting-started', component: GettingStarted },
     { path: '/docs/:id?', component: Docs },
     { path: '/search/docs/:query', component: DocsSearch },
-    { path: '/blog', component: Blog }
+    { path: '/blog', component: Blog },
+    { path: '/api-docs', component: ApiDocs }
 ]
 
 const router = new VueRouter({

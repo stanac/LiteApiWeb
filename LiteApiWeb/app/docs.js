@@ -9,6 +9,9 @@ module.exports = {
 <div class="row off-top">
     <div class="col-md-3">
         <ul class="treeListRoot">
+            <li class="treeListItem">
+                <router-link to="/api-docs/">API documentation</router-link>
+            </li>
             <template v-for="item in treeData">
                 <treeitem :model="item"></treeitem>
             </template>
@@ -40,7 +43,6 @@ module.exports = {
             services.docsService.get(id, (res) => {
                 this.docsHtml = res;
                 codeHelpers.highlight();
-
             });
         },
 

@@ -1,7 +1,7 @@
 ﻿---
 Author: stanac
 CreatedDate: 2017-03-30
-Title: Controller recognition
+Title: Controller registration
 RenderTitle: false
 IsHtml: false
 Id: controller-registration

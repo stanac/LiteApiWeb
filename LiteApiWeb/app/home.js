@@ -1,4 +1,5 @@
 ﻿var services = require('./services/httpService');
+var codeHelpers = require('./services/codeHelpers');
 
 module.exports = {
     data() {
@@ -17,10 +18,7 @@ module.exports = {
         loadData() {
             services.pageService.get('home', (response) => {
                 this.html = response;
-
-                setTimeout(_ => {
-                    this.isLoading = false;
-                }, 1500);
+                codeHelpers.highlight();
             });
         }
     }
