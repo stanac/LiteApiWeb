@@ -20,6 +20,7 @@ namespace LiteApiWeb
     {
         public readonly IConfigurationRoot _config;
         private readonly bool _enableFirstRunRender;
+        public static SearchCacheService DocsSearch { get; private set; }
 
         public Startup()
         {
@@ -57,6 +58,7 @@ namespace LiteApiWeb
             if (_enableFirstRunRender)
             {
                 RenderAllPages(env, app.ApplicationServices);
+                DocsSearch.Search("dream team bear tear").ToArray();
             }
 
             if (env.IsDevelopment())
@@ -112,9 +114,14 @@ namespace LiteApiWeb
 
         private void RenderAllPages(IHostingEnvironment env, IServiceProvider services)
         {
+            IDocsService docsService = services.GetService<IDocsService>();
+
             RenderAll<IPageService>(env, services, "pages");
             RenderAll<IDocsService>(env, services, "docs");
-            RenderDocsIndex(env, services.GetService<IDocsService>());
+            RenderDocsIndex(env, docsService);
+
+            string docsPath = Path.Combine(env.ContentRootPath, "wwwroot", "content", "docs");
+            DocsSearch = new SearchCacheService(docsPath, docsService);
         }
 
         private void RenderAll<T>(IHostingEnvironment env, IServiceProvider services, string path)
