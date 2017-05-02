@@ -1,5 +1,21 @@
 
 <div class='user-content'>
 <h1 id="parameter-retrieving-from-service-provider"><a id="pragma-line-1"></a>Parameter retrieving from service provider</h1>
+<p id="pragma-line-3">Sometimes there is just one action in controller that depends on a service.
+In order to avoid injecting the service for all action calls in that
+controller we can inject the service only when appropriate action
+method is called. This can be done using <code>FromServicesAttribute</code>
+(located in <code>LiteApi.Attributes</code> namespace) which should be set on
+parameter level. Here is an example:</p>
+<pre><code id="pragma-line-10" class="language-csharp">public int Add(int a, int b, [FromServices]IMathOps theService)  
+{
+    return theService.Add(a, b);
+}
+</code></pre>
+<p id="pragma-line-17">It should be noted that you can have regular parameters from body/query/route/header
+next to your dependency-injected parameter, order of parameters is not important.
+Dependency-injected parameter is resolved from IServiceProvider, so any service
+that is registered on app level can be retrieved this way. It is possible to
+injected more than one parameter this way.</p>
 
 </div>

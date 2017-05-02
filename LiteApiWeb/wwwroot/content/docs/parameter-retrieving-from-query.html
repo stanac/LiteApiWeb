@@ -1,6 +1,58 @@
 
 <div class='user-content'>
 <h1 id="parameter-retrieving-from-query"><a id="pragma-line-1"></a>Parameter retrieving from query</h1>
-<p id="pragma-line-3">@@</p>
+<p id="pragma-line-3">All simple types (check <a href="/docs/parameters-supported-types">supported types</a>)
+can be received from query as well as following types where <code>T</code>, <code>TKey</code>
+and <code>TValue</code> are simple types.</p>
+<ul id="pragma-line-7">
+<li id="pragma-line-7"><code>IEnumerable&lt;T&gt;</code></li>
+<li id="pragma-line-8"><code>List&lt;T&gt;</code></li>
+<li id="pragma-line-9"><code>T[]</code></li>
+<li id="pragma-line-10"><code>Dictionary&lt;TKey, TValue&gt;</code></li>
+<li id="pragma-line-11"><code>IDictionary&lt;TKey, TValue&gt;</code></li>
+<li id="pragma-line-12"><code>Nullable&lt;T&gt;</code></li>
+</ul>
+<p id="pragma-line-14">For collections check:</p>
+<ul id="pragma-line-15">
+<li id="pragma-line-15"><a href="/docs/parameters-retrieving-arrays">Retrieving collections</a></li>
+<li id="pragma-line-16"><a href="/docs/parameters-retrieving-dictionaries">Retrieving dictionaries</a></li>
+</ul>
+<p id="pragma-line-18">By default all query-supported types are received from query. We can also explicitly
+say that parameter is from query with <code>LiteApi.Attributes.FromQueryAttribute</code>.
+Parameter name must match query key, matching is done in case insensitive manner.</p>
+<h2 id="samples"><a id="pragma-line-22"></a>Samples</h2>
+<p id="pragma-line-24">Following two samples are equivalent.</p>
+<pre><code id="pragma-line-26" class="language-csharp">[Restful]
+public class ActorsController: LiteController
+{
+    // id is retrieved from query as in /api/actors?id=5
+    public ActorModel Get([FromQuery] int id) =&gt; _service.Get(id);
+}
+</code></pre>
+<pre><code id="pragma-line-35" class="language-csharp">[Restful]
+public class ActorsController: LiteController
+{
+    // id is retrieved from query as in /api/actors?id=5
+    public ActorModel Get(int id) =&gt; _service.Get(id);
+}
+</code></pre>
+<h2 id="working-with-nullable-parameters"><a id="pragma-line-45"></a>Working with nullable parameters</h2>
+<p id="pragma-line-47">In order for action to receive null as parameter value, parameter must be
+<code>Nullable&lt;T&gt;</code> (e.g. <code>int?</code>) where <code>T</code> is any of the previously listed
+types with exception of <code>string</code>. For example in query we can have action
+like in the sample below.</p>
+<p id="pragma-line-52">For action to receive null, we must provide name of the parameter in query
+and empty string as value of the parameter.
+If parameter name is missing exception will be thrown.</p>
+<pre><code id="pragma-line-56" class="language-csharp">public class MathController: LiteController
+{
+    // /api/math/zeroOrValue?n=
+    //      returns 0, n will be null 
+    //
+    // /api/math/zeroOrValue
+    //      throws exception, parameter is not provided
+    public int ZeroOrValue(int? n) =&gt; n ?? 0;
+}
+</code></pre>
 
 </div>

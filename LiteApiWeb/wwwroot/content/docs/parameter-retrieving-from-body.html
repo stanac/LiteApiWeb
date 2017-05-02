@@ -1,5 +1,39 @@
 
 <div class='user-content'>
 <h1 id="parameter-retrieving-from-body"><a id="pragma-line-1"></a>Parameter retrieving from body</h1>
+<p id="pragma-line-3">All parameter types can be retrieved from body, condition is that there is
+no more than one parameter expected from body in single action.
+By convention all complex parameter types (for
+simple parameter types check <a href="/docs/parameters-supported-types">Supported types</a>)
+are expected to come from body.</p>
+<p id="pragma-line-9">LiteApi is currently supporting only JSON, so body parameter needs to be JSON serialized.
+If we want to be explicit we can use <code>LiteApi.Attributes.FromBodyAttribute</code>
+to specify that parameter is coming from body. Same attribute needs to be used
+if we want to provide simple-type parameter via body.</p>
+<p id="pragma-line-14">Following two samples are equivalent since <code>PersonModel</code> is complex type.</p>
+<pre><code id="pragma-line-16" class="language-csharp">[Restful]
+public class PersonsController: LiteController
+{
+    [HttpPost]
+    public PersonModel Add(PersonModel model) =&gt; _service.Add(model);
+}
+</code></pre>
+<pre><code id="pragma-line-25" class="language-csharp">[Restful]
+public class PersonsController: LiteController
+{
+    [HttpPost]
+    public PersonModel Add([FromBody] PersonModel model) =&gt; _service.Add(model);
+}
+</code></pre>
+<p id="pragma-line-34">Following sample shows how to set source of simple-type parameter to be from body.</p>
+<pre><code id="pragma-line-36" class="language-csharp">[Restful]
+public class InternalSearchController: LiteController
+{
+    [HttpPost]
+    // in this case [FromBodyAttribute] is necessary because
+    // we want to receive simple type parameter from body
+    public SearchResult Search([FromBody] string searchTerm) =&gt; _service.Search(searchTerm);
+}
+</code></pre>
 
 </div>

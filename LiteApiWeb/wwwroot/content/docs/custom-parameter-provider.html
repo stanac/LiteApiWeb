@@ -1,5 +1,107 @@
 
 <div class='user-content'>
 <h1 id="custom-parameter-provider"><a id="pragma-line-1"></a>Custom parameter provider</h1>
+<p id="pragma-line-3">If support for additional parameter types from query is needed, developer can
+implement <code>LiteApi.Contracts.Abstractions.IQueryModelBinder</code> or inherit
+<code>LiteApi.Services.ModelBinders.BasicQueryModelBinder</code> and override
+appropriate methods. After custom query binder is implement it needs to be
+registered with <code>LiteApiOptions</code> when registering the middleware.
+When declaring parameters supported by custom binder, they need to have
+<code>FromQuery</code> attribute declared (as in the controller at the end of the page).</p>
+<p id="pragma-line-11">In sample below we will implement custom query binder for <code>Stack&lt;T&gt;</code>.</p>
+<p id="pragma-line-13">First we need to implement custom binder by inheriting <code>BasicQueryModelBinder</code>.</p>
+<h2 id="creating-custom-binder"><a id="pragma-line-15"></a>Creating custom binder</h2>
+<p id="pragma-line-17">Easiest way to implement custom binder is to inherit <code>BasicQueryModelBinder</code>.
+<code>BasicQueryModelBinder</code> already knows how to parse simple types and nullable simple
+types.</p>
+<p id="pragma-line-21">In <code>BasicQueryModelBinder</code> we need to override methods <code>DoesSupportType</code>
+and <code>ParseParameterValue</code>. Parameter names should be case insensitive that's why
+we use <code>queryKey</code> variable.</p>
+<pre><code id="pragma-line-25" class="language-csharp">public class StackQueryBinder: BasicQueryModelBinder
+{
+    public override bool DoesSupportType(Type type)
+    {
+        var info = type.GetTypeInfo();
+        return 
+            info.IsGenericType 
+            &amp;&amp; info.GetGenericTypeDefinition() == typeof(Stack&lt;&gt;)
+            &amp;&amp; base.DoesSupportType(info.GetGenericArguments()[0]);
+    }
+
+    public override object ParseParameterValue(HttpRequest request, ActionContext actionCtx, ActionParameter parameter)
+    {
+        string queryKey = request.Query.First(x =&gt; 
+            string.Compare(x.Key, parameter.Name, StringComparison.OrdinalIgnoreCase) == 0
+            ).Key;
+        // using queryKey to match in case insensitive manner
+        string[] values = request.Query[queryKey];
+
+        object stack = Activator.CreateInstance(parameter.Type);
+        if (values.Any())
+        {
+            var details = new StackParameterDetails(parameter.Type.GetGenericArguments()[0]);
+            var pushMethod = parameter.Type.GetMethod(&quot;Push&quot;, BindingFlags.Public | BindingFlags.Instance);
+            foreach (var queryValue in values)
+            {
+                object value = ParseSingleQueryValue(
+                    queryValue, 
+                    details.BaseType, // needs to be base type, e.g. if parameter type is int? we need to pass int
+                    details.IsNullable, 
+                    parameter.Name, 
+                    new Lazy&lt;string&gt;(() =&gt; actionCtx.Name)
+                    );
+                pushMethod.Invoke(stack, new[] { value });
+            }
+        }
+        return stack;
+    }
+
+    private class StackParameterDetails
+    {
+        // TODO: cache result to improve performance
+        public StackParameterDetails(Type type)
+        {
+            Type baseType;
+            
+            if (type.IsNullable(out baseType)) // extension method from LiteApi namespace
+            {
+                BaseType = baseType;
+                IsNullable = true;
+            }
+            else
+            {
+                BaseType = type;
+            }
+        }
+
+        public Type BaseType { get; set; }
+        public bool IsNullable { get; set; }
+    }
+}
+</code></pre>
+<h2 id="registering-the-binder"><a id="pragma-line-89"></a>Registering the binder</h2>
+<p id="pragma-line-91">Once we have created the binder, we need to register it using <code>LiteApiOptions</code>
+in <code>Startup</code> class <code>Configure</code> method.</p>
+<pre><code id="pragma-line-94" class="language-csharp">app.UseLiteApi(
+    LiteApiOptions.Default
+        .AddAdditionalQueryModelBinder(new StackQueryBinder())
+        );
+</code></pre>
+<h2 id="creating-the-controller"><a id="pragma-line-101"></a>Creating the controller</h2>
+<p id="pragma-line-103">Now we can pass <code>Stack&lt;T&gt;</code> via query to any controller/action. A pitfall here
+is that LiteApi does not know that we can pass <code>Stack&lt;T&gt;</code> via query so we need
+to use <code>FromQuery</code> attribute on our parameter.</p>
+<pre><code id="pragma-line-107" class="language-csharp">public class StackController: LiteController
+{
+    public int NonNullCount([FromQuery]Stack&lt;int?&gt; s) =&gt; s.Count(x =&gt; x.HasValue);
+}
+</code></pre>
+<h2 id="result"><a id="pragma-line-114"></a>Result</h2>
+<p id="pragma-line-116">Now we can call the controller with following URL and get <code>2</code> as a result.</p>
+<pre><code id="pragma-line-117">/api/stack/nonNullCount?s=&amp;s=1&amp;s=&amp;s=3
+</code></pre>
+<div class="alert alert-info">
+This sample is taken from <a href="https://github.com/stanac/LiteApi/tree/master/LiteApi/LiteApi.Demo">Demo project</a>
+</div>
 
 </div>

@@ -1,5 +1,43 @@
 
 <div class='user-content'>
 <h1 id="parameter-retrieving-from-route-segment"><a id="pragma-line-1"></a>Parameter retrieving from route segment</h1>
+<p id="pragma-line-3">Parameters can be received from route segment, which makes URLs on which API
+is responding more attractive.</p>
+<p id="pragma-line-6">All simple types (check <a href="/docs/parameters-supported-types">supported types</a>)
+can be received from route segment. Nullable variants are not supported. Collections
+and dictionaries are not supported for parameters from route segment.</p>
+<p id="pragma-line-10">Matching of parameters is done by name of the parameter and name of the route segment.
+Matching is case insensitive. Route segments that holds parameter values
+must be escaped with <code>{</code> and <code>}</code> in <code>ActionRouteAttribute</code>.</p>
+<p id="pragma-line-14">If we want to be explicit we can use <code>LiteApi.Attributes.FromRouteAttribute</code>.</p>
+<p id="pragma-line-16">Following two samples are equivalent.</p>
+<pre><code id="pragma-line-18" class="language-csharp">[Restful]
+public class EntitiesController : LiteController
+{
+    // will respond to /api/entities/person/5
+    [ActionRoute(&quot;{type}/{id}&quot;)]
+    public EntityModel GetEntity(string type, int id) =&gt; _service.Get(type, id)
+}
+</code></pre>
+<pre><code id="pragma-line-28" class="language-csharp">[Restful]
+public class EntitiesController : LiteController
+{
+    // will respond to /api/entities/person/5
+    [ActionRoute(&quot;{type}/{id}&quot;)]
+    public EntityModel GetEntity([FromRoute] string type, [FromRoute] int id) =&gt; _service.Get(type, id)
+}
+</code></pre>
+<p id="pragma-line-38"><code>ActionRouteAttribute</code> can also have constants, see example.</p>
+<pre><code id="pragma-line-40" class="language-csharp">public class MathController: LiteController
+{
+    // will respond to /api/math/5/plus/7
+    [ActionRoute(&quot;/{i}/plus/{j}&quot;)]
+    public int Add(int i, int j) =&gt; i + j;
+
+    // will respond to /api/math/5/minus/7
+    [ActionRoute(&quot;/{i}/minus/{j}&quot;)]
+    public int Subtract(int i, int j) =&gt; i - j;
+
+</code></pre>
 
 </div>

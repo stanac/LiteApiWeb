@@ -1,5 +1,19 @@
 
 <div class='user-content'>
 <h1 id="parameter-retrieving-from-header"><a id="pragma-line-1"></a>Parameter retrieving from header</h1>
+<p id="pragma-line-3">Parameters can be retrieved from HTTP request header. Parameter to be received from
+header must have <code>LiteApi.Attributes.FromHeaderAttribute</code> set. See following
+examples.</p>
+<p id="pragma-line-7">Parameter name and header key doesn't have to match, but in they don't match
+header key must be set in the attribute constructor.</p>
+<pre><code id="pragma-line-10" class="language-csharp">public class HeaderParametersController: LiteController
+{
+    // parameter values will be retrieved from headers &quot;i&quot; and &quot;x-overriden-param-name-j&quot;
+    public int Add([FromHeader]int i, [FromHeader(&quot;x-overriden-param-name-j&quot;)]int j) =&gt; i + j;
+}
+</code></pre>
+<p id="pragma-line-18">All simple types (check <a href="/docs/parameters-supported-types">supported types</a>)
+can be received from header and nullable equivalents of simple types.</p>
+<p id="pragma-line-21">Collections, dictionaries and complex types cannot be received from header.</p>
 
 </div>

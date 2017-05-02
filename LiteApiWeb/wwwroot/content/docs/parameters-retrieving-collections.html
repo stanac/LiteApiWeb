@@ -1,0 +1,23 @@
+
+<div class='user-content'>
+<h1 id="parameter-retrieving-collections"><a id="pragma-line-1"></a>Parameter - retrieving collections</h1>
+<p id="pragma-line-3">Collections are supported by parameters from query and body. Body can receive any
+collection as long as it can be deserialized from JSON.</p>
+<p id="pragma-line-6">Supported collections from query are</p>
+<ul id="pragma-line-7">
+<li id="pragma-line-7"><code>IEnumerable&lt;T&gt;</code></li>
+<li id="pragma-line-8"><code>List&lt;T&gt;</code></li>
+<li id="pragma-line-9"><code>T[]</code></li>
+</ul>
+<p id="pragma-line-11">Where <code>T</code> is one of the simple types (check <a href="/docs/parameters-supported-types">Supported types</a>)
+or nullable variant of a simple types.</p>
+<p id="pragma-line-14">Collection is provided by repeating parameter name as query key with multiple
+values. Following sample will respond to <code>/api/math/sum?i=1&amp;i=5&amp;i=3&amp;i=3</code> and
+return 12.</p>
+<pre><code id="pragma-line-18" class="language-csharp">public class MathController: LiteController
+{
+    public int Sum(int[] i) =&gt; i.Sum();
+}
+</code></pre>
+
+</div>

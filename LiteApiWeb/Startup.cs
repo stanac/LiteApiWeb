@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using LiteApi;
 using LiteApiWeb.Services;
 using Microsoft.AspNetCore.Builder;
@@ -38,7 +36,7 @@ namespace LiteApiWeb
             }
             else
             {
-                _enableFirstRunRender = false;
+                _enableFirstRunRender = true;
             }
         }
         
@@ -58,7 +56,6 @@ namespace LiteApiWeb
             if (_enableFirstRunRender)
             {
                 RenderAllPages(env, app.ApplicationServices);
-                DocsSearch.Search("dream team bear tear").ToArray();
             }
 
             if (env.IsDevelopment())
@@ -80,15 +77,7 @@ namespace LiteApiWeb
                 }
                 await next.Invoke();
             });
-
-            //app.Use(async (ctx, next) =>
-            //{
-            //    if (ctx.Request.Method.ToUpper() == "GET" && !ctx.Request.Path.StartsWithSegments("/api") && !ctx.Request.Path.Value.Contains("."))
-            //    {
-            //        ctx.Request.Path = "/index.html";
-            //    }
-            //    await next.Invoke();
-            //});
+            
             app.UseDefaultFiles();
 
             if (Debugger.IsAttached && _enableFirstRunRender)

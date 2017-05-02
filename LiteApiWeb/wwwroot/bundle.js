@@ -202,7 +202,7 @@ module.exports = {
     route: {
         canReuse: false
     },
-    template: '\n<div class="row off-top">\n    <div class="col-md-3">\n        <ul class="treeListRoot">\n            <li class="treeListItem">\n                <router-link to="/api-docs/">API documentation</router-link>\n            </li>\n            <template v-for="item in treeData">\n                <treeitem :model="item"></treeitem>\n            </template>\n        </ul>\n    </div>\n\n    <div v-html="docsHtml" class="col-md-9"></div>\n</div>',
+    template: '\n<div class="row off-top">\n    <div class="col-md-3">\n        <ul class="treeListRoot">\n            <li class="treeListItem">\n                <router-link to="/api-docs/">API documentation (in development)</router-link>\n            </li>\n            <template v-for="item in treeData">\n                <treeitem :model="item"></treeitem>\n            </template>\n        </ul>\n    </div>\n\n    <div v-html="docsHtml" class="col-md-9"></div>\n</div>',
     data: function data() {
         return {
             docsHtml: 'loading...',
@@ -427,7 +427,7 @@ function initSearch(timeout) {
         input.keypress(function (e) {
             if (e.which == 13) {
                 var query = input.val();
-                window.vueRouter.push('/search/docs/' + (query || ''));
+                window.vueRouter.push('/search/docs/' + (query || ' '));
                 return false;
             }
         });

@@ -36,7 +36,7 @@ function initSearch(timeout) {
         input.keypress(function (e) {
             if (e.which == 13) {
                 var query = input.val();
-                window.vueRouter.push('/search/docs/' + (query || ''));
+                window.vueRouter.push('/search/docs/' + (query || ' '));
                 return false; 
             }
         });

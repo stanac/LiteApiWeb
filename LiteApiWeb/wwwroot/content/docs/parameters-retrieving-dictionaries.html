@@ -1,5 +1,49 @@
 
 <div class='user-content'>
 <h1 id="parameter-retrieving-dictionaries"><a id="pragma-line-1"></a>Parameter - retrieving dictionaries</h1>
+<p id="pragma-line-3">LiteApi action can receive dictionary from body or query. From body any
+dictionary (any object) can be received as long as it can be deserialized
+from JSON.</p>
+<p id="pragma-line-7">From query following parameter types are supported:</p>
+<ul id="pragma-line-8">
+<li id="pragma-line-8"><code>Dictionary&lt;TKey, TValue&gt;</code></li>
+<li id="pragma-line-9"><code>IDictionary&lt;TKey, TValue&gt;</code></li>
+</ul>
+<p id="pragma-line-11">Where <code>TKey</code> and <code>TValue</code> are simple types (check <a href="/docs/parameters-supported-types">Supported types</a>)
+or nullable variants of simple types.</p>
+<pre><code id="pragma-line-15" class="language-csharp">public class DictionaryController : LiteController
+{
+    public IDictionary&lt;int, string&gt; Join(IDictionary&lt;int, string&gt; a, Dictionary&lt;int, string&gt; b)
+    {
+        Dictionary&lt;int, string&gt; c = new Dictionary&lt;int, string&gt;();
+        foreach (var keyValue in a)
+        {
+            c[keyValue.Key] = keyValue.Value;
+        }
+        foreach (var keyValue in b)
+        {
+            c[keyValue.Key] = keyValue.Value;
+        }
+        return c;
+    }
+}
+</code></pre>
+<p id="pragma-line-34">If we call action from sample above with:</p>
+<pre><code id="pragma-line-36">/api/dictionary/join?a.1=one&amp;a.3=three&amp;b.2=two&amp;b.4=four
+</code></pre>
+<p id="pragma-line-40">It will return</p>
+<pre><code id="pragma-line-42" class="language-json">{  
+  &quot;1&quot;:&quot;one&quot;,
+  &quot;3&quot;:&quot;three&quot;,
+  &quot;2&quot;:&quot;two&quot;,
+  &quot;4&quot;:&quot;four&quot;
+}
+</code></pre>
+<p id="pragma-line-51">From the sample it can be concluded that dictionary value is passed
+by repeating key-value pairs, where key-value pair is set in format</p>
+<pre><code id="pragma-line-54">parameter1.key1=value1&amp;parameter1.key2=value2&amp;parameter2.key1=value1&amp;parameter2.key2=value2
+</code></pre>
+<p id="pragma-line-58">This means that key and value cannot contain <code>.</code>, if it does developers needs
+to find a way to encode it and decode it.</p>
 
 </div>

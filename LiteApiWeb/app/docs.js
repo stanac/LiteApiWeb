@@ -10,7 +10,7 @@ module.exports = {
     <div class="col-md-3">
         <ul class="treeListRoot">
             <li class="treeListItem">
-                <router-link to="/api-docs/">API documentation</router-link>
+                <router-link to="/api-docs/">API documentation (in development)</router-link>
             </li>
             <template v-for="item in treeData">
                 <treeitem :model="item"></treeitem>

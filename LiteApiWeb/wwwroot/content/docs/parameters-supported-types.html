@@ -1,5 +1,64 @@
 
 <div class='user-content'>
 <h1 id="supported-types"><a id="pragma-line-1"></a>Supported types</h1>
+<p id="pragma-line-3">For LiteApi following types are considered as simple types:</p>
+<ul id="pragma-line-5">
+<li id="pragma-line-5"><code>bool</code></li>
+<li id="pragma-line-6"><code>string</code></li>
+<li id="pragma-line-7"><code>char</code></li>
+<li id="pragma-line-8"><code>Int16</code></li>
+<li id="pragma-line-9"><code>Int32</code></li>
+<li id="pragma-line-10"><code>Int64</code></li>
+<li id="pragma-line-11"><code>UInt16</code></li>
+<li id="pragma-line-12"><code>UInt32</code></li>
+<li id="pragma-line-13"><code>UInt64</code></li>
+<li id="pragma-line-14"><code>Byte</code></li>
+<li id="pragma-line-15"><code>SByte</code></li>
+<li id="pragma-line-16"><code>decimal</code></li>
+<li id="pragma-line-17"><code>float</code></li>
+<li id="pragma-line-18"><code>double</code></li>
+<li id="pragma-line-19"><code>DateTime</code></li>
+<li id="pragma-line-20"><code>Guid</code></li>
+</ul>
+<p id="pragma-line-22">Parameter types supported by <strong>query</strong> are all simple types and following types
+where <code>T</code>, <code>TKey</code> and <code>TValue</code> are all simple types.</p>
+<ul id="pragma-line-25">
+<li id="pragma-line-25"><code>IEnumerable&lt;T&gt;</code></li>
+<li id="pragma-line-26"><code>List&lt;T&gt;</code></li>
+<li id="pragma-line-27"><code>T[]</code></li>
+<li id="pragma-line-28"><code>Dictionary&lt;TKey, TValue&gt;</code></li>
+<li id="pragma-line-29"><code>IDictionary&lt;TKey, TValue&gt;</code></li>
+<li id="pragma-line-30"><code>Nullable&lt;T&gt;</code></li>
+</ul>
+<p id="pragma-line-32">Parameter types supported by <strong>route segment</strong> are all simple types (no nullable
+variants).</p>
+<p id="pragma-line-35">Parameters supported by <strong>request header</strong> are all simple types. Collections are
+not supported, nullable variants are supported.</p>
+<p id="pragma-line-38">Parameters supported by <strong>body</strong> are all parameter types, but there can be maximum one
+parameter received from body.</p>
+<p id="pragma-line-41">Action can receive parameters of any type from <strong>services</strong> with condition
+that parameter type is registered in app's DI container.</p>
+<h2 id="working-with-nullable-parameters"><a id="pragma-line-44"></a>Working with nullable parameters</h2>
+<p id="pragma-line-46">In order for action to receive null as parameter value, parameter must be
+<code>Nullable&lt;T&gt;</code> (e.g. <code>int?</code>) where <code>T</code> is any of the previously listed
+types with exception of <code>string</code>. Nullable parameters are supported in
+query and header. For example in query we can have action like in the sample
+below.</p>
+<p id="pragma-line-52">For action to receive null, we must provide name of the parameter (in query parameters)
+or header name (in header parameters) and empty string as value of the parameter.
+If parameter name is missing exception will be thrown.</p>
+<pre><code id="pragma-line-56" class="language-csharp">public class MathController: LiteController
+{
+    // /api/math/zeroOrValue?n=
+    //      returns 0, n will be null 
+    //
+    // /api/math/zeroOrValue
+    //      throws exception, parameter is not provided
+    public int ZeroOrValue(int? n) =&gt; n ?? 0;
+}
+</code></pre>
+<p id="pragma-line-68">For parameters from body to be received as <code>null</code> JSON serializer needs to handle
+null values. Default (Json.NET) serializer will deserialize value to <code>null</code>
+if body is empty or has value <code>null</code>.</p>
 
 </div>
