@@ -10,11 +10,17 @@ namespace LiteApiWeb.Api
     public class DocsController: LiteController
     {
         [HttpGet,ActionRoute("/search/{query}")]
-        public IEnumerable<SearchResultItem> Search(string query)
+        public IEnumerable<object> Search(string query)
         {
             return Startup.DocsSearch.Search(query)
-                .Where(x => x.Hits > 2)
-                .OrderByDescending(x => x.Weight);
+                .OrderByDescending(x => x.Weight)
+                .Select(x =>
+                new
+                {
+                    id = x.Page.Id,
+                    title = x.Page.Title,
+                    weight = x.Weight
+                });
         }
     }
 }

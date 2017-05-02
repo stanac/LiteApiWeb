@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 6);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -96,6 +96,29 @@ var DocsService = function DocsService() {
             callback(responseText);
         });
     };
+    this.search = function (query, callback) {
+        query = query.trim();
+        var error = {
+            error: 'Search term(s) needs to have at lease 3 characters'
+        };
+        if (query.length < 3) {
+            callback(error);
+            return;
+        }
+        //var words = query.split(' ');
+        //for (let w of words) {
+        //    if (w.length < 3) {
+        //        callback(error);
+        //        return;
+        //    }
+        //}
+        nanoajax.ajax({
+            method: 'GET',
+            url: '/api/docs/search/' + encodeURIComponent(query)
+        }, function (code, responseText, request) {
+            callback(JSON.parse(responseText));
+        });
+    };
 };
 
 var pageService = new PageService();
@@ -111,7 +134,47 @@ module.exports = { pageService: pageService, docsService: docsService };
 
 
 module.exports = {
-    template: '<h2>LiteApi blog<h2> <div class="alert alert-info">  In development</div>'
+    highlight: function highlight() {
+        var fixLinks = function fixLinks() {
+            $('.user-content a').filter(function () {
+                return ($(this).attr('id') || '').indexOf('pragma-line') === -1;
+            }).on('click', function () {
+                if ($(this)[0].host === window.location.host) {
+                    // vueRuter.push();
+                    var link = $(this).attr('href');
+                    console.log('prevent: ' + link);
+                    vueRouter.push(link);
+                    return false;
+                }
+            });
+        };
+
+        var innerHighlight = function innerHighlight(timeout) {
+            timeout = timeout | 50;
+            if (timeout > 2000) return;
+
+            setTimeout(function () {
+                if (Prism) Prism.highlightAll();else innerHighlight(timeout * 2);
+            }, timeout);
+        };
+
+        var innerTable = function innerTable(timeout) {
+            timeout = timeout | 50;
+            if (timeout > 2000) return;
+
+            setTimeout(function () {
+                if (window.$) {
+                    $('.user-content table').addClass('table table-stripped');
+                    fixLinks();
+                } else {
+                    innerTable(timeout * 2);
+                }
+            }, timeout);
+        };
+
+        innerHighlight(50);
+        innerTable(50);
+    }
 };
 
 /***/ }),
@@ -121,8 +184,19 @@ module.exports = {
 "use strict";
 
 
+module.exports = {
+    template: '<h2>LiteApi blog<h2> <div class="alert alert-info">  In development</div>'
+};
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 var services = __webpack_require__(0);
-var codeHelpers = __webpack_require__(6);
+var codeHelpers = __webpack_require__(1);
 
 module.exports = {
     route: {
@@ -180,14 +254,14 @@ module.exports = {
 };
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var services = __webpack_require__(0);
-var codeHelpers = __webpack_require__(6);
+var codeHelpers = __webpack_require__(1);
 
 module.exports = {
     data: function data() {
@@ -215,7 +289,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -251,36 +325,35 @@ module.exports = {
 };
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _gettingStarted = __webpack_require__(3);
+var _gettingStarted = __webpack_require__(4);
 
 var GettingStarted = _interopRequireWildcard(_gettingStarted);
 
-var _docs = __webpack_require__(2);
+var _docs = __webpack_require__(3);
 
 var Docs = _interopRequireWildcard(_docs);
 
-var _home = __webpack_require__(4);
+var _home = __webpack_require__(5);
 
 var Home = _interopRequireWildcard(_home);
 
-var _blog = __webpack_require__(1);
+var _blog = __webpack_require__(2);
 
 var Blog = _interopRequireWildcard(_blog);
 
+var _docsSearch = __webpack_require__(7);
+
+var DocsSearch = _interopRequireWildcard(_docsSearch);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-// 0. If using a module system, call Vue.use(VueRouter)
-
-var routes = [{ path: '/', component: Home }, { path: '/getting-started', component: GettingStarted }, { path: '/docs/:id?', component: Docs },
-// { path: '/docs/:id', component: Docs },
-//{ path: '/docs', component: Docs },
-{ path: '/blog', component: Blog }];
+var routes = [{ path: '/', component: Home }, { path: '/getting-started', component: GettingStarted }, { path: '/docs/:id?', component: Docs }, { path: '/search/docs/:query', component: DocsSearch }, { path: '/blog', component: Blog }]; // 0. If using a module system, call Vue.use(VueRouter)
 
 var router = new VueRouter({
     routes: routes,
@@ -293,54 +366,72 @@ var app = new Vue({
     router: router
 }).$mount('#app');
 
+function initSearch(timeout) {
+    if (timeout > 5000) {
+        return;
+    }
+    if (window.$) {
+        var input = $('#navbar form input');
+        input.keypress(function (e) {
+            if (e.which == 13) {
+                var query = input.val();
+                window.vueRouter.push('/search/docs/' + (query || ''));
+                return false;
+            }
+        });
+    } else {
+        setTimeout(function () {
+            initSearch(timeout * 2);
+        }, timeout);
+    }
+}
+initSearch(50);
+
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
+var services = __webpack_require__(0);
+// var codeHelpers = require('./services/codeHelpers');
+
 module.exports = {
-    highlight: function highlight() {
-        var fixLinks = function fixLinks() {
-            $('.user-content a').filter(function () {
-                return ($(this).attr('id') || '').indexOf('pragma-line') === -1;
-            }).on('click', function () {
-                if ($(this)[0].host === window.location.host) {
-                    // vueRuter.push();
-                    var link = $(this).attr('href');
-                    console.log('prevent: ' + link);
-                    vueRouter.push(link);
-                    return false;
-                }
-            });
+    data: function data() {
+        return {
+            model: [],
+            error: '',
+            loading: true
         };
+    },
 
-        var innerHighlight = function innerHighlight(timeout) {
-            timeout = timeout | 50;
-            if (timeout > 2000) return;
+    template: '\n<div class="off-top row">\n<div v-if=\'error\' class="alert alert-warning">\n    {{ error }}\n</div>\n\n<p>\nSearch for: <strong>{{ $route.params.query }}</strong>\n</p>\n\n<div v-if=\'loading\'>\n<div class="spinner">\n  <div class="rect1"></div>\n  <div class="rect2"></div>\n  <div class="rect3"></div>\n  <div class="rect4"></div>\n  <div class="rect5"></div>\n</div>\n</div>\n<div v-else>\n<div v-if=\'model.length === 0\' class=\'alert alert-info\'>\nYour search didn\u2019t return any results\n</div>\n</div>\n\n<ul>\n<li v-for="item in model">\n     <router-link :to="\'/docs/\' + item.id">{{ item.title }}</router-link>\n</li>\n</ul>\n</div>',
+    created: function created() {
+        this.loadData();
+    },
 
-            setTimeout(function () {
-                if (Prism) Prism.highlightAll();else innerHighlight(timeout * 2);
-            }, timeout);
-        };
+    watch: {
+        '$route': 'loadData'
+    },
+    methods: {
+        loadData: function loadData() {
+            var _this = this;
 
-        var innerTable = function innerTable(timeout) {
-            timeout = timeout | 50;
-            if (timeout > 2000) return;
-
-            setTimeout(function () {
-                if (window.$) {
-                    $('.user-content table').addClass('table table-stripped');
-                    fixLinks();
+            this.loading = true;
+            var query = this.$route.params.query || '';
+            services.docsService.search(query, function (response) {
+                _this.model = [];
+                _this.error = '';
+                if (response.error) {
+                    _this.error = response.error;
                 } else {
-                    innerTable(timeout * 2);
+                    _this.model = response;
                 }
-            }, timeout);
-        };
-
-        innerHighlight(50);
-        innerTable(50);
+                _this.loading = false;
+                // codeHelpers.highlight();
+            });
+        }
     }
 };
 

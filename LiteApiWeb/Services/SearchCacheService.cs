@@ -28,6 +28,7 @@ namespace LiteApiWeb.Services
                     .Replace("&lt;", "<")
                     .Replace("&gt;", ">");
                 content = Regex.Replace(content, @"\s{2,}", " ");
+                content = content.ToLower();
 
                 var page = pages.First(x => x.Id == key);
 
@@ -44,7 +45,7 @@ namespace LiteApiWeb.Services
         public IEnumerable<SearchResultItem> Search(string query)
         {
             query = (query ?? "").ToLower().Trim();
-            if (query.Length < 4) yield break;
+            if (query.Length < 3) yield break;
             string[] words = query.Split(_separator, StringSplitOptions.RemoveEmptyEntries).Distinct().ToArray();
             
             foreach (var item in _cache)
@@ -60,7 +61,7 @@ namespace LiteApiWeb.Services
                 foreach (var word in words)
                 {
                     response.MatchOnTitleWeight += item.Title.Contains(word) ? 5 : 0;
-                    response.Hits += item.Content.Split(new string[] { word }, StringSplitOptions.None).Length;
+                    response.Hits += item.Content.Split(new string[] { word }, StringSplitOptions.None).Length - 1;
                 }
                 if (response.Weight > 0) yield return response;
             }

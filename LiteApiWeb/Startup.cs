@@ -71,8 +71,9 @@ namespace LiteApiWeb
                 if (httpCtx.Request.Method == "GET" &&
                     (httpCtx.Request.Path.StartsWithSegments("/docs")
                     || httpCtx.Request.Path.StartsWithSegments("/blog")
-                    || httpCtx.Request.Path.StartsWithSegments("/getting-started"))
-                    )
+                    || httpCtx.Request.Path.StartsWithSegments("/getting-started")
+                    || httpCtx.Request.Path.StartsWithSegments("/search")
+                    ))
                 {
                     httpCtx.Request.Path = "/";
                 }
