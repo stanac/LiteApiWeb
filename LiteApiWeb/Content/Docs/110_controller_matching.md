@@ -22,8 +22,6 @@ All controllers must inherit <code>LiteApi.LiteController</code> class. All attr
 All routes and parameters are case insensitive.
 </div>
 
-This is quick overview with samples, for specific topic check subsections on the left under "Controller and action matching".
-
 All controller are matched on URL `/api/{controller}`. If controller class name ends "Controller", "Controller" suffix with will be stripped from matching URL.
 
 Controller route can be configurated using `ControllerRouteAttribute` as in:

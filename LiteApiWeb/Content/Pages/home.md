@@ -21,6 +21,7 @@ IsHtml: true
             <br />
             Without server side rendering engine LiteApi is made for developers who are writing SPA applications.
         </p>
+        <pre><code>PM> Install-Package LiteApi -Pre</code></pre>
     </div>
 </div>
 
@@ -39,7 +40,9 @@ Check <a href="/docs/performance">Performance comparison between MVC Core and Li
 <div class='col-md-4'>
 <span class='sub'>Easy to use</span>
 <br/>
-Controllers with conventions you likely already know how to use. Check getting started, if you already used MVC WebAPI you will find
+<a href="/docs/controller-and-action-matching">Controllers</a> with conventions you 
+likely already know how to use. Check <a href="/getting-started">getting started</a>, 
+if you already used MVC WebAPI you will find
 using LiteApi to be like a walk in the park.
 </div>
 
@@ -58,19 +61,31 @@ Compiled to .NET Standard 1.6 means LiteApi works on Linux, macOS, and Windows.
 <div class='col-md-4'>
 <span class='sub'>Feature rich</span>
 <br/>
-Get parameters from query, header, body or route segment. Pass array, dictionary or create your own parameter type handler.
+Get <a href="/docs/parameter-retrieving">parameters</a> from
+<a href="/docs/parameter-retrieving-from-query">query</a>, 
+<a href="/docs/parameter-retrieving-from-body">body</a>, 
+<a href="/docs/parameter-retrieving-from-route-segment">route segment</a>,
+<a href="/docs/parameter-retrieving-from-header">header</a> or
+<a href="/docs/parameter-retrieving-from-service-provider">DI container</a>. 
+Pass 
+<a href="/docs/parameters-retrieving-collections">array, list</a>, 
+<a href="/docs/parameters-retrieving-dictionaries">dictionary</a> or 
+<a href="/docs/custom-parameter-provider">create your own parameter type handler</a>.
 </div>
 
 <div class='col-md-4'>
 <span class='sub'>Authorization done right</span>
 <br/>
-Authentication is left for other middlewares, configurable authorization with predefined filters and ability to create your own.
+Authentication is left for other middlewares, configurable 
+<a href="/docs/authorization">authorization</a> with predefined filters 
+and ability to <a href="/docs/custom-authorization">create your own</a>.
 </div>
 
 <div class='col-md-4'>
 <span class='sub'>Extensible</span>
 <br/>
-Extensibility points are already here for some parts of the middleware, more will be available soon.
+<a href="/docs/extensibility-points">Extensibility points</a> are already here for some parts of the middleware, 
+more will follow soon.
 </div>
 
 </div>

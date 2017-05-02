@@ -13,6 +13,9 @@ ParentPageId: authorization
 You can implement your own custom authorization filter attribute by implementing
 `IApiFilter` or `IApiFilterAsync` interface. 
 Both interfaces are located in `LiteApi.Contracts.Abstractions` namespace. 
+It is recommended to check first [Policy based authorization](/docs/policy-authorization), 
+it's easier to implement, and provide
+custom authorization capabilities.
 
 How to define custom authorization attribute filter:
 

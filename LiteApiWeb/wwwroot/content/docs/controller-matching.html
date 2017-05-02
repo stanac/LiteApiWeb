@@ -9,10 +9,9 @@ All controllers must inherit <code>LiteApi.LiteController</code> class. All attr
 <div class="alert alert-info">
 All routes and parameters are case insensitive.
 </div>
-<p id="pragma-line-15">This is quick overview with samples, for specific topic check subsections on the left under &quot;Controller and action matching&quot;.</p>
-<p id="pragma-line-17">All controller are matched on URL <code>/api/{controller}</code>. If controller class name ends &quot;Controller&quot;, &quot;Controller&quot; suffix with will be stripped from matching URL.</p>
-<p id="pragma-line-19">Controller route can be configurated using <code>ControllerRouteAttribute</code> as in:</p>
-<pre><code id="pragma-line-21" class="language-csharp">[ControllerRoute(&quot;/api/v2/actors&quot;)] 
+<p id="pragma-line-15">All controller are matched on URL <code>/api/{controller}</code>. If controller class name ends &quot;Controller&quot;, &quot;Controller&quot; suffix with will be stripped from matching URL.</p>
+<p id="pragma-line-17">Controller route can be configurated using <code>ControllerRouteAttribute</code> as in:</p>
+<pre><code id="pragma-line-19" class="language-csharp">[ControllerRoute(&quot;/api/v2/actors&quot;)] 
 public class ActorsController : LiteController
 {
 }
@@ -21,9 +20,9 @@ public class BooksController : LiteController
 {
 }
 </code></pre>
-<p id="pragma-line-32">In this case <code>ActorsController</code> will match <code>/api/v2/actors</code> route and <code>BooksController</code>
+<p id="pragma-line-30">In this case <code>ActorsController</code> will match <code>/api/v2/actors</code> route and <code>BooksController</code>
 will match <code>/api/books</code>.</p>
-<p id="pragma-line-35">By default LiteApi will recognize controllers only in you main assembly, if you want to
+<p id="pragma-line-33">By default LiteApi will recognize controllers only in you main assembly, if you want to
 use controlles from other assemblies please check <a href="/docs/controller-registration">Controller recognition</a>.</p>
 
 </div>
