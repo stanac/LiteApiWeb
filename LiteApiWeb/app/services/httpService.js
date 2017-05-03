@@ -1,8 +1,9 @@
 ﻿var PageService = function () {
+    var appVersion = "?v=" + window.appVersion;
     this.get = function(name, callback) {
         nanoajax.ajax({
             method: 'GET',
-            url: '/content/pages/' + name + '.html'
+            url: '/content/pages/' + name + '.html' + appVersion
         }, function (code, responseText, request) {
             callback(responseText);
         });
@@ -10,13 +11,14 @@
 };
 
 var DocsService = function () {
+    var appVersion = "?v=" + window.appVersion;
     this.get = function (name, callback) {
         if (!name.endsWith('.html') && !name.endsWith('.json')) {
             name += '.html';
         }
         nanoajax.ajax({
             method: 'GET',
-            url: '/content/docs/' + name
+            url: '/content/docs/' + name + appVersion
         }, function (code, responseText, request) {
             callback(responseText);
         });
@@ -39,7 +41,7 @@ var DocsService = function () {
         //}
         nanoajax.ajax({
             method: 'GET',
-            url: '/api/docs/search/' + encodeURIComponent(query)
+            url: '/api/docs/search/' + encodeURIComponent(query) + appVersion
         }, function (code, responseText, request) {
             callback(JSON.parse(responseText));
         });
