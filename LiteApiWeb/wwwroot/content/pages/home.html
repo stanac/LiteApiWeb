@@ -13,7 +13,6 @@
             <br />
             Without server side rendering engine LiteApi is made for developers who are writing SPA applications.
         </p>
-        <pre><code>PM> Install-Package LiteApi -Pre</code></pre>
     </div>
 </div>
 
@@ -80,6 +79,80 @@ and ability to <a href="/docs/custom-authorization">create your own</a>.
 more will follow soon.
 </div>
 
+</div>
+
+<div class='row'>&nbsp;</div>
+
+<div class='row'>
+<div class='col-md-8 col-md-offset-2'>
+<pre><code>PM> Install-Package LiteApi -Pre</code></pre>
+
+<pre><code class="language-csharp">public class TestController: LiteController
+{
+    // will respond to /api/test/add?a=3&b=8
+    public int Add(int a, int b)
+    {
+        return a + b;
+    }
+}</code></pre>
+
+<pre><code class="language-csharp">[Restful]
+public class PersonsController: LiteController
+{
+    private readonly IPersonDataAccess _dataAccess;
+
+    public PersonsController(IPersonDataAccess dataAccess)
+    {
+        _dataAccess = dataAccess;
+    }
+
+    // method names are not affecting action routes when using [Restful]
+
+    [HttpGet] // will respond to /api/persons?id={someGuid}
+    public PersonModel ById(Guid id) => _dataAccess.Get(id);
+
+    [HttpGet, ActionRoute("/{id}")] // will respond to /api/persons/{someGuid}
+    public PersonModel ByIdFromRoute(Guid id) => _dataAccess.Get(id);
+
+    [HttpGet] // will respond to /api/persons
+    public IEnumerable<PersonModel> All() => _dataAccess.GetAll();
+
+    [HttpPost] // will respond to /api/persons
+    public PersonModel Save(PersonModel model) => _dataAccess.Save(model);
+
+    [HttpPost, ActionRoute("/{id}")] // will respond to /api/persons/{someGuid}
+    public PersonModel Update(Guid id, PersonModel model) => _dataAccess.Update(id, model);
+}</code></pre>
+
+<!--<pre><code class="language-csharp">[ControllerRoute("/api/v2/ops")]
+public class OperationsController : LiteController
+{
+    // will respond to /api/v2/ops/3/plus/8
+    [ActionRoute("/{a}/plus/{b}")]
+    [HttpGet] // [HttpGet] is optional, by default it's GET, otherwise you can use [HttpPost], [HttpPut] or [HttpDelete]
+    public int Add(int a, int b) => a + b;
+    
+    // will respond to /api/v2/ops/sum?ints=3&ints=6&ints=4
+    public int Sum(IEnumerable<int> ints) => ints.Sum();
+    
+    // will respond to /api/v2/ops/join?a.1=one&a.3=three&b.2=two
+    public IDictionary<int, string> Join(IDictionary<int, string> a, Dictionary<int, string> b)
+    {
+        Dictionary<int, string> c = new Dictionary<int, string>();
+        foreach (var keyValue in a)
+        {
+            c[keyValue.Key] = keyValue.Value;
+        }
+        foreach (var keyValue in b)
+        {
+            c[keyValue.Key] = keyValue.Value;
+        }
+        return c;
+    }
+
+}</code></pre>-->
+
+</div>
 </div>
 
 <div class='row'>&nbsp;</div>
