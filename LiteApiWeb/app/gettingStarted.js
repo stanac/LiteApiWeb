@@ -7,7 +7,7 @@ module.exports = {
             html: 'loading...'
         }
     },
-    template: '<div class="off-top row" v-html="html"></div>',
+    template: '<div class="off-top row"><div v-html="html" class="col-md-12"></div></div>',
     created() {
         this.loadData();
     },

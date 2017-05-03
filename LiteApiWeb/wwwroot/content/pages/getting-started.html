@@ -17,22 +17,22 @@ If you are no using Windows, you can try free code editor <a href="https://code.
 If you are using VS Core (or some other code editor) you can use <a href="https://docs.microsoft.com/en-us/dotnet/articles/core/tools/dotnet-new">dotnet CLI</a>, but this article won't
 cover any details about using CLI tool (there will be another article).</p>
 <div class='col-md-12 text-center'>
-<img src="/content/imgs/getting-started/01_new_project.png" />
+<img src="/content/imgs/getting-started/01_new_project.png" class="img-responsive"/>
 </div>
 <p id="pragma-line-30">On next screen select empty project and click OK.</p>
 <div class='col-md-12 text-center'>
-<img src="/content/imgs/getting-started/02_empty_project.png" />
+<img src="/content/imgs/getting-started/02_empty_project.png" class="img-responsive"/>
 </div>
 <div style='clear:both'> <br/> </div>
 <h3 id="install-nuget-package"><a id="pragma-line-38"></a>Install nuget package</h3>
 <p id="pragma-line-40">Once the project is created go to solution explorer (if not visible VIEW -&gt; Solution Explorer) right click on
 dependencies and select Manage Nuget Packages.</p>
 <div class='col-md-12 text-center'>
-<img src="/content/imgs/getting-started/03_manage_nugets.png" />
+<img src="/content/imgs/getting-started/03_manage_nugets.png" class="img-responsive"/>
 </div>
 <p id="pragma-line-47">In Package explorer go to <em>Browse</em>, check <em>Include prerelease</em>, search for <em>LiteApi</em>, and install the package.</p>
 <div class='col-md-12 text-center'>
-<img src="/content/imgs/getting-started/04_install_lite_api.png" />
+<img src="/content/imgs/getting-started/04_install_lite_api.png" class="img-responsive"/>
 </div>
 <div style='clear:both'> <br/> </div>
 <h3 id="setup-middleware"><a id="pragma-line-55"></a>Setup middleware</h3>
@@ -94,7 +94,7 @@ project creation. Copy the URL from browser, we are going to need it for testing
 <p id="pragma-line-131">Now, open Postman and paste URL from the browser and invoke <code>GET</code> request.
 You should get something like this:</p>
 <div class='col-md-12 text-center'>
-<img src="/content/imgs/getting-started/05_postman_hello_world.png" />
+<img src="/content/imgs/getting-started/05_postman_hello_world.png" class="img-responsive"/>
 </div>
 <p id="pragma-line-138">Ok, now set the URL to point to our action. In order to target the action from our controller, URL
 should be in following format:</p>
@@ -103,7 +103,7 @@ should be in following format:</p>
 <p id="pragma-line-145">In our case it should be <code>/api/math/add?a=2&amp;b=3</code>. If we send the <code>GET</code> request through Postman
 we should get 5 for response as on the following screenshot.</p>
 <div class='col-md-12 text-center'>
-<img src="/content/imgs/getting-started/06_postman_add.png" />
+<img src="/content/imgs/getting-started/06_postman_add.png" class="img-responsive"/>
 </div>
 <p id="pragma-line-152">For subtraction action we want to use different format of the URL. When we invoke <code>/api/math/5/minus/3</code> we
 want to get <code>2</code> as the response. In order to achiveachieve such behavior we will use <code>ActionRouteAttribute</code> from
@@ -132,7 +132,7 @@ try to automatically recognize from where parameter should be retrieved. If ther
 route with same name as in the method, LiteApi will expect for the parameter to arrive as URL segment.</p>
 <p id="pragma-line-182">After invoking the <code>GET</code> method in Postman response should be returned.</p>
 <div class='col-md-12 text-center'>
-<img src="/content/imgs/getting-started/07_postman_subtract.png" />
+<img src="/content/imgs/getting-started/07_postman_subtract.png" class="img-responsive" />
 </div>
 <p id="pragma-line-188">Sum action is left to be implemented. This action should accept array of integers (or <code>List&lt;int&gt;</code> or IEnumerable<int>)
 and return sum of all integers from the collection. In order to pass a collection we should repeat
@@ -149,7 +149,7 @@ parameter in the query string. Sum action will respond on <code>/api/math/sum?in
 }
 </code></pre>
 <div class='col-md-12 text-center'>
-<img src="/content/imgs/getting-started/08_postman_sum.png" />
+<img src="/content/imgs/getting-started/08_postman_sum.png" class="img-responsive" />
 </div>
 <div style='clear:both'> <br/> </div>
 <h2 id="create-restful-controller"><a id="pragma-line-212"></a>Create RESTful controller</h2>
@@ -268,7 +268,7 @@ public class ActorsController : LiteController, IActorsService
 <h3 id="testing-the-controller"><a id="pragma-line-344"></a>Testing the controller</h3>
 <p id="pragma-line-346">Here is a gif which demonstrates how to use <code>ActorsController</code>:</p>
 <div class='col-md-12 text-center'>
-<img src="/content/imgs/getting-started/09_actors.gif" />
+<img src="/content/imgs/getting-started/09_actors.gif" class="img-responsive" />
 </div>
 <div style='clear:both'> <br/> </div>
 <div class='alert alert-info'>

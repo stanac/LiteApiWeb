@@ -6,8 +6,11 @@ module.exports = {
         canReuse: false,
     },
     template: `
-<div class="row off-top">
-    <div class="col-md-3">
+<div>
+
+    <div v-html="docsHtml" class="col-md-9  col-md-push-3"></div>
+
+    <div class="col-md-3 col-md-pull-9" style="margin-top:28px">
         <ul class="treeListRoot">
             <li class="treeListItem">
                 <router-link to="/api-docs/">API documentation (in development)</router-link>
@@ -18,7 +21,7 @@ module.exports = {
         </ul>
     </div>
 
-    <div v-html="docsHtml" class="col-md-9"></div>
+    
 </div>`,
     data() {
         return {
@@ -36,6 +39,7 @@ module.exports = {
     methods: {
         loadData() {
             this.docsHtml = '';
+            $(window).scrollTop(0);
             var id = 'home';
             if (this.$route.params.id) {
                 id = this.$route.params.id;

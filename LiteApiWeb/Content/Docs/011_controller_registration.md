@@ -24,3 +24,36 @@ var options = LiteApiOptions.Default.AddControllerAssemblies(
     );
 app.UseLiteApi(options);
 ```
+
+## Constructor
+
+Controller constructor can accept parameters of types that are registered with
+DI container. Any type that is not registered with dependency injection container
+will make a problem in constructor (parameter will be null, or exception will be thrown).
+
+Controller can have multiple constructors, in which case, only one constructor
+needs to be decorated with `PrimaryConstructorAttribute` (located in 
+`LiteApi.Attributes` namespace). See sample below.
+
+``` csharp
+public class SpaceController: LiteController
+{
+    // this constructor will be called by LiteApi
+    [PrimaryConstructor]
+    public SpaceController(ISpaceService _service, ISpaceDataService _dataService)
+    {
+        // ...
+    }
+
+    // this one can be called from other code
+    public SpaceController()
+    {
+        // ...
+    }
+}
+```
+
+Generally it's recommended to avoid multiple constructors in controllers. 
+Multiple constructors can increase complexity of you application. Instead
+you can create multiple implementations of interfaces that are passed to
+the constructor.

@@ -33,13 +33,13 @@ If you are using VS Core (or some other code editor) you can use [dotnet CLI](ht
 cover any details about using CLI tool (there will be another article).
 
 <div class='col-md-12 text-center'>
-<img src="/content/imgs/getting-started/01_new_project.png" />
+<img src="/content/imgs/getting-started/01_new_project.png" class="img-responsive"/>
 </div>
 
 On next screen select empty project and click OK.
 
 <div class='col-md-12 text-center'>
-<img src="/content/imgs/getting-started/02_empty_project.png" />
+<img src="/content/imgs/getting-started/02_empty_project.png" class="img-responsive"/>
 </div>
 
 <div style='clear:both'> <br/> </div>
@@ -50,13 +50,13 @@ Once the project is created go to solution explorer (if not visible VIEW -> Solu
 dependencies and select Manage Nuget Packages.
 
 <div class='col-md-12 text-center'>
-<img src="/content/imgs/getting-started/03_manage_nugets.png" />
+<img src="/content/imgs/getting-started/03_manage_nugets.png" class="img-responsive"/>
 </div>
 
 In Package explorer go to *Browse*, check *Include prerelease*, search for *LiteApi*, and install the package.
 
 <div class='col-md-12 text-center'>
-<img src="/content/imgs/getting-started/04_install_lite_api.png" />
+<img src="/content/imgs/getting-started/04_install_lite_api.png" class="img-responsive"/>
 </div>
 
 <div style='clear:both'> <br/> </div>
@@ -141,7 +141,7 @@ Now, open Postman and paste URL from the browser and invoke `GET` request.
 You should get something like this:
 
 <div class='col-md-12 text-center'>
-<img src="/content/imgs/getting-started/05_postman_hello_world.png" />
+<img src="/content/imgs/getting-started/05_postman_hello_world.png" class="img-responsive"/>
 </div>
 
 Ok, now set the URL to point to our action. In order to target the action from our controller, URL
@@ -155,7 +155,7 @@ In our case it should be `/api/math/add?a=2&b=3`. If we send the `GET` request t
 we should get 5 for response as on the following screenshot.
 
 <div class='col-md-12 text-center'>
-<img src="/content/imgs/getting-started/06_postman_add.png" />
+<img src="/content/imgs/getting-started/06_postman_add.png" class="img-responsive"/>
 </div>
 
 For subtraction action we want to use different format of the URL. When we invoke `/api/math/5/minus/3` we 
@@ -191,7 +191,7 @@ route with same name as in the method, LiteApi will expect for the parameter to 
 After invoking the `GET` method in Postman response should be returned.
 
 <div class='col-md-12 text-center'>
-<img src="/content/imgs/getting-started/07_postman_subtract.png" />
+<img src="/content/imgs/getting-started/07_postman_subtract.png" class="img-responsive" />
 </div>
 
 Sum action is left to be implemented. This action should accept array of integers (or `List<int>` or IEnumerable<int>)
@@ -213,7 +213,7 @@ public class MathController: LiteController
 ```
 
 <div class='col-md-12 text-center'>
-<img src="/content/imgs/getting-started/08_postman_sum.png" />
+<img src="/content/imgs/getting-started/08_postman_sum.png" class="img-responsive" />
 </div>
 
 <div style='clear:both'> <br/> </div>
@@ -355,7 +355,7 @@ Few remarks on this controller:
 Here is a gif which demonstrates how to use `ActorsController`:
 
 <div class='col-md-12 text-center'>
-<img src="/content/imgs/getting-started/09_actors.gif" />
+<img src="/content/imgs/getting-started/09_actors.gif" class="img-responsive" />
 </div>
 
 

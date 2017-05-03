@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 7);
+/******/ 	return __webpack_require__(__webpack_require__.s = 8);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -185,11 +185,22 @@ module.exports = {
 
 
 module.exports = {
-    template: "\n<div class=\"row off-top\">\n    <h2> LiteApi blog<h2> <div class=\"alert alert-info\"> In development</div>\n\n</div>"
+    template: "\n<div class=\"row off-top\">\n<div class=\"col-md-12\">\n    <h2>API documentation<h2> <div class=\"alert alert-info\">In development</div>\n</div>\n</div>"
 };
 
 /***/ }),
 /* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = {
+    template: "\n<div class=\"row off-top\">\n<div class=\"col-md-12\">\n    <h2> LiteApi blog<h2> <div class=\"alert alert-info\"> In development</div>\n</div>\n</div>\n"
+};
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -202,7 +213,7 @@ module.exports = {
     route: {
         canReuse: false
     },
-    template: '\n<div class="row off-top">\n    <div class="col-md-3">\n        <ul class="treeListRoot">\n            <li class="treeListItem">\n                <router-link to="/api-docs/">API documentation (in development)</router-link>\n            </li>\n            <template v-for="item in treeData">\n                <treeitem :model="item"></treeitem>\n            </template>\n        </ul>\n    </div>\n\n    <div v-html="docsHtml" class="col-md-9"></div>\n</div>',
+    template: '\n<div>\n\n    <div v-html="docsHtml" class="col-md-9  col-md-push-3"></div>\n\n    <div class="col-md-3 col-md-pull-9" style="margin-top:28px">\n        <ul class="treeListRoot">\n            <li class="treeListItem">\n                <router-link to="/api-docs/">API documentation (in development)</router-link>\n            </li>\n            <template v-for="item in treeData">\n                <treeitem :model="item"></treeitem>\n            </template>\n        </ul>\n    </div>\n\n    \n</div>',
     data: function data() {
         return {
             docsHtml: 'loading...',
@@ -223,6 +234,7 @@ module.exports = {
             var _this = this;
 
             this.docsHtml = '';
+            $(window).scrollTop(0);
             var id = 'home';
             if (this.$route.params.id) {
                 id = this.$route.params.id;
@@ -254,7 +266,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -302,7 +314,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -318,7 +330,7 @@ module.exports = {
         };
     },
 
-    template: '<div class="off-top row" v-html="html"></div>',
+    template: '<div class="off-top row"><div v-html="html" class="col-md-12"></div></div>',
     created: function created() {
         this.loadData();
     },
@@ -337,7 +349,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -371,33 +383,33 @@ module.exports = {
 };
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _gettingStarted = __webpack_require__(5);
+var _gettingStarted = __webpack_require__(6);
 
 var GettingStarted = _interopRequireWildcard(_gettingStarted);
 
-var _docs = __webpack_require__(3);
+var _docs = __webpack_require__(4);
 
 var Docs = _interopRequireWildcard(_docs);
 
-var _home = __webpack_require__(6);
+var _home = __webpack_require__(7);
 
 var Home = _interopRequireWildcard(_home);
 
-var _blog = __webpack_require__(2);
+var _blog = __webpack_require__(3);
 
 var Blog = _interopRequireWildcard(_blog);
 
-var _docsSearch = __webpack_require__(4);
+var _docsSearch = __webpack_require__(5);
 
 var DocsSearch = _interopRequireWildcard(_docsSearch);
 
-var _apiDocs = __webpack_require__(8);
+var _apiDocs = __webpack_require__(2);
 
 var ApiDocs = _interopRequireWildcard(_apiDocs);
 
@@ -438,17 +450,6 @@ function initSearch(timeout) {
     }
 }
 initSearch(50);
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = {
-    template: "\n<div class=\"row off-top\">\n    <h2>API documentation<h2> <div class=\"alert alert-info\">In development</div>\n</div>"
-};
 
 /***/ })
 /******/ ]);
