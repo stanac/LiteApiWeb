@@ -11,6 +11,7 @@ module.exports = {
     },
     template: `
 <div class="off-top row">
+<div class="col-md-12">
 <div v-if='error' class="alert alert-warning">
     {{ error }}
 </div>
@@ -39,6 +40,7 @@ Your search didn’t return any results
      <router-link :to="'/docs/' + item.id">{{ item.title }}</router-link>
 </li>
 </ul>
+</div>
 </div>`,
     created() {
         this.loadData();

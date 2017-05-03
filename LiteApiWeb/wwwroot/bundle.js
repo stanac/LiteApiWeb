@@ -284,7 +284,7 @@ module.exports = {
         };
     },
 
-    template: '\n<div class="off-top row">\n<div v-if=\'error\' class="alert alert-warning">\n    {{ error }}\n</div>\n\n<p>\nSearch for: <strong>{{ $route.params.query }}</strong>\n</p>\n\n<div v-if=\'loading\'>\n<div class="spinner">\n  <div class="rect1"></div>\n  <div class="rect2"></div>\n  <div class="rect3"></div>\n  <div class="rect4"></div>\n  <div class="rect5"></div>\n</div>\n</div>\n<div v-else>\n<div v-if=\'model.length === 0\' class=\'alert alert-info\'>\nYour search didn\u2019t return any results\n</div>\n</div>\n\n<ul>\n<li v-for="item in model">\n     <router-link :to="\'/docs/\' + item.id">{{ item.title }}</router-link>\n</li>\n</ul>\n</div>',
+    template: '\n<div class="off-top row">\n<div class="col-md-12">\n<div v-if=\'error\' class="alert alert-warning">\n    {{ error }}\n</div>\n\n<p>\nSearch for: <strong>{{ $route.params.query }}</strong>\n</p>\n\n<div v-if=\'loading\'>\n<div class="spinner">\n  <div class="rect1"></div>\n  <div class="rect2"></div>\n  <div class="rect3"></div>\n  <div class="rect4"></div>\n  <div class="rect5"></div>\n</div>\n</div>\n<div v-else>\n<div v-if=\'model.length === 0\' class=\'alert alert-info\'>\nYour search didn\u2019t return any results\n</div>\n</div>\n\n<ul>\n<li v-for="item in model">\n     <router-link :to="\'/docs/\' + item.id">{{ item.title }}</router-link>\n</li>\n</ul>\n</div>\n</div>',
     created: function created() {
         this.loadData();
     },
@@ -439,6 +439,7 @@ function initSearch(timeout) {
         input.keypress(function (e) {
             if (e.which == 13) {
                 var query = input.val();
+                $('.navbar-collapse').collapse('hide');
                 window.vueRouter.push('/search/docs/' + (query || ' '));
                 return false;
             }
