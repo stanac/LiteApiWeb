@@ -32,6 +32,11 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Content Update="/Content">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <None Update="port">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
