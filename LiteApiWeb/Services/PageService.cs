@@ -6,6 +6,7 @@ using AutoMapper;
 using LiteApiWeb.Models;
 using Microsoft.AspNetCore.Hosting;
 using Markdig;
+using System.Linq;
 
 namespace LiteApiWeb.Services
 {
@@ -36,11 +37,13 @@ namespace LiteApiWeb.Services
 
         public IEnumerable<PageDetails> GetPages()
         {
+            List<PageDetails> pages = new List<PageDetails>();
             foreach (var file in Directory.GetFiles(_rootDir, "*.md"))
             {
                 var page = ReadPage(Path.GetFileName(file), false);
-                yield return _mapFromContentToDetails.Map<PageDetails>(page);
+                pages.Add(_mapFromContentToDetails.Map<PageDetails>(page));
             }
+            return pages.OrderBy(x => x.OrderId);
         }
 
         public PageContent GetPageContent(string pageId)
@@ -51,6 +54,7 @@ namespace LiteApiWeb.Services
 
         private PageContent ReadPage(string file, bool readContent)
         {
+            string orderId = file;
             file = Path.Combine(_rootDir, file);
             string content = File.ReadAllText(file);
             StringBuilder sb = StringBuilderPool.Default.GetStringBuilder();
@@ -98,6 +102,7 @@ namespace LiteApiWeb.Services
             }
             
             var page = new PageContent(FrontMatterParser.Parse(frontMatter));
+            page.OrderId = orderId;
             if (readContent)
             {
                 page.ContentMarkDown = sb.ToString();

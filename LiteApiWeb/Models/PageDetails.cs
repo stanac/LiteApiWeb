@@ -22,5 +22,6 @@ namespace LiteApiWeb.Models
         public string[] Tags { get; set; } = new string[0];
         public bool IsHtml { get; set; }
         public string ParentPageId { get; set; }
+        public string OrderId { get; set; }
     }
 }
