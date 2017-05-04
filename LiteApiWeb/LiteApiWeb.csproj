@@ -5,37 +5,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="wwwroot\content\imgs\getting-started\09_actors.gif" />
-    <Content Include="wwwroot\content\imgs\performance\32_threads_pipe_20_thread_off.png" />
-    <Content Include="wwwroot\content\imgs\performance\64_threads_pipe_20_thread_off.png" />
-    <Content Include="wwwroot\content\imgs\performance\8_threads_pipe_10_thread_on.png" />
-    <Content Include="wwwroot\libs\nanoajax.min.js" />
-    <Content Include="wwwroot\libs\prism.css" />
-    <Content Include="wwwroot\libs\prism.js" />
-    <Content Include="wwwroot\libs\vue-router.min.js" />
-    <Content Include="wwwroot\libs\vue.min.js" />
-    <Content Include="wwwroot\style.css" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.0.2" />
     <PackageReference Include="LiteApi" Version="0.7.2-beta" />
     <PackageReference Include="Markdig" Version="0.10.7" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.1" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="wwwroot\content\pages\__short\" />
-  </ItemGroup>
+
   <ItemGroup>
     <Content Update="config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Content Update="/Content">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+
   <ItemGroup>
     <None Update="port">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
