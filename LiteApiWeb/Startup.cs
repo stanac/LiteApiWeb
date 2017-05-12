@@ -109,6 +109,7 @@ namespace LiteApiWeb
 
             RenderAll<IPageService>(env, services, "pages");
             RenderAll<IDocsService>(env, services, "docs");
+//            RenderAll<IBlogCacheService>(env, services, "blog")
             RenderDocsIndex(env, docsService);
 
             string docsPath = Path.Combine(env.ContentRootPath, "wwwroot", "content", "docs");

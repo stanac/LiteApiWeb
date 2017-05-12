@@ -48,7 +48,29 @@ var DocsService = function () {
     };
 };
 
+var BlogService = function () {
+    var appVersion = "?v=" + window.appVersion;
+    this.getPage = function (pageNum, callback) {
+        nanoajax.ajax({
+            method: 'GET',
+            url: '/api/blog/page/' + pageNum + appVersion
+        }, function (code, responseText, request) {
+            callback(responseText);
+        });
+    }
+
+    this.getPost = function (id, callback) {
+        nanoajax.ajax({
+            method: 'GET',
+            url: '/api/blog/' + id + appVersion
+        }, function (code, responseText, request) {
+            callback(responseText);
+        });
+    }
+};
+
 var pageService = new PageService();
 var docsService = new DocsService();
+var blogService = new BlogService();
 
-module.exports = { pageService, docsService };
+module.exports = { pageService, docsService, blogService };

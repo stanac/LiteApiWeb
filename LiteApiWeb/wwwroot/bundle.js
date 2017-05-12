@@ -6,9 +6,9 @@
 /******/ 	function __webpack_require__(moduleId) {
 /******/
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
+/******/ 		if(installedModules[moduleId]) {
 /******/ 			return installedModules[moduleId].exports;
-/******/
+/******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
@@ -123,10 +123,32 @@ var DocsService = function DocsService() {
     };
 };
 
+var BlogService = function BlogService() {
+    var appVersion = "?v=" + window.appVersion;
+    this.getPage = function (pageNum, callback) {
+        nanoajax.ajax({
+            method: 'GET',
+            url: '/api/blog/page/' + pageNum + appVersion
+        }, function (code, responseText, request) {
+            callback(responseText);
+        });
+    };
+
+    this.getPost = function (id, callback) {
+        nanoajax.ajax({
+            method: 'GET',
+            url: '/api/blog/' + id + appVersion
+        }, function (code, responseText, request) {
+            callback(responseText);
+        });
+    };
+};
+
 var pageService = new PageService();
 var docsService = new DocsService();
+var blogService = new BlogService();
 
-module.exports = { pageService: pageService, docsService: docsService };
+module.exports = { pageService: pageService, docsService: docsService, blogService: blogService };
 
 /***/ }),
 /* 1 */
@@ -197,8 +219,41 @@ module.exports = {
 "use strict";
 
 
+var services = __webpack_require__(0);
+var codeHelpers = __webpack_require__(1);
+
 module.exports = {
-    template: "\n<div class=\"row off-top\">\n<div class=\"col-md-12\">\n    <h2> LiteApi blog<h2> <div class=\"alert alert-info\"> In development</div>\n</div>\n</div>\n"
+    route: {
+        canReuse: false
+    },
+    template: '\n<div>\n<div class="row">\n    <h2>LiteApi Blog</h2>\n    \n    <div class="col-md-9" v-for="p in posts">\n        <router-link :to="\'/blog/\' + p.formatedCreatedDate + \'/\' + p.id"><h3>{{ p.title }}</h3></router-link>\n        <div v-html="p.shortHtml"></div>\n        {{ p.formatedCreatedDate }} by {{ p.author }}\n    </div>\n\n</div>    \n</div>',
+    data: function data() {
+        return {
+            posts: []
+        };
+    },
+
+    watch: {
+        '$route': 'loadData'
+    },
+    created: function created() {
+        this.loadData();
+    },
+
+    methods: {
+        loadData: function loadData() {
+            var _this = this;
+
+            this.posts = [];
+            $(window).scrollTop(0);
+
+            services.blogService.getPage(1, function (res) {
+                _this.posts = JSON.parse(res);
+                codeHelpers.highlight();
+            });
+        }
+    }
+
 };
 
 /***/ }),
@@ -407,6 +462,10 @@ var _blog = __webpack_require__(3);
 
 var Blog = _interopRequireWildcard(_blog);
 
+var _blogPost = __webpack_require__(9);
+
+var BlogPost = _interopRequireWildcard(_blogPost);
+
 var _docsSearch = __webpack_require__(5);
 
 var DocsSearch = _interopRequireWildcard(_docsSearch);
@@ -417,9 +476,7 @@ var ApiDocs = _interopRequireWildcard(_apiDocs);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-// 0. If using a module system, call Vue.use(VueRouter)
-
-var routes = [{ path: '/', component: Home }, { path: '/getting-started', component: GettingStarted }, { path: '/docs/:id?', component: Docs }, { path: '/search/docs/:query', component: DocsSearch }, { path: '/blog', component: Blog }, { path: '/api-docs', component: ApiDocs }];
+var routes = [{ path: '/', component: Home }, { path: '/getting-started', component: GettingStarted }, { path: '/docs/:id?', component: Docs }, { path: '/search/docs/:query', component: DocsSearch }, { path: '/blog', component: Blog }, { path: '/blog/:date/:id', component: BlogPost }, { path: '/api-docs', component: ApiDocs }]; // 0. If using a module system, call Vue.use(VueRouter)
 
 var router = new VueRouter({
     routes: routes,
@@ -453,6 +510,50 @@ function initSearch(timeout) {
     }
 }
 initSearch(50);
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var services = __webpack_require__(0);
+var codeHelpers = __webpack_require__(1);
+
+module.exports = {
+	route: {
+		canReuse: false
+	},
+	template: '\n\t\t<div class="row off-top" v-if="post">\n\t\t\t<div class="col-md-12"><h2>{{ post.title }}</h2></div>\n\t\t\t<div class ="col-md-12">{{ post.formatedCreatedDate }} by {{ post.author }}</div>\n\t\t\t<div class="col-md-12" v-html="post.contentHtml"></div>\n\t\t</div>\n',
+	data: function data() {
+		return {
+			post: null
+		};
+	},
+
+	watch: {
+		'$route': 'loadData'
+	},
+	created: function created() {
+		this.loadData();
+	},
+
+	methods: {
+		loadData: function loadData() {
+			var _this = this;
+
+			this.post = null;
+			$(window).scrollTop(0);
+			var id = this.$route.params.id;
+			services.blogService.getPost(id, function (res) {
+				_this.post = JSON.parse(res);
+				codeHelpers.highlight();
+			});
+		}
+	}
+
+};
 
 /***/ })
 /******/ ]);

@@ -4,6 +4,7 @@ import * as GettingStarted from './gettingStarted'
 import * as Docs from './docs'
 import * as Home from './home'
 import * as Blog from './blog'
+import * as BlogPost from './blogPost'
 import * as DocsSearch from './docsSearch'
 import * as ApiDocs from './apiDocs'
 
@@ -13,6 +14,7 @@ const routes = [
     { path: '/docs/:id?', component: Docs },
     { path: '/search/docs/:query', component: DocsSearch },
     { path: '/blog', component: Blog },
+    { path: '/blog/:date/:id', component: BlogPost },
     { path: '/api-docs', component: ApiDocs }
 ]
 

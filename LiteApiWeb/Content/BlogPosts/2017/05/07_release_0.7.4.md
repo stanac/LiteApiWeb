@@ -5,10 +5,8 @@ Title: Release 0.7.4
 RenderTitle: true
 IsHtml: false
 Id: release-0_7_4
-RenderShort: false
+RenderShort: True
 ---
-
-## Release 0.7.4
 
 LiteApi 0.7.4 is released
 
