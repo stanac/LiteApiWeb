@@ -22,28 +22,39 @@ namespace LiteApiWeb.Services
 
         private static readonly IMapper _mapFromContentToDetails;
 
+        private readonly bool _readSubDirs;
+
         static PageService()
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<PageContent, PageDetails>());
             _mapFromContentToDetails = config.CreateMapper();
         }
         
-        public PageService(IHostingEnvironment host, string contentDirectory = "Pages")
+        public PageService(IHostingEnvironment host, string contentDirectory = "Pages", bool readSubDirs = false)
         {
             string rootDir = Path.Combine(host.ContentRootPath, "Content", contentDirectory);
             if (!Directory.Exists(rootDir)) throw new ArgumentException($"dir {rootDir} doesn't exists.");
             _rootDir = rootDir;
+            _readSubDirs = readSubDirs;
         }
 
         public IEnumerable<PageDetails> GetPages()
         {
             List<PageDetails> pages = new List<PageDetails>();
-            foreach (var file in Directory.GetFiles(_rootDir, "*.md"))
+            var searchOption = _readSubDirs ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
+
+            foreach (var file in Directory.GetFiles(_rootDir, "*.md", searchOption))
             {
                 var page = ReadPage(Path.GetFileName(file), false);
                 pages.Add(_mapFromContentToDetails.Map<PageDetails>(page));
             }
             return pages.OrderBy(x => x.OrderId);
+        }
+
+        public int GetCount()
+        {
+            var searchOption = _readSubDirs ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
+            return Directory.GetFiles(_rootDir, "*.md", searchOption).Length;
         }
 
         public PageContent GetPageContent(string pageId)
@@ -55,7 +66,16 @@ namespace LiteApiWeb.Services
         private PageContent ReadPage(string file, bool readContent)
         {
             string orderId = file;
-            file = Path.Combine(_rootDir, file);
+            if (_readSubDirs)
+            {
+                if (file.EndsWith(".md", StringComparison.Ordinal)) file = Path.GetFileNameWithoutExtension(file);
+                var files = Directory.GetFiles(_rootDir, "*.md", SearchOption.AllDirectories);
+                file = files.First(x => Path.GetFileNameWithoutExtension(x) == file);
+            }
+            else
+            {
+                file = Path.Combine(_rootDir, file);
+            }
             string content = File.ReadAllText(file);
             StringBuilder sb = StringBuilderPool.Default.GetStringBuilder();
             string shortSplitLine = null;

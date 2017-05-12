@@ -7,7 +7,7 @@ using LiteApiWeb.Services;
 
 namespace LiteApiWeb.Api
 {
-    [RestfulLinks]
+    [Restful]
     public class PagesController: LiteController
     {
         private readonly IPageService _service;

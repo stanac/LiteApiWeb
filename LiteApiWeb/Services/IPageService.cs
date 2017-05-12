@@ -8,5 +8,6 @@ namespace LiteApiWeb.Services
         IEnumerable<PageDetails> GetPages();
         PageContent GetPageContent(string pageId);
         RenderedPageContent RenderPage(PageContent pageContent);
+        int GetCount();
     }
 }

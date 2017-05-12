@@ -1,4 +1,6 @@
-﻿namespace LiteApiWeb.Models
+﻿using System;
+
+namespace LiteApiWeb.Models
 {
     public class RenderedPageContent: PageContent
     {
@@ -23,5 +25,11 @@
 
         public string ShortHtml { get; set; }
         public string ContentHtml { get; set; }
+
+        internal void RemoveMarkdownSource()
+        {
+            this.ContentMarkDown = null;
+            this.ShortMarkDown = null;
+        }
     }
 }

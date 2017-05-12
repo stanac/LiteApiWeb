@@ -23,5 +23,8 @@ namespace LiteApiWeb.Models
         public bool IsHtml { get; set; }
         public string ParentPageId { get; set; }
         public string OrderId { get; set; }
+        public bool RenderShort { get; set; }
+
+        public string FormatedCreatedDate => $"{CreatedDate.Year}-{CreatedDate.Month.ToString("00")}-{CreatedDate.Day.ToString("00")}";
     }
 }

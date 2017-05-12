@@ -40,15 +40,14 @@ namespace LiteApiWeb
             }
         }
         
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IPageService, PageService>();
             services.AddScoped<IDocsService, DocsService>();
+            services.AddScoped<IBlogPageService, BlogPageService>();
+            services.AddSingleton<IBlogCacheService, BlogCacheService>();
         }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             // loggerFactory.AddConsole();
@@ -56,6 +55,7 @@ namespace LiteApiWeb
             if (_enableFirstRunRender)
             {
                 RenderAllPages(env, app.ApplicationServices);
+                // ParseApi(env.ContentRootPath);
             }
 
             if (env.IsDevelopment())
@@ -132,5 +132,12 @@ namespace LiteApiWeb
             string json = JsonConvert.SerializeObject(docs);
             File.WriteAllText(jsonFilePath, json);
         }
+
+        //private void ParseApi(string rootPath)
+        //{
+        //    string path = Path.Combine(rootPath, "Content", "NugetSource");
+        //    var reader = new DocsReader(path);
+        //    reader.DownloadAndParse().Wait();
+        //}
     }
 }
