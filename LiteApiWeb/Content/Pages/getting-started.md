@@ -10,7 +10,7 @@ IsHtml: false
 # Getting started
 
 <div class='alert alert-info'>
-tl;dr here is the code on GitHub.
+tl;dr <a href="https://github.com/stanac/LiteApi-GettingStartedSample" target="_blank">here is the code</a> on GitHub.
 </div>
 
 <div class='alert alert-info'>
@@ -362,5 +362,5 @@ Here is a gif which demonstrates how to use `ActorsController`:
 <div style='clear:both'> <br/> </div>
 
 <div class='alert alert-info'>
-Here is the code on GitHub. Documentation can be found under <a href="/docs">Docs section</a>.
+<a href="https://github.com/stanac/LiteApi-GettingStartedSample" target="_blank">Here is the code</a> on GitHub. Documentation can be found under <a href="/docs">Docs section</a>.
 </div>
