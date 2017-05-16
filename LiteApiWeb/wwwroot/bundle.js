@@ -525,7 +525,7 @@ module.exports = {
 	route: {
 		canReuse: false
 	},
-	template: '\n\t\t<div class="row off-top" v-if="post">\n\t\t\t<div class="col-md-12"><h2>{{ post.title }}</h2></div>\n\t\t\t<div class ="col-md-12">{{ post.formatedCreatedDate }} by {{ post.author }}</div>\n\t\t\t<div class="col-md-12" v-html="post.contentHtml"></div>\n\t\t</div>\n',
+	template: '\n\t\t<div class="row off-top" v-if="post">\n\t\t\t<div class="col-md-12"><h2>{{ post.title }}</h2></div>\n\t\t\t<div class="col-md-12">{{ post.formatedCreatedDate }} by {{ post.author }}</div>\n\t\t\t<div class ="col-md-12">\n\t\t\t\t<br/><br/>\n\t\t\t</div>\n\t\t\t<div class="col-md-12" v-html="post.contentHtml"></div>\n\t\t</div>\n',
 	data: function data() {
 		return {
 			post: null
