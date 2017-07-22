@@ -50,3 +50,6 @@ public class PersonsController:LiteController
     // ...
 }
 ```
+
+If you are interested in API key/secret type of authorization
+you can check [this post](/blog/2017-07-22/key-secret-auth).
