@@ -70,11 +70,13 @@ public abstract class LiteController
 <h1 id="iliteactionresult"><a id="pragma-line-73"></a>ILiteActionResult</h1>
 <p id="pragma-line-75"><code>LiteApi.ILiteActionResult</code> is special type of action response that will not
 be serialized by the middleware. Instead <code>ILiteActionResult</code> needs to know
-how to write the response itself. Internally it's used for file download, but
-it can be inherited by any class, so low-level response can be handled by
+how to write the response itself. Internally it's used for file download, returning
+raw json or returning custom responses, however
+it can be implemented by any class, so low-level response can be handled by
 class that's specific to your application.</p>
-<p id="pragma-line-81">Content of <code>ILiteActionResult</code> interface:</p>
-<pre><code id="pragma-line-83" class="language-csharp">/// &lt;summary&gt;
+<p id="pragma-line-82">There are specialized methods that are returning <code>ILiteActionResult</code>, see <a href="/docs/custom-response">Custom status, headers and response</a>.</p>
+<p id="pragma-line-84">Content of <code>ILiteActionResult</code> interface:</p>
+<pre><code id="pragma-line-86" class="language-csharp">/// &lt;summary&gt;
 /// Specialized type of response that does not need to be serialized, but instead can write the response itself
 /// &lt;/summary&gt;
 public interface ILiteActionResult

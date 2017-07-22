@@ -14,9 +14,9 @@ Following extensibility points are available:
 - [Custom query model binder](/docs/custom-parameter-provider)
 - [Custom policy authorization](/docs/policy-authorization)
 - [Custom authorization filter](/docs/custom-authorization)
-- [Custom response (ILiteActionResult)](/docs/litecontroller-and-iliteactionresult)
+- [Custom response (low level) (ILiteActionResult)](/docs/litecontroller-and-iliteactionresult)
+- [Custom response, content-type, header, status code](/docs/custom-response)
+- [Replacing any internal service with custom implementation](/docs/replacing-internal-services)
 
 Planned extensibility points:
 - [Global filters](/docs/global-filters)
-- Options to replace any internal service
-- Support for other document type, not just JSON

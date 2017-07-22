@@ -13,7 +13,7 @@ ParentPageId: security
 LiteApi can reject all non HTTPS requests on middleware level, controller level or
 action level.  
 
-## Require HTTPS on controller or action
+## Require HTTPS on controller or action level
 
 On controller or action `LiteApi.Attributes.RequiresHttpsAttribute` can be set
 in order to force HTTPS.
@@ -66,7 +66,7 @@ anonymously access some `Login` action but has to do it over `HTTPS`.
 
 ---
 
-## Require HTTPS on middleware
+## Require HTTPS on middleware level
 
 LiteApi can be configurated to require HTTPS on all actions in the middleware by
 calling `LiteApiOptions.SetRequiresHttps` in `Startup.Configure` method.

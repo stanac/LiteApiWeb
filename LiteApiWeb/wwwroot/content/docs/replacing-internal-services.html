@@ -1,0 +1,66 @@
+
+<div class='user-content'>
+<h2 id="replacing-internal-services"><a id="pragma-line-1"></a>Replacing internal services</h2>
+<p id="pragma-line-3">It is possible for API application to replace default implementations of
+following internal services in the middleware:</p>
+<ul id="pragma-line-6">
+<li id="pragma-line-6"><code>IActionDiscoverer</code></li>
+<li id="pragma-line-7"><code>IActionInvoker</code></li>
+<li id="pragma-line-8"><code>IActionsValidator</code></li>
+<li id="pragma-line-9"><code>IAuthorizationPolicyStore</code></li>
+<li id="pragma-line-10"><code>IControllerBuilder</code></li>
+<li id="pragma-line-11"><code>IControllerDiscoverer</code></li>
+<li id="pragma-line-12"><code>IControllersValidator</code></li>
+<li id="pragma-line-13"><code>IJsonSerializer</code></li>
+<li id="pragma-line-14"><code>IParametersDiscoverer</code></li>
+<li id="pragma-line-15"><code>IPathResolver</code></li>
+<li id="pragma-line-16"><code>IParametersValidator</code></li>
+</ul>
+<p id="pragma-line-18">As an example we can replace default implementation of
+<code>IControllerDiscoverer</code> to allow our controller names
+to end with <code>Ctrl</code> as in <code>PersonsCtrl</code>. First we need to inherit default
+implementation and override necessary method.</p>
+<pre><code id="pragma-line-23" class="language-csharp">public class CustomControllerDiscoverer : ControllerDiscoverer
+{
+    public CustomControllerDiscoverer(IActionDiscoverer actionDiscoverer)
+        :base(actionDiscoverer)
+    {
+    }
+
+    protected override string GetControllerName(string typeFullName)
+    {
+        var name = base.GetControllerName(typeFullName);
+        if (name.EndsWith(&quot;ctrl&quot;, StringComparison.Ordinal))
+            name = name.Substring(0, name.Length - 4);
+        return name;
+    }
+}
+</code></pre>
+<p id="pragma-line-41">After we have new implementation of internal LiteApi service, we need to register it
+during middleware registration in <code>Startup</code> class.</p>
+<pre><code id="pragma-line-44" class="language-csharp">public class Startup
+{
+    public void ConfigureServices(IServiceCollection services)
+    {
+    }
+    
+    public void Configure(
+        IApplicationBuilder app, 
+        IHostingEnvironment env, 
+        ILoggerFactory loggerFactory)
+    {
+        // REGISTER LITE API WITH CUSTOM IControllerDiscoverer
+        var options = LiteApiOptions.Default;
+        options.InternalServiceResolver.Register&lt;IControllerDiscoverer, CustomControllerDiscoverer&gt;();
+        app.UseLiteApi(options);
+        
+        app.Run(async context =&gt;
+        {
+            context.Response.StatusCode = 404;
+            await context.Response.WriteAsync(&quot;404 - NOT FOUND&quot;);
+        });
+    }
+}
+</code></pre>
+
+</div>

@@ -84,9 +84,12 @@ Actions can be `async` but does not have to be.
 
 `LiteApi.ILiteActionResult` is special type of action response that will not 
 be serialized by the middleware. Instead `ILiteActionResult` needs to know
-how to write the response itself. Internally it's used for file download, but
-it can be inherited by any class, so low-level response can be handled by
+how to write the response itself. Internally it's used for file download, returning 
+raw json or returning custom responses, however
+it can be implemented by any class, so low-level response can be handled by
 class that's specific to your application.
+
+There are specialized methods that are returning `ILiteActionResult`, see [Custom status, headers and response](/docs/custom-response).
 
 Content of `ILiteActionResult` interface:
 

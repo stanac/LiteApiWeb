@@ -1,0 +1,29 @@
+
+<div class='user-content'>
+<h1 id="custom-status-headers-and-response"><a id="pragma-line-1"></a>Custom status, headers and response</h1>
+<p id="pragma-line-3">Since release 0.8 it's possible to return any type of response from action with
+any custom content, response code, and header.
+This is done by using following methods available in any controller:</p>
+<ul id="pragma-line-6">
+<li id="pragma-line-6"><code>ILiteActionResult Content(string data, string contentType)</code></li>
+<li id="pragma-line-7"><code>ILiteActionResult Content(byte[] data, string contentType)</code></li>
+<li id="pragma-line-8"><code>ILiteActionResult Json(string jsonContent)</code></li>
+<li id="pragma-line-9"><code>void SetResponseStatusCode(int? responseCode)</code></li>
+<li id="pragma-line-10"><code>void AddResponseHeader(string key, StringValues values)</code></li>
+<li id="pragma-line-11"><code>void AddResponseHeaders(IDictionary&lt;string, StringValues&gt; keyValuesPairs)</code></li>
+</ul>
+<p id="pragma-line-13">See following sample action:</p>
+<pre><code id="pragma-line-15" class="language-csharp">public class SomeController: LiteController
+{
+    public ILiteActionResult SomeResponse()
+    {
+        AddResponseHeader(&quot;key&quot;, &quot;val&quot;);
+        SetResponseStatusCode(241);
+        return Json(&quot;{ \&quot;a\&quot;: \&quot;b\&quot; }&quot;);
+        // or
+        // return Content(&quot;response body&quot;, &quot;text/plain&quot;);
+    }
+}
+</code></pre>
+
+</div>
