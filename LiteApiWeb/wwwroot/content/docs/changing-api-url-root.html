@@ -1,0 +1,26 @@
+
+<div class='user-content'>
+<h2 id="changing-api-url-root"><a id="pragma-line-1"></a>Changing API URL root</h2>
+<p id="pragma-line-3">Since version 0.9.0 it is possible to change root of API URL.</p>
+<p id="pragma-line-5">For example here is a controller which responds to: <code>/api/persons</code>.</p>
+<pre><code id="pragma-line-7" class="language-csharp">[Restful]
+public PersonsController: LiteController
+{
+    public IEnumerable&lt;Person&gt; GetAll() =&gt; //...
+}
+</code></pre>
+<p id="pragma-line-15">We can change root URL of the middleware so all our controllers respond to
+<code>/api-awesome/[controller]</code> which means controller from example above
+will respond to <code>/api-awesome/persons</code>. We can change API URL root by calling
+<code>LiteApiOptions.SetApiUrlRoot(string)</code> and providing the options when
+registering the middleware. Here is a sample from <code>Startup.</code>.</p>
+<pre><code id="pragma-line-21" class="language-csharp">var options = LiteApiOptions
+    .Default
+    .SetApiUrlRoot(&quot;api-awesome/&quot;);
+app.UseLiteApi(options);
+</code></pre>
+<p id="pragma-line-28"><strong>Please note:</strong> this option will not affect controllers which have
+<code>ControllerRouteAttribute</code> set. Those type of controller will
+respond to whatever URL is set in the attribute.</p>
+
+</div>

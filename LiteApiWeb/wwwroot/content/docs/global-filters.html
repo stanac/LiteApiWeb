@@ -1,6 +1,63 @@
 
 <div class='user-content'>
 <h2 id="global-filters"><a id="pragma-line-1"></a>Global filters</h2>
-<p id="pragma-line-3">To be implemented</p>
+<p id="pragma-line-3">Global filters can be used to filter any request that matches any
+controller/action. They are implementing same interface as filter attributes.
+Which means same attributes you use on controller or action level
+can now be used on global level. This gives us an option to
+prevent access to the whole API on middleware level except for example on
+<code>Login</code> action.</p>
+<p id="pragma-line-10">Here is sample from <code>Startup.Configure</code> method which uses <code>RequiresAuthenticationAttribute</code>
+as global filter.</p>
+<pre><code id="pragma-line-13" class="language-csharp">var options = LiteApiOptions
+    .Default
+    .AddGlobalFilter(new LiteApi.Attributes.RequiresAuthenticationAttribute());
+app.UseLiteApi(options);
+</code></pre>
+<p id="pragma-line-20">Global filters can be added to <code>LiteApiOptions</code> by calling one or more of the following methods:</p>
+<table id="pragma-line-22">
+<thead>
+<tr>
+<th id="pragma-line-22">Method</th>
+<th id="pragma-line-22">Parameter</th>
+<th id="pragma-line-22">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td id="pragma-line-24">AddGlobalFilter</td>
+<td id="pragma-line-24">IApiFilter filter</td>
+<td id="pragma-line-24">Adds global filter</td>
+</tr>
+<tr>
+<td id="pragma-line-25">AddGlobalFilter</td>
+<td id="pragma-line-25">IApiFilterAsync filter</td>
+<td id="pragma-line-25">Adds global filter</td>
+</tr>
+<tr>
+<td id="pragma-line-26">AddGlobalFilters</td>
+<td id="pragma-line-26">IEnumerable&lt;IApiFilter&gt; filters</td>
+<td id="pragma-line-26">Adds global filters</td>
+</tr>
+<tr>
+<td id="pragma-line-27">AddGlobalFilters</td>
+<td id="pragma-line-27">IEnumerable&lt;IApiFilterAsync&gt; filters</td>
+<td id="pragma-line-27">Adds global filters</td>
+</tr>
+</tbody>
+</table>
+<p id="pragma-line-29">Now, since there is no way to access the API you need either an action that has
+<code>SkipFiltersAttribute</code> for login, or a separate middleware for logging in
+users. Here is a sample of the action that will ignore global (and local) filters:</p>
+<pre><code id="pragma-line-33" class="language-csharp">[Restful]
+public class AuthController: LiteController
+{
+    [HttpPost, SkipFilters]
+    public Task LoginUser(LoginData loginData)
+    {
+        // ...
+    }
+}
+</code></pre>
 
 </div>

@@ -73,9 +73,39 @@ or by editing project's <code>.csproj</code> file and running <a href="https://d
 <td id="pragma-line-52">Tells middleware to (or not to) reject all non HTTPS requests</td>
 <td id="pragma-line-52"><a href="/docs/require-https">Link</a></td>
 </tr>
+<tr>
+<td id="pragma-line-53">SetApiUrlRoot</td>
+<td id="pragma-line-53">string urlRoot</td>
+<td id="pragma-line-53">Changes API URL root, if not set by defualt is 'api/'</td>
+<td id="pragma-line-53"><a href="/docs/changing-api-url-root">Link</a></td>
+</tr>
+<tr>
+<td id="pragma-line-54">AddGlobalFilter</td>
+<td id="pragma-line-54">IApiFilter filter</td>
+<td id="pragma-line-54">Adds global filter</td>
+<td id="pragma-line-54"><a href="/docs/global-filters">Link</a></td>
+</tr>
+<tr>
+<td id="pragma-line-55">AddGlobalFilter</td>
+<td id="pragma-line-55">IApiFilterAsync filter</td>
+<td id="pragma-line-55">Adds global filter</td>
+<td id="pragma-line-55"><a href="/docs/global-filters">Link</a></td>
+</tr>
+<tr>
+<td id="pragma-line-56">AddGlobalFilters</td>
+<td id="pragma-line-56">IEnumerable&lt;IApiFilter&gt; filters</td>
+<td id="pragma-line-56">Adds global filters</td>
+<td id="pragma-line-56"><a href="/docs/global-filters">Link</a></td>
+</tr>
+<tr>
+<td id="pragma-line-57">AddGlobalFilters</td>
+<td id="pragma-line-57">IEnumerable&lt;IApiFilterAsync&gt; filters</td>
+<td id="pragma-line-57">Adds global filters</td>
+<td id="pragma-line-57"><a href="/docs/global-filters">Link</a></td>
+</tr>
 </tbody>
 </table>
-<p id="pragma-line-54">Method that is planned to be added is <code>SetApiRootUrl(string rootUrl)</code>.
+<p id="pragma-line-59">Method that is planned to be added is <code>SetApiRootUrl(string rootUrl)</code>.
 By default all controller root URLs are <code>/api</code> which can be overriden with <code>ControllerRouteAttribute</code>.</p>
 
 </div>
