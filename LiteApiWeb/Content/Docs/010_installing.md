@@ -59,6 +59,11 @@ Following methods can alter `LiteApiOptions`:
 | SetJsonSerializer | IJsonSerializer jsonSerializer | Sets custom JSON (de)serializer, by default Json.NET is used | [Link](/docs/changing-json-serializer) |
 | SetLoggerFactory | ILoggerFactory loggerFactory | Sets logger factory, no logger is used by default | [Link](/docs/configurating-logging) |
 | SetRequiresHttps | bool requireHttps | Tells middleware to (or not to) reject all non HTTPS requests | [Link](/docs/require-https) |
+| SetApiUrlRoot | string urlRoot | Changes API URL root, if not set by defualt is 'api/' | [Link](/docs/changing-api-url-root)
+| AddGlobalFilter | IApiFilter filter | Adds global filter | [Link](/docs/global-filters) |
+| AddGlobalFilter | IApiFilterAsync filter | Adds global filter | [Link](/docs/global-filters) |
+| AddGlobalFilters | IEnumerable&lt;IApiFilter&gt; filters | Adds global filters | [Link](/docs/global-filters) |
+| AddGlobalFilters | IEnumerable&lt;IApiFilterAsync&gt; filters | Adds global filters | [Link](/docs/global-filters) |
 
 Method that is planned to be added is `SetApiRootUrl(string rootUrl)`.
 By default all controller root URLs are `/api` which can be overriden with `ControllerRouteAttribute`.
