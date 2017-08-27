@@ -7,6 +7,7 @@ import * as Blog from './blog'
 import * as BlogPost from './blogPost'
 import * as DocsSearch from './docsSearch'
 import * as ApiDocs from './apiDocs'
+import VueAnalytics from 'vue-analytics'
 
 const routes = [
     { path: '/', component: Home },
