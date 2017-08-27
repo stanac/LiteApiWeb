@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 8);
+/******/ 	return __webpack_require__(__webpack_require__.s = 9);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -267,6 +267,50 @@ var services = __webpack_require__(0);
 var codeHelpers = __webpack_require__(1);
 
 module.exports = {
+	route: {
+		canReuse: false
+	},
+	template: '\n\t\t<div class="row off-top" v-if="post">\n\t\t\t<div class="col-md-12"><h2>{{ post.title }}</h2></div>\n\t\t\t<div class="col-md-12">{{ post.formatedCreatedDate }} by {{ post.author }}</div>\n\t\t\t<div class ="col-md-12">\n\t\t\t\t<br/><br/>\n\t\t\t</div>\n\t\t\t<div class="col-md-12" v-html="post.contentHtml"></div>\n\t\t</div>\n',
+	data: function data() {
+		return {
+			post: null
+		};
+	},
+
+	watch: {
+		'$route': 'loadData'
+	},
+	created: function created() {
+		this.loadData();
+	},
+
+	methods: {
+		loadData: function loadData() {
+			var _this = this;
+
+			this.post = null;
+			$(window).scrollTop(0);
+			var id = this.$route.params.id;
+			services.blogService.getPost(id, function (res) {
+				_this.post = JSON.parse(res);
+				codeHelpers.highlight();
+			});
+		}
+	}
+
+};
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var services = __webpack_require__(0);
+var codeHelpers = __webpack_require__(1);
+
+module.exports = {
     route: {
         canReuse: false
     },
@@ -323,7 +367,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -371,7 +415,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -406,7 +450,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -440,21 +484,21 @@ module.exports = {
 };
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _gettingStarted = __webpack_require__(6);
+var _gettingStarted = __webpack_require__(7);
 
 var GettingStarted = _interopRequireWildcard(_gettingStarted);
 
-var _docs = __webpack_require__(4);
+var _docs = __webpack_require__(5);
 
 var Docs = _interopRequireWildcard(_docs);
 
-var _home = __webpack_require__(7);
+var _home = __webpack_require__(8);
 
 var Home = _interopRequireWildcard(_home);
 
@@ -462,11 +506,11 @@ var _blog = __webpack_require__(3);
 
 var Blog = _interopRequireWildcard(_blog);
 
-var _blogPost = __webpack_require__(9);
+var _blogPost = __webpack_require__(4);
 
 var BlogPost = _interopRequireWildcard(_blogPost);
 
-var _docsSearch = __webpack_require__(5);
+var _docsSearch = __webpack_require__(6);
 
 var DocsSearch = _interopRequireWildcard(_docsSearch);
 
@@ -484,6 +528,11 @@ var router = new VueRouter({
 });
 
 window.vueRouter = router;
+
+Vue.use(VueAnalytics, {
+    id: 'UA-105330561-1',
+    router: router
+});
 
 var app = new Vue({
     router: router
@@ -510,50 +559,6 @@ function initSearch(timeout) {
     }
 }
 initSearch(50);
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var services = __webpack_require__(0);
-var codeHelpers = __webpack_require__(1);
-
-module.exports = {
-	route: {
-		canReuse: false
-	},
-	template: '\n\t\t<div class="row off-top" v-if="post">\n\t\t\t<div class="col-md-12"><h2>{{ post.title }}</h2></div>\n\t\t\t<div class="col-md-12">{{ post.formatedCreatedDate }} by {{ post.author }}</div>\n\t\t\t<div class ="col-md-12">\n\t\t\t\t<br/><br/>\n\t\t\t</div>\n\t\t\t<div class="col-md-12" v-html="post.contentHtml"></div>\n\t\t</div>\n',
-	data: function data() {
-		return {
-			post: null
-		};
-	},
-
-	watch: {
-		'$route': 'loadData'
-	},
-	created: function created() {
-		this.loadData();
-	},
-
-	methods: {
-		loadData: function loadData() {
-			var _this = this;
-
-			this.post = null;
-			$(window).scrollTop(0);
-			var id = this.$route.params.id;
-			services.blogService.getPost(id, function (res) {
-				_this.post = JSON.parse(res);
-				codeHelpers.highlight();
-			});
-		}
-	}
-
-};
 
 /***/ })
 /******/ ]);

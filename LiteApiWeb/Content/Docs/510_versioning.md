@@ -20,4 +20,4 @@ public class ActorsController : LiteController
 ```
 
 Versioning with headers are not supported at the moment, it's planned for version
-[1.3](https://github.com/stanac/LiteApi#roadmap).
+[1.3](https://github.com/stanac/LiteApi/blob/master/roadmap.md).

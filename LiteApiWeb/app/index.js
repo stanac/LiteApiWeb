@@ -25,9 +25,14 @@ const router = new VueRouter({
 
 window.vueRouter = router;
 
+Vue.use(VueAnalytics, {
+    id: 'UA-105330561-1',
+    router
+});
+
 const app = new Vue({
-  router
-}).$mount('#app')
+    router
+}).$mount('#app');
 
 function initSearch(timeout) {
     if (timeout > 5000) {
