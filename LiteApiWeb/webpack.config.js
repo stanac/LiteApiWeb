@@ -4,7 +4,7 @@
     
     output: {
         // path: '',
-        filename: './wwwroot/bundle.js'
+        filename: './wwwroot/bundle-app.js'
     },
 
     module: {

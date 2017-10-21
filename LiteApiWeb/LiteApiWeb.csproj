@@ -14,8 +14,9 @@
     <PackageReference Include="LiteApi" Version="0.7.4-beta" />
     <PackageReference Include="Markdig" Version="0.10.7" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.ResponseCompression" Version="1.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.1" />
-    <PackageReference Include="System.IO.Compression.ZipFile" Version="4.3.0" />
+    <PackageReference Include="NUglify" Version="1.5.8" />
   </ItemGroup>
 
   <ItemGroup>

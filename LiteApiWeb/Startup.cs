@@ -8,40 +8,49 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System.Diagnostics;
 using Newtonsoft.Json;
-using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.ResponseCompression;
+using System.IO.Compression;
 
 namespace LiteApiWeb
 {
     public class Startup
     {
-        public readonly IConfigurationRoot _config;
-        private readonly bool _enableFirstRunRender;
+        //public readonly IConfigurationRoot _config;
+        // private readonly bool _enableFirstRunRender;
+        public static string WwwRootPath { get; private set; }
         public static SearchCacheService DocsSearch { get; private set; }
 
         public Startup()
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("config.json");
+            //var builder = new ConfigurationBuilder()
+            //    .SetBasePath(Directory.GetCurrentDirectory())
+            //    .AddJsonFile("config.json");
 
-            _config = builder.Build();
-            const string key = "enableFirstTimeRender";
-            bool parse;
-            if (_config.AsEnumerable().Any(x => x.Key == key)
-                && bool.TryParse(_config[key], out parse))
-            {
-                _enableFirstRunRender = parse;
-            }
-            else
-            {
-                _enableFirstRunRender = true;
-            }
+            //_config = builder.Build();
+            //const string key = "enableFirstTimeRender";
+            //bool parse;
+            //if (_config.AsEnumerable().Any(x => x.Key == key)
+            //    && bool.TryParse(_config[key], out parse))
+            //{
+            //    _enableFirstRunRender = parse;
+            //}
+            //else
+            //{
+            //    _enableFirstRunRender = true;
+            //}
         }
         
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddResponseCompression(o =>
+            {
+                o.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[] { "image/svg+xml" });
+            });
+            services.Configure<GzipCompressionProviderOptions>(options =>
+            {
+                options.Level = CompressionLevel.Fastest;
+            });
             services.AddScoped<IPageService, PageService>();
             services.AddScoped<IDocsService, DocsService>();
             services.AddScoped<IBlogPageService, BlogPageService>();
@@ -50,18 +59,23 @@ namespace LiteApiWeb
         
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            WwwRootPath = Path.Combine(env.ContentRootPath, "wwwroot");
+            
             // loggerFactory.AddConsole();
 
-            if (_enableFirstRunRender)
-            {
+            //if (_enableFirstRunRender)
+            //{
                 RenderAllPages(env, app.ApplicationServices);
-                // ParseApi(env.ContentRootPath);
-            }
+            // ParseApi(env.ContentRootPath);
+            //}
+
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.Use(BundleAndMinify.Middleware);
 
             app.Use(async (httpCtx, next) =>
             {
@@ -79,18 +93,6 @@ namespace LiteApiWeb
             });
             
             app.UseDefaultFiles();
-
-            if (Debugger.IsAttached && _enableFirstRunRender)
-            {
-                app.Use(async (httpCtx, next) =>
-                {
-                    if (httpCtx.Request.Path.Value.Contains("index.html"))
-                    {
-                        RenderAllPages(env, app.ApplicationServices);
-                    }
-                    await next.Invoke();
-                });
-            }
             
             app.UseStaticFiles();
 
