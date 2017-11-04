@@ -27,7 +27,9 @@ For LiteApi following types are considered as simple types:
 - `float`
 - `double`
 - `DateTime`
+- `DateTimeOffset`
 - `Guid`
+- Enums
 
 Parameter types supported by **query** are all simple types and following types
 where `T`, `TKey` and `TValue` are all simple types.
@@ -78,3 +80,8 @@ public class MathController: LiteController
 For parameters from body to be received as `null` JSON serializer needs to handle
 null values. Default (Json.NET) serializer will deserialize value to `null`
 if body is empty or has value `null`.
+
+---
+- For specifics of using `DateTime` and `DateTimeOffset` parameters please check: 
+[Parsing DateTime and DateTimeOffset parameters](/docs/parameters-parsing-datetime-and-datetimeoffset).
+- For working with Enums please check [Enum parameters](/docs/parameters-enums)

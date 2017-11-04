@@ -1,0 +1,76 @@
+
+<div class='user-content'>
+<h1 id="parsing-datetime-and-datetimeoffset-parameters"><a id="pragma-line-1"></a>Parsing DateTime and DateTimeOffset parameters</h1>
+<p id="pragma-line-3">Value of <code>DateTime</code> and <code>DateTimeOffset</code> types can be passed as
+URI segment, query value, header value and body.</p>
+<h2 id="parsing-datetimeoffset"><a id="pragma-line-6"></a>Parsing DateTimeOffset</h2>
+<p id="pragma-line-8">Since <code>DateTimeOffset</code>
+is very specific (includes timezone) specifying
+exact parsing format for <code>DateTimeOffset</code> isn't supported. It's recommended
+for value passed as <code>DateTimeOffset</code> to be in following format:</p>
+<pre><code id="pragma-line-13">2017-10-28T09:51:17+07:00 (which is percent encoded 2017-10-28T09:51:17%2B07:00)
+</code></pre>
+<h2 id="parsing-datetime"><a id="pragma-line-17"></a>Parsing DateTime</h2>
+<h3 id="specifying-iformatprovider"><a id="pragma-line-19"></a>Specifying IFormatProvider</h3>
+<p id="pragma-line-21">For parsing <code>DateTime</code> exact format and <code>IFormatProvider</code> can be specified.
+<code>IFormatProvider</code> is specified with <code>DateTimeParsingFormatProviderFactory</code> which
+is located in <code>LiteApiOptions</code>. Default implementation of
+<code>DateTimeParsingFormatProviderFactory</code> is:</p>
+<pre><code id="pragma-line-26" class="language-csharp">// LiteApiOptions
+
+public Func&lt;HttpContext, IFormatProvider&gt; DateTimeParsingFormatProviderFactory { get; private set; }
+    = httpCtx =&gt; System.Globalization.CultureInfo.CurrentCulture;
+</code></pre>
+<p id="pragma-line-33">If it's desired to change default <code>DateTimeParsingFormatProviderFactory</code> it can be
+done using <code>LiteApiOptions.SetDateTimeParsingFormatProviderFactory</code> as in:</p>
+<pre><code id="pragma-line-36" class="language-csharp">// Startup.cs method: Configure
+
+LiteApiOptions options = LiteApiOptions.Default
+    .SetDateTimeParsingFormatProviderFactory(myProviderFact);
+app.UseLiteApi(options);
+</code></pre>
+<h3 id="specifying-parsing-format"><a id="pragma-line-44"></a>Specifying parsing format</h3>
+<p id="pragma-line-46">It's possible to specify exact parsing format on:</p>
+<ul id="pragma-line-47">
+<li id="pragma-line-47">Middleware level</li>
+<li id="pragma-line-48">Controller level</li>
+<li id="pragma-line-49">Action level</li>
+</ul>
+<p id="pragma-line-51">When parsing <code>DateTime</code> LiteApi will check if parsing format exists on
+action, if not it will look for paring format on controller and if neither
+exist, it will use global parsing format (format specified on middleware level).</p>
+<p id="pragma-line-55">Global parsing format is set with <code>LiteApiOptions.SetGlobalDateTimeParsingFormat(string)</code>.
+Default value is null, which means <code>DateTime.Parse(string)</code> method will be used
+which will try to determine the format on it's own.</p>
+<p id="pragma-line-59">Let's check an example:</p>
+<pre><code id="pragma-line-61" class="language-csharp">[DateTimeParsingFormat(&quot;MM/dd/yyyy&quot;)]
+public class Dt1Controller: LiteController
+{
+    public long Ticks1(DateTime dt)
+    {
+        return dt.Ticks;
+    }
+
+    [DateTimeParsingFormat(&quot;yyyy-MM-dd&quot;)]
+    public long Ticks2(DateTime dt)
+    {
+        return dt.Ticks;
+    }
+}
+</code></pre>
+<p id="pragma-line-78">In the <code>Dt1Controller</code> action <code>Ticks1</code> will use parsing format
+specified on controller level (<code>&quot;MM/dd/yyyy&quot;</code>) and <code>Ticks2</code> will
+use format specified on the action (<code>&quot;yyyy-MM-dd&quot;</code>). If <code>Dt1Controller</code>
+didn't have specified parsing format global parsing format would be used.
+Global parsing format can be specified when registering LiteApi in <code>Startup.cs</code>:</p>
+<pre><code id="pragma-line-84" class="language-csharp">// Startup.cs method: Configure
+
+LiteApiOptions options = LiteApiOptions.Default
+    .SetGlobalDateTimeParsingFormat(&quot;yyyy-MM-dd&quot;)
+app.UseLiteApi(options);
+</code></pre>
+<p id="pragma-line-92"><strong>Note</strong>: it's not possible to specify parsing format on parameter level.
+If you really need ASAP, please raise an issue
+<a href="https://github.com/stanac/LiteApi/issues">here</a>.</p>
+
+</div>

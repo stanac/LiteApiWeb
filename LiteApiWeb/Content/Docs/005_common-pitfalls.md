@@ -95,7 +95,7 @@ your method. All complex parameters are by default consider to come from body.
 ---
 **Parameter is from route and there is no matching route segment found**
 
-Parameter from route is defined but no matching route segment in found, here is an example of how to get this error (if you are so inclined).
+Parameter from route is defined but no matching route segment is found, here is an example of how to get this error (if you are so inclined).
 ```csharp
 [Restful]
 public class PersonController: LiteController
@@ -108,7 +108,8 @@ public class PersonController: LiteController
 ---
 **Route segment is set as parameter without matching parameter in method**
 
-See previous error on this page and check example (make sure all parameters defined in `ActionRouteAttribute` has matching parameters in method).
+See previous error on this page and check example (make sure all parameters
+defined in `ActionRouteAttribute` has matching parameters in method signature).
 ```csharp
 [Restful]
 public class PersonController: LiteController

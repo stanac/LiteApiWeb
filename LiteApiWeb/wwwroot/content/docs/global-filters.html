@@ -4,7 +4,7 @@
 <p id="pragma-line-3">Global filters can be used to filter any request that matches any
 controller/action. They are implementing same interface as filter attributes.
 Which means same attributes you use on controller or action level
-can now be used on global level. This gives us an option to
+can be used on global level. This gives us an option to
 prevent access to the whole API on middleware level except for example on
 <code>Login</code> action.</p>
 <p id="pragma-line-10">Here is sample from <code>Startup.Configure</code> method which uses <code>RequiresAuthenticationAttribute</code>
@@ -59,5 +59,11 @@ public class AuthController: LiteController
     }
 }
 </code></pre>
+<hr id="pragma-line-45" />
+<p id="pragma-line-46">Related pages:</p>
+<ul id="pragma-line-47">
+<li id="pragma-line-47"><a href="/docs/install-and-configure">Installing and configurating LiteApi</a></li>
+<li id="pragma-line-48"><a href="/docs/authorization">Authorization</a></li>
+</ul>
 
 </div>

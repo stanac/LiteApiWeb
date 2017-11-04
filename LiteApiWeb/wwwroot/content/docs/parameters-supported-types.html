@@ -18,36 +18,38 @@
 <li id="pragma-line-17"><code>float</code></li>
 <li id="pragma-line-18"><code>double</code></li>
 <li id="pragma-line-19"><code>DateTime</code></li>
-<li id="pragma-line-20"><code>Guid</code></li>
+<li id="pragma-line-20"><code>DateTimeOffset</code></li>
+<li id="pragma-line-21"><code>Guid</code></li>
+<li id="pragma-line-22">Enums</li>
 </ul>
-<p id="pragma-line-22">Parameter types supported by <strong>query</strong> are all simple types and following types
+<p id="pragma-line-24">Parameter types supported by <strong>query</strong> are all simple types and following types
 where <code>T</code>, <code>TKey</code> and <code>TValue</code> are all simple types.</p>
-<ul id="pragma-line-25">
-<li id="pragma-line-25"><code>IEnumerable&lt;T&gt;</code></li>
-<li id="pragma-line-26"><code>List&lt;T&gt;</code></li>
-<li id="pragma-line-27"><code>T[]</code></li>
-<li id="pragma-line-28"><code>Dictionary&lt;TKey, TValue&gt;</code></li>
-<li id="pragma-line-29"><code>IDictionary&lt;TKey, TValue&gt;</code></li>
-<li id="pragma-line-30"><code>Nullable&lt;T&gt;</code></li>
+<ul id="pragma-line-27">
+<li id="pragma-line-27"><code>IEnumerable&lt;T&gt;</code></li>
+<li id="pragma-line-28"><code>List&lt;T&gt;</code></li>
+<li id="pragma-line-29"><code>T[]</code></li>
+<li id="pragma-line-30"><code>Dictionary&lt;TKey, TValue&gt;</code></li>
+<li id="pragma-line-31"><code>IDictionary&lt;TKey, TValue&gt;</code></li>
+<li id="pragma-line-32"><code>Nullable&lt;T&gt;</code></li>
 </ul>
-<p id="pragma-line-32">Parameter types supported by <strong>route segment</strong> are all simple types (no nullable
+<p id="pragma-line-34">Parameter types supported by <strong>route segment</strong> are all simple types (no nullable
 variants).</p>
-<p id="pragma-line-35">Parameters supported by <strong>request header</strong> are all simple types. Collections are
+<p id="pragma-line-37">Parameters supported by <strong>request header</strong> are all simple types. Collections are
 not supported, nullable variants are supported.</p>
-<p id="pragma-line-38">Parameters supported by <strong>body</strong> are all parameter types, but there can be maximum one
+<p id="pragma-line-40">Parameters supported by <strong>body</strong> are all parameter types, but there can be maximum one
 parameter received from body.</p>
-<p id="pragma-line-41">Action can receive parameters of any type from <strong>services</strong> with condition
+<p id="pragma-line-43">Action can receive parameters of any type from <strong>services</strong> with condition
 that parameter type is registered in app's DI container.</p>
-<h2 id="working-with-nullable-parameters"><a id="pragma-line-44"></a>Working with nullable parameters</h2>
-<p id="pragma-line-46">In order for action to receive null as parameter value, parameter must be
+<h2 id="working-with-nullable-parameters"><a id="pragma-line-46"></a>Working with nullable parameters</h2>
+<p id="pragma-line-48">In order for action to receive null as parameter value, parameter must be
 <code>Nullable&lt;T&gt;</code> (e.g. <code>int?</code>) where <code>T</code> is any of the previously listed
 types with exception of <code>string</code>. Nullable parameters are supported in
 query and header. For example in query we can have action like in the sample
 below.</p>
-<p id="pragma-line-52">For action to receive null, we must provide name of the parameter (in query parameters)
+<p id="pragma-line-54">For action to receive null, we must provide name of the parameter (in query parameters)
 or header name (in header parameters) and empty string as value of the parameter.
 If parameter name is missing exception will be thrown.</p>
-<pre><code id="pragma-line-56" class="language-csharp">public class MathController: LiteController
+<pre><code id="pragma-line-58" class="language-csharp">public class MathController: LiteController
 {
     // /api/math/zeroOrValue?n=
     //      returns 0, n will be null 
@@ -57,8 +59,14 @@ If parameter name is missing exception will be thrown.</p>
     public int ZeroOrValue(int? n) =&gt; n ?? 0;
 }
 </code></pre>
-<p id="pragma-line-68">For parameters from body to be received as <code>null</code> JSON serializer needs to handle
+<p id="pragma-line-70">For parameters from body to be received as <code>null</code> JSON serializer needs to handle
 null values. Default (Json.NET) serializer will deserialize value to <code>null</code>
 if body is empty or has value <code>null</code>.</p>
+<hr id="pragma-line-74" />
+<ul id="pragma-line-75">
+<li id="pragma-line-75">For specifics of using <code>DateTime</code> and <code>DateTimeOffset</code> parameters please check:
+<a href="/docs/parameters-parsing-datetime-and-datetimeoffset">Parsing DateTime and DateTimeOffset parameters</a>.</li>
+<li id="pragma-line-77">For working with Enums please check <a href="/docs/parameters-enums">Enum parameters</a></li>
+</ul>
 
 </div>

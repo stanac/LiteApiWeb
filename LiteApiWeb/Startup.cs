@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.ResponseCompression;
 using System.IO.Compression;
+using System.Diagnostics;
 
 namespace LiteApiWeb
 {
@@ -93,7 +94,21 @@ namespace LiteApiWeb
             });
             
             app.UseDefaultFiles();
-            
+
+#if DEBUG
+            if (Debugger.IsAttached)
+            {
+                app.Use(async (httpCtx, next) =>
+                {
+                    if (httpCtx.Request.Path.Value.Contains("index.html"))
+                    {
+                        RenderAllPages(env, app.ApplicationServices);
+                    }
+                    await next.Invoke();
+                });
+            }
+#endif
+
             app.UseStaticFiles();
 
             app.UseLiteApi(LiteApiOptions.Default.SetLoggerFactory(loggerFactory));

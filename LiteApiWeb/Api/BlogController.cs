@@ -2,7 +2,6 @@
 using LiteApi.Attributes;
 using LiteApiWeb.Models;
 using LiteApiWeb.Services;
-using System.Linq;
 
 namespace LiteApiWeb.Api
 {

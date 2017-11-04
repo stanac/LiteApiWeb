@@ -63,7 +63,7 @@ you can set method to be private/internal/protected or use <code>DontMapToApiAtt
 your method. All complex parameters are by default consider to come from body.</p>
 <hr id="pragma-line-85" />
 <p id="pragma-line-86"><strong>Parameter is from route and there is no matching route segment found</strong></p>
-<p id="pragma-line-88">Parameter from route is defined but no matching route segment in found, here is an example of how to get this error (if you are so inclined).</p>
+<p id="pragma-line-88">Parameter from route is defined but no matching route segment is found, here is an example of how to get this error (if you are so inclined).</p>
 <pre><code id="pragma-line-89" class="language-csharp">[Restful]
 public class PersonController: LiteController
 {
@@ -73,16 +73,17 @@ public class PersonController: LiteController
 </code></pre>
 <hr id="pragma-line-98" />
 <p id="pragma-line-99"><strong>Route segment is set as parameter without matching parameter in method</strong></p>
-<p id="pragma-line-101">See previous error on this page and check example (make sure all parameters defined in <code>ActionRouteAttribute</code> has matching parameters in method).</p>
-<pre><code id="pragma-line-102" class="language-csharp">[Restful]
+<p id="pragma-line-101">See previous error on this page and check example (make sure all parameters
+defined in <code>ActionRouteAttribute</code> has matching parameters in method signature).</p>
+<pre><code id="pragma-line-103" class="language-csharp">[Restful]
 public class PersonController: LiteController
 {
     [ActionRoute(&quot;/{type}/{id}&quot;)] // notice that parameter {type} is not defined in method
     public Person Get([FromRoute]int id) =&gt; _service.Get(id);
 }
 </code></pre>
-<hr id="pragma-line-111" />
-<h2 id="runtime-errors"><a id="pragma-line-112"></a>Runtime errors</h2>
-<p id="pragma-line-114">TBD, please report a bug on <a href="https://github.com/stanac/LiteApi/issues/new">GitHub</a> if middleware related runtime error occurs.</p>
+<hr id="pragma-line-112" />
+<h2 id="runtime-errors"><a id="pragma-line-113"></a>Runtime errors</h2>
+<p id="pragma-line-115">TBD, please report a bug on <a href="https://github.com/stanac/LiteApi/issues/new">GitHub</a> if middleware related runtime error occurs.</p>
 
 </div>

@@ -19,7 +19,8 @@ IsHtml: true
         <p>
             LiteApi is ASP.NET Core middleware for implementing RESTful APIs.
             <br />
-            Without server side rendering engine LiteApi is made for developers who are writing SPA applications.
+            Without server side rendering engine LiteApi is made for developers who are writing 
+            SPA applications and/or REST APIs.
         </p>
     </div>
 </div>
@@ -83,8 +84,7 @@ and ability to <a href="/docs/custom-authorization">create your own</a>.
 <div class='col-md-4'>
 <span class='sub'>Extensible</span>
 <br/>
-<a href="/docs/extensibility-points">Extensibility points</a> are already here for some parts of the middleware, 
-more will follow soon.
+A lot of <a href="/docs/extensibility-points">extensibility points</a> are available.
 </div>
 
 </div>
@@ -93,7 +93,7 @@ more will follow soon.
 
 <div class='row'>
 <div class='col-md-8 col-md-offset-2'>
-<pre><code>PM> Install-Package LiteApi -Pre</code></pre>
+<pre><code>PM> Install-Package LiteApi</code>  OR  > dotnet add package LiteApi</pre>
 
 <pre><code class="language-csharp">public class TestController: LiteController
 {

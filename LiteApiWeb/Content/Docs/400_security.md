@@ -30,5 +30,8 @@ For more information please check [Require HTTPS](/docs/require-https).
 
 Authorization is done with `Requires...Attribute` on controller or action level.
 For more information please check [Authorization](/docs/authorization).
+
+## Global filters
 Authorization can be implemented on middleware level using 
-[Global filters (to be implemented)](/docs/global-filters).
+[Global filters](/docs/global-filters). Global filters can be used to filter any request that matches any
+controller/action. They are implementing same interface as filter attributes.

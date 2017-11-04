@@ -1,0 +1,32 @@
+
+<div class='user-content'>
+<h1 id="working-with-enums"><a id="pragma-line-1"></a>Working with Enums</h1>
+<p id="pragma-line-3">LiteApi supports passing <code>Enum</code> values from route, query, header and body.
+Enum value should be passed as string value and parsing is done in case
+insensitive manner.</p>
+<p id="pragma-line-7">Please note that <code>EnumMemberAttribute</code>, <code>DescriptionAttribute</code> or
+any other attribute won't be considered when parsing enum values from query,
+header or route segment. When parsing enum values from body JSON de/serializer
+will use it's specific settings. For JSON de/serializer settings please check
+<a href="/docs/changing-json-serializer">this page</a>.</p>
+<p id="pragma-line-13"><code>EnumMemberAttribute</code> might be supported in future. Please
+raise an issue on <a href="https://github.com/stanac/LiteApi/issues">GitHub</a>
+if you need it ASAP.</p>
+<p id="pragma-line-17">An example:</p>
+<pre><code id="pragma-line-19" class="language-csharp">public class EntityController: LiteController
+{
+    // will respond to e.g. /api/entity/person/type-name
+    [ActionRoute(&quot;{e}/type-name&quot;)]
+    public string ToString(Entity e)
+    {
+        return e.ToString();
+    }
+}
+
+public enum Entity
+{
+    Person, Company, Account
+}
+</code></pre>
+
+</div>

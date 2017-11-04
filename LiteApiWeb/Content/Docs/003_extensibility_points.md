@@ -17,6 +17,9 @@ Following extensibility points are available:
 - [Custom response (low level) (ILiteActionResult)](/docs/litecontroller-and-iliteactionresult)
 - [Custom response, content-type, header, status code](/docs/custom-response)
 - [Replacing any internal service with custom implementation](/docs/replacing-internal-services)
-
-Planned extensibility points:
 - [Global filters](/docs/global-filters)
+- For virtual methods `BeforeActionExecution` and `AfterActionExecuted` please check [LiteController page](/docs/litecontroller-and-iliteactionresult)
+
+---
+Related pages:
+- [Installing and configurating LiteApi](/docs/install-and-configure)

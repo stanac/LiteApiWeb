@@ -1,0 +1,52 @@
+
+<div class='user-content'>
+<h2 id="replacing-iliteapiserviceresolver"><a id="pragma-line-1"></a>Replacing ILiteApiServiceResolver</h2>
+<p id="pragma-line-3"><code>LiteApi</code> has internal dependency resolver (IoC contrainter)
+that is specifically  crafter for the middleware needs. Dependency resolver
+implements following interface:</p>
+<pre><code id="pragma-line-7" class="language-csharp">public interface ILiteApiServiceResolver
+{
+    void Initialize(IServiceProvider serviceProvider, LiteApiOptions options);
+    
+    IActionDiscoverer GetActionDiscoverer();
+    IActionInvoker GetActionInvoker();
+    IJsonSerializer GetJsonSerializer();
+    IActionsValidator GetActionsValidator();
+    IAuthorizationPolicyStore GetAuthorizationPolicyStore();
+    IControllerBuilder GetControllerBuilder();
+    IControllerDiscoverer GetControllerDiscoverer();
+    IControllersValidator GetControllerValidator();
+    IParametersDiscoverer GetParametersDiscoverer();
+    IPathResolver GetPathResolver();
+    IParametersValidator GetParametersValidator();
+    ILiteApiOptionsRetriever GetOptionsRetriever();
+    
+    object Resolve(Type interfaceType);
+    T Resolve&lt;T&gt;() where T : class;
+    
+    void Register&lt;TInterface, TService&gt;() where TService : class;
+    void Register&lt;TInterface&gt;(Func&lt;TInterface&gt; factory);
+    void RegisterSingleton&lt;TInterface, TService&gt;() where TService : class;
+    void RegisterInstance&lt;TInterface&gt;(object instance);
+
+    bool IsServiceRegistered&lt;TInterface&gt;();
+    bool IsServiceRegistered(Type tInterface);
+}
+</code></pre>
+<p id="pragma-line-38">For full file content please check <a href="https://github.com/stanac/LiteApi/blob/master/LiteApi/LiteApi/Contracts/Abstractions/ILiteApiServiceResolver.cs">GitHub repo</a>.
+Default implementation can be seen <a href="https://github.com/stanac/LiteApi/blob/master/LiteApi/LiteApi/Services/LiteApiServiceResolver.cs">here</a>.</p>
+<p id="pragma-line-41">It's possible to replace default implementation with you own
+when registering the middleware in <code>Startup.cs</code>:</p>
+<pre><code id="pragma-line-44" class="language-csharp">// Startup.cs - Configure method
+
+LiteApiOptions options = LiteApiOptions.Default
+    .ReplaceInternalServiceResolver(myServiceResolver);
+app.UseLiteApi(options);
+</code></pre>
+<hr id="pragma-line-52" />
+<p id="pragma-line-53">Related:</p>
+<ul id="pragma-line-54">
+<li id="pragma-line-54"><a href="/docs/replacing-internal-services">Replacing internal services</a></li>
+</ul>
+
+</div>

@@ -75,3 +75,7 @@ public class Startup
     }
 }
 ```
+
+---
+Related:
+ - [Replacing internal service resolver](/docs/replacing-liteapi-service-resolver)

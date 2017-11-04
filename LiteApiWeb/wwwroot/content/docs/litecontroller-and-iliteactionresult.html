@@ -4,8 +4,7 @@
 <p id="pragma-line-3"><code>LiteApi.LiteController</code> is abstract class which all controllers
 in LiteApi app must inherit. If something needs to be done on lower level with
 request it can be done using <code>HttpContext</code> property provided by <code>LiteController</code>.</p>
-<p id="pragma-line-7"><code>LiteController</code> is very lite class (pun intended).</p>
-<pre><code id="pragma-line-9" class="language-csharp">/// &lt;summary&gt;
+<pre><code id="pragma-line-7" class="language-csharp">/// &lt;summary&gt;
 /// Base class for all controllers that should be registered by the middleware
 /// &lt;/summary&gt;
 public abstract class LiteController
@@ -33,10 +32,7 @@ public abstract class LiteController
     /// &lt;param name=&quot;contentType&quot;&gt;Content type header value.&lt;/param&gt;
     /// &lt;param name=&quot;fileName&quot;&gt;Name of the file.&lt;/param&gt;
     /// &lt;returns&gt;Result that can be handled by the middleware.&lt;/returns&gt;
-    public ILiteActionResult FileDownload(byte[] data, string contentType, string fileName)
-    {
-        return new FileDownloadActionResult(data, contentType, fileName);
-    }
+    public ILiteActionResult FileDownload(byte[] data, string contentType, string fileName) =&gt; new FileDownloadActionResult(data, contentType, fileName);
 
     /// &lt;summary&gt;
     /// Write response of file download. Provided Stream will not be disposed, you need to do it yourself.
@@ -45,11 +41,64 @@ public abstract class LiteController
     /// &lt;param name=&quot;contentType&quot;&gt;Content type header value.&lt;/param&gt;
     /// &lt;param name=&quot;fileName&quot;&gt;Name of the file.&lt;/param&gt;
     /// &lt;returns&gt;Result that can be handled by the middleware.&lt;/returns&gt;
-    public ILiteActionResult FileDownload(Stream data, string contentType, string fileName)
+    public ILiteActionResult FileDownload(Stream data, string contentType, string fileName) =&gt; new FileDownloadActionResult(data, contentType, fileName);
+
+    /// &lt;summary&gt;
+    /// Creates response with the specified data.
+    /// &lt;/summary&gt;
+    /// &lt;param name=&quot;data&quot;&gt;The data.&lt;/param&gt;
+    /// &lt;param name=&quot;contentType&quot;&gt;Type of the content.&lt;/param&gt;
+    /// &lt;returns&gt;Result that can be handled by the middleware.&lt;/returns&gt;
+    public ILiteActionResult Content(string data, string contentType) =&gt; new ContentActionResult(data, contentType);
+
+    /// &lt;summary&gt;
+    /// Creates response with the specified data.
+    /// &lt;/summary&gt;
+    /// &lt;param name=&quot;data&quot;&gt;The data.&lt;/param&gt;
+    /// &lt;param name=&quot;contentType&quot;&gt;Type of the content.&lt;/param&gt;
+    /// &lt;returns&gt;Result that can be handled by the middleware.&lt;/returns&gt;
+    public ILiteActionResult Content(byte[] data, string contentType) =&gt; new ContentActionResult(data, contentType);
+
+    /// &lt;summary&gt;
+    /// Creates response with the specified JSON content.
+    /// &lt;/summary&gt;
+    /// &lt;param name=&quot;jsonContent&quot;&gt;Content in JSON format.&lt;/param&gt;
+    /// &lt;returns&gt;Result that can be handled by the middleware.&lt;/returns&gt;
+    public ILiteActionResult Json(string jsonContent) =&gt; new JsonActionResult(jsonContent);
+
+    /// &lt;summary&gt;
+    /// Sets the response status code.
+    /// &lt;/summary&gt;
+    /// &lt;param name=&quot;responseCode&quot;&gt;The response status code, if null or not set LiteApi will determine by itself response status code.&lt;/param&gt;
+    public void SetResponseStatusCode(int? responseCode)
     {
-        return new FileDownloadActionResult(data, contentType, fileName);
+        HttpContext.SetResponseStatusCode(responseCode);
     }
 
+    /// &lt;summary&gt;
+    /// Adds the response header.
+    /// &lt;/summary&gt;
+    /// &lt;param name=&quot;key&quot;&gt;The header key.&lt;/param&gt;
+    /// &lt;param name=&quot;values&quot;&gt;The header value(s).&lt;/param&gt;
+    public void AddResponseHeader(string key, StringValues values)
+    {
+        var headers = HttpContext.GetResponseHeaders(false);
+        headers.Add(key, values);
+    }
+
+    /// &lt;summary&gt;
+    /// Adds the response headers.
+    /// &lt;/summary&gt;
+    /// &lt;param name=&quot;keyValuesPairs&quot;&gt;The key values pairs to add.&lt;/param&gt;
+    public void AddResponseHeaders(IDictionary&lt;string, StringValues&gt; keyValuesPairs)
+    {
+        var headers = HttpContext.GetResponseHeaders(false);
+        foreach (var kvp in keyValuesPairs)
+        {
+            headers[kvp.Key] = kvp.Value;
+        }
+    }
+    
     /// &lt;summary&gt;
     /// Returns a &lt;see cref=&quot;System.String&quot; /&gt; that represents this instance.
     /// &lt;/summary&gt;
@@ -57,26 +106,49 @@ public abstract class LiteController
     /// A &lt;see cref=&quot;System.String&quot; /&gt; that represents this instance.
     /// &lt;/returns&gt;
     public override string ToString() =&gt; &quot;CTRL: &quot; + GetType().FullName;
+
+    /// &lt;summary&gt;
+    /// Called before action execution. Should return bool value indicating whether action should be executed. 
+    /// &lt;/summary&gt;
+    /// &lt;param name=&quot;ctx&quot;&gt;Action executing context.&lt;/param&gt;
+    /// &lt;returns&gt;Task with bool result. If task result is true action will be executed.&lt;/returns&gt;
+    [Attributes.DontMapToApiAttribute]
+    public virtual Task&lt;bool&gt; BeforeActionExecution(ActionExecutingContext ctx)
+    {
+        return Task.FromResult(true);
+    }
+
+    /// &lt;summary&gt;
+    /// Called after the action is executed.
+    /// &lt;/summary&gt;
+    /// &lt;param name=&quot;ctx&quot;&gt;Action executing context.&lt;/param&gt;
+    /// &lt;param name=&quot;result&quot;&gt;Result of action call.&lt;/param&gt;
+    /// &lt;returns&gt;Task to await.&lt;/returns&gt;
+    [Attributes.DontMapToApiAttribute]
+    public virtual Task AfterActionExecuted(ActionExecutingContext ctx, object result)
+    {
+        return Task.FromResult(0);
+    }
 }
 </code></pre>
-<p id="pragma-line-65">Return value of actions in your controllers needs to be:</p>
-<ul id="pragma-line-66">
-<li id="pragma-line-66"><code>Task</code></li>
-<li id="pragma-line-67"><code>Task&lt;T&gt;</code></li>
-<li id="pragma-line-68"><code>void</code> (not recommended for <code>async</code> calls)</li>
-<li id="pragma-line-69"><code>T</code> (any other value)</li>
+<p id="pragma-line-136">Return value of actions in your controllers needs to be:</p>
+<ul id="pragma-line-137">
+<li id="pragma-line-137"><code>Task</code></li>
+<li id="pragma-line-138"><code>Task&lt;T&gt;</code></li>
+<li id="pragma-line-139"><code>void</code> (not recommended for <code>async</code> calls)</li>
+<li id="pragma-line-140"><code>T</code> (any other value)</li>
 </ul>
-<p id="pragma-line-71">Actions can be <code>async</code> but does not have to be.</p>
-<h1 id="iliteactionresult"><a id="pragma-line-73"></a>ILiteActionResult</h1>
-<p id="pragma-line-75"><code>LiteApi.ILiteActionResult</code> is special type of action response that will not
+<p id="pragma-line-142">Actions can be <code>async</code> but does not have to be.</p>
+<h1 id="iliteactionresult"><a id="pragma-line-144"></a>ILiteActionResult</h1>
+<p id="pragma-line-146"><code>LiteApi.ILiteActionResult</code> is special type of action response that will not
 be serialized by the middleware. Instead <code>ILiteActionResult</code> needs to know
 how to write the response itself. Internally it's used for file download, returning
 raw json or returning custom responses, however
 it can be implemented by any class, so low-level response can be handled by
 class that's specific to your application.</p>
-<p id="pragma-line-82">There are specialized methods that are returning <code>ILiteActionResult</code>, see <a href="/docs/custom-response">Custom status, headers and response</a>.</p>
-<p id="pragma-line-84">Content of <code>ILiteActionResult</code> interface:</p>
-<pre><code id="pragma-line-86" class="language-csharp">/// &lt;summary&gt;
+<p id="pragma-line-153">There are specialized methods that are returning <code>ILiteActionResult</code>, see <a href="/docs/custom-response">Custom status, headers and response</a>.</p>
+<p id="pragma-line-155">Content of <code>ILiteActionResult</code> interface:</p>
+<pre><code id="pragma-line-157" class="language-csharp">/// &lt;summary&gt;
 /// Specialized type of response that does not need to be serialized, but instead can write the response itself
 /// &lt;/summary&gt;
 public interface ILiteActionResult

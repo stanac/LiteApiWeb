@@ -13,7 +13,7 @@ ParentPageId: security
 Global filters can be used to filter any request that matches any
 controller/action. They are implementing same interface as filter attributes.
 Which means same attributes you use on controller or action level
-can now be used on global level. This gives us an option to 
+can be used on global level. This gives us an option to 
 prevent access to the whole API on middleware level except for example on
 `Login` action.
 
@@ -51,3 +51,8 @@ public class AuthController: LiteController
     }
 }
 ```
+
+---
+Related pages:
+- [Installing and configurating LiteApi](/docs/install-and-configure)
+- [Authorization](/docs/authorization)

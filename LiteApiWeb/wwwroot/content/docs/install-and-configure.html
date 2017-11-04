@@ -76,7 +76,7 @@ or by editing project's <code>.csproj</code> file and running <a href="https://d
 <tr>
 <td id="pragma-line-53">SetApiUrlRoot</td>
 <td id="pragma-line-53">string urlRoot</td>
-<td id="pragma-line-53">Changes API URL root, if not set by defualt is 'api/'</td>
+<td id="pragma-line-53">Changes API URL root, if not set by default it's <code>/api</code></td>
 <td id="pragma-line-53"><a href="/docs/changing-api-url-root">Link</a></td>
 </tr>
 <tr>
@@ -103,9 +103,25 @@ or by editing project's <code>.csproj</code> file and running <a href="https://d
 <td id="pragma-line-57">Adds global filters</td>
 <td id="pragma-line-57"><a href="/docs/global-filters">Link</a></td>
 </tr>
+<tr>
+<td id="pragma-line-58">ReplaceInternalServiceResolver</td>
+<td id="pragma-line-58">ILiteApiServiceResolver serviceResolver</td>
+<td id="pragma-line-58">Replaces default implementation of ILiteApiServiceResolver</td>
+<td id="pragma-line-58"><a href="/docs/replacing-liteapi-service-resolver">Link</a></td>
+</tr>
+<tr>
+<td id="pragma-line-59">SetGlobalDateTimeParsingFormat</td>
+<td id="pragma-line-59">string format</td>
+<td id="pragma-line-59">Sets global strict format for parsing DateTime</td>
+<td id="pragma-line-59"><a href="/docs/parameters-parsing-datetime-and-datetimeoffset">Link</a></td>
+</tr>
+<tr>
+<td id="pragma-line-60">SetDateTimeParsingFormatProviderFactory</td>
+<td id="pragma-line-60">Func&lt;HttpContext, IFormatProvider&gt; formatProviderFactory)</td>
+<td id="pragma-line-60">Sets global formatProviderFactory for parsing DateTime</td>
+<td id="pragma-line-60"><a href="/docs/parameters-parsing-datetime-and-datetimeoffset">Link</a></td>
+</tr>
 </tbody>
 </table>
-<p id="pragma-line-59">Method that is planned to be added is <code>SetApiRootUrl(string rootUrl)</code>.
-By default all controller root URLs are <code>/api</code> which can be overriden with <code>ControllerRouteAttribute</code>.</p>
 
 </div>
