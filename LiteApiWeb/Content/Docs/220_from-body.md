@@ -17,7 +17,7 @@ simple parameter types check [Supported types](/docs/parameters-supported-types)
 are expected to come from body.
 
 LiteApi is currently supporting only JSON, so body parameter needs to be JSON serialized.
-If we want to be explicit we can use `LiteApi.Attributes.FromBodyAttribute`
+If we want to be explicit we can use `LiteApi.FromBodyAttribute`
 to specify that parameter is coming from body. Same attribute needs to be used
 if we want to provide simple-type parameter via body.
 

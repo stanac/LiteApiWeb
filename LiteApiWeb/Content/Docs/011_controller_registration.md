@@ -33,7 +33,7 @@ will make a problem in constructor (parameter will be null, or exception will be
 
 Controller can have multiple constructors, in which case, only one constructor
 needs to be decorated with `PrimaryConstructorAttribute` (located in 
-`LiteApi.Attributes` namespace). See sample below.
+`LiteApi` namespace). See sample below.
 
 ``` csharp
 public class SpaceController: LiteController

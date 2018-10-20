@@ -21,7 +21,7 @@ Matching of parameters is done by name of the parameter and name of the route se
 Matching is case insensitive. Route segments that holds parameter values
 must be escaped with `{` and `}` in `ActionRouteAttribute`.
 
-If we want to be explicit we can use `LiteApi.Attributes.FromRouteAttribute`.
+If we want to be explicit we can use `LiteApi.FromRouteAttribute`.
 
 Following two samples are equivalent.
 

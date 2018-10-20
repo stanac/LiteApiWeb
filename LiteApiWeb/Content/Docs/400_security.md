@@ -22,7 +22,7 @@ or as [Global filter](/docs/global-filters).
 ## Require HTTPS
 
 Require HTTPS can be set on controller level, action level or middleware level by
-using `LiteApi.Attributes.RequiresHttpsAttribute` or by setting `LiteApiOptions`
+using `LiteApi.RequiresHttpsAttribute` or by setting `LiteApiOptions`
 when registering middleware.
 For more information please check [Require HTTPS](/docs/require-https).
 

@@ -18,11 +18,11 @@ Parameters can be retrieved from:
 
 If you like to be explicit, you can use on parameter level one of the attributes:
 
-- `LiteApi.Attributes.FromQueryAttribute` (previously in v <= 0.7.2 `FromUrlAttribute`)
-- `LiteApi.Attributes.FromRouteAttribute`
-- `LiteApi.Attributes.FromBodyAttribute`
-- `LiteApi.Attributes.FromHeaderAttribute`
-- `LiteApi.Attributes.FromServicesAttribute`
+- `LiteApi.FromQueryAttribute`
+- `LiteApi.FromRouteAttribute`
+- `LiteApi.FromBodyAttribute`
+- `LiteApi.FromHeaderAttribute`
+- `LiteApi.FromServicesAttribute`
 
 ## Convetions
 

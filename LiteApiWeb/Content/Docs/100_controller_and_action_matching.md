@@ -14,7 +14,7 @@ It is recommended to first check [Getting started](/docs/getting-started).
 ## Controllers
 
 <div class="alert alert-warning">
-All controllers must inherit `LiteApi.LiteController` class. All attributes used by LiteApi can be found under LiteApi.Attributes namespace.
+All controllers must inherit `LiteApi.LiteController` class. All attributes used by LiteApi can be found under LiteApi namespace.
 </div>
 
 <div class="alert alert-info">
@@ -114,10 +114,10 @@ Please note that using multiple attributes of same time is not allowed on contro
 As you might have noticed all actions in presented examples are responding to HTTP `GET`.
 If we want to use some other HTTP method to target our actions we can use one of the following
 attributes:
-- `LiteApi.Attributes.HttpGet`
-- `LiteApi.Attributes.HttpPost`
-- `LiteApi.Attributes.HttpPut`
-- `LiteApi.Attributes.HttpDelete`
+- `LiteApi.HttpGet`
+- `LiteApi.HttpPost`
+- `LiteApi.HttpPut`
+- `LiteApi.HttpDelete`
 
 For more information check [Action matching](/docs/action-matching).
 

@@ -34,7 +34,7 @@ app.UseLiteApi(LiteApiOptions.Default
 ```
 
 Once policy is defined, it can be applied to controller or action using
-`LiteApi.Attributes.RequiresAuthorizationPolicyAttribute`.
+`LiteApi.RequiresAuthorizationPolicyAttribute`.
 
 Constructor:
 ```csharp

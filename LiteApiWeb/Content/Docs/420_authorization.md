@@ -10,8 +10,7 @@ ParentPageId: security
 
 # Authorization
 
-Authorization is implemented using one or more attributes (all located in `LiteApi.Attributes`
-namespace):
+Authorization is implemented using one or more attributes (all located in `LiteApi` namespace):
 - RequiresAuthentication
 - RequiresAuthorizationPolicy
 - RequiresClaims

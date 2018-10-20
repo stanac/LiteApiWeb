@@ -12,7 +12,7 @@ ParentPageId: controller-and-action-matching
 
 
 <div class="alert alert-info">
-All attributes used in samples are located in <code>LiteApi.Attributes</code> namespace. All routes and parameters are case insensitive.
+All attributes used in samples are located in <code>LiteApi</code> namespace. All routes and parameters are case insensitive.
 </div>
 
 Actions are by default matched by HTTP method and action name.
@@ -28,7 +28,7 @@ public class PersonsController: LiteController
 ```
 ---
 
-Action name can be overridden using `LiteApi.Attributes.ActionRouteAttribute`.
+Action name can be overridden using `LiteApi.ActionRouteAttribute`.
 
 ```csharp
 public class PersonsController: LiteController
@@ -41,7 +41,7 @@ public class PersonsController: LiteController
 
 ---
 
-Action name can be omitted in case when `LiteApi.Attributes.RestfulAttribute` is set on controller.
+Action name can be omitted in case when `LiteApi.RestfulAttribute` is set on controller.
 
 ```csharp
 [Restful]
@@ -92,10 +92,10 @@ public class PersonsController: LiteController
 Only one Http<em>Method</em>Attribute can be set on one action.
 
 Following HTTP methods are supported with attributes:
-- `LiteApi.Attributes.HttpGet`
-- `LiteApi.Attributes.HttpPost`
-- `LiteApi.Attributes.HttpPut`
-- `LiteApi.Attributes.HttpDelete`
+- `LiteApi.HttpGet`
+- `LiteApi.HttpPost`
+- `LiteApi.HttpPut`
+- `LiteApi.HttpDelete`
 
 More HTTP methods might be supported in future releases (if you need `PATCH` or some other method to be 
 added please open ticket on [GitHub](https://github.com/stanac/shutdown/issues/new).

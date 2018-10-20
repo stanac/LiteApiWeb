@@ -9,7 +9,7 @@ Id: versioning
 
 ## Versioning
 
-For now you can version your APIs only with URLs using `LiteApi.Attributes.ControllerRouteAttribute` as in
+For now you can version your APIs only with URLs using `LiteApi.ControllerRouteAttribute` as in
 
 ```csharp
 [ControllerRoute("/api/v2/actors")] 

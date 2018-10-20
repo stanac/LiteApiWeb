@@ -23,7 +23,7 @@ as global filter.
 ```csharp
 var options = LiteApiOptions
     .Default
-    .AddGlobalFilter(new LiteApi.Attributes.RequiresAuthenticationAttribute());
+    .AddGlobalFilter(new LiteApi.RequiresAuthenticationAttribute());
 app.UseLiteApi(options);
 ```
 

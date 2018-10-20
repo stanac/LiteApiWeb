@@ -160,13 +160,12 @@ we should get 5 for response as on the following screenshot.
 
 For subtraction action we want to use different format of the URL. When we invoke `/api/math/5/minus/3` we 
 want to get `2` as the response. In order to achiveachieve such behavior we will use `ActionRouteAttribute` from
-`LiteApi.Attributes` namespace.
+`LiteApi` namespace.
 
 After adding `Minus` action, our file looks like this:
 
 ```csharp
 using LiteApi;
-using LiteApi.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -308,7 +307,7 @@ public void ConfigureServices(IServiceCollection services)
 ### Adding the controller
 
 Lets say our controller is second version of the API. In such case we can use `ControllerRouteAttribute`
-from `LiteApi.Attributes` namespace with appropriate route. If we want our actions to response to URLs 
+from `LiteApi` namespace with appropriate route. If we want our actions to response to URLs 
 without action names we should use `RestfulAttribute`. Here is our controller which uses the
 service we described above.
 

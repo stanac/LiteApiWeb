@@ -18,7 +18,7 @@ All attributes can be combined, such as if more than one attribute is set on
 controller or action, all attribute checks must be satisfied in order for user
 to get access to controller/action.
 
-All attributes are located in `LiteApi.Attributes` namespace.
+All attributes are located in `LiteApi` namespace.
 
 ## RequiresClaimsAttribute
 

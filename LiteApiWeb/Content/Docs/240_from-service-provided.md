@@ -14,7 +14,7 @@ Sometimes there is just one action in controller that depends on a service.
 In order to avoid injecting the service for all action calls in that 
 controller we can inject the service only when appropriate action 
 method is called. This can be done using `FromServicesAttribute` 
-(located in `LiteApi.Attributes` namespace) which should be set on 
+(located in `LiteApi` namespace) which should be set on 
 parameter level. Here is an example:
 
 ```csharp

@@ -10,7 +10,7 @@ ParentPageId: authorization
 
 # Require authentication
 
-`LiteApi.Attributes.RequiresAuthenticationAttribute` is simplest of all
+`LiteApi.RequiresAuthenticationAttribute` is simplest of all
 authorization filters. It requires for user to be logged in and authenticated
 when calling the controller or action.
 

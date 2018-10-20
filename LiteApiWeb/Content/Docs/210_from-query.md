@@ -26,7 +26,7 @@ For collections check:
 - [Retrieving dictionaries](/docs/parameters-retrieving-dictionaries)
 
 By default all query-supported types are received from query. We can also explicitly
-say that parameter is from query with `LiteApi.Attributes.FromQueryAttribute`.
+say that parameter is from query with `LiteApi.FromQueryAttribute`.
 Parameter name must match query key, matching is done in case insensitive manner.
 
 ## Samples

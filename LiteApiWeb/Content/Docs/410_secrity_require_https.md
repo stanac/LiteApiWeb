@@ -15,7 +15,7 @@ action level.
 
 ## Require HTTPS on controller or action level
 
-On controller or action `LiteApi.Attributes.RequiresHttpsAttribute` can be set
+On controller or action `LiteApi.RequiresHttpsAttribute` can be set
 in order to force HTTPS.
 
 ```csharp

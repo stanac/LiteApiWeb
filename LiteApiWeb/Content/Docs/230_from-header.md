@@ -11,7 +11,7 @@ ParentPageId: parameter-retrieving
 # Parameter retrieving from header
 
 Parameters can be retrieved from HTTP request header. Parameter to be received from
-header must have `LiteApi.Attributes.FromHeaderAttribute` set. See following
+header must have `LiteApi.FromHeaderAttribute` set. See following
 examples.
 
 Parameter name and header key doesn't have to match, but in they don't match
